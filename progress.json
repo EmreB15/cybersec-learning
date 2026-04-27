@@ -1,0 +1,63 @@
+{
+  "schema_version": "3.0",
+  "user": "Emre",
+  "started_date": null,
+  "last_session": null,
+  "session_count": 0,
+  "tracks": {
+    "python": {
+      "level": 1,
+      "level_complete_criteria": "4 challenges done, no unresolved critical or moderate weak points (or escape via remediation)",
+      "challenges_completed": [],
+      "challenges_attempted": [],
+      "current_challenge": null,
+      "current_challenge_text": null,
+      "last_active": null
+    },
+    "bash": {
+      "level": 1,
+      "level_complete_criteria": "3 challenges done, pipes and redirection solid",
+      "challenges_completed": [],
+      "challenges_attempted": [],
+      "current_challenge": null,
+      "current_challenge_text": null,
+      "last_active": null
+    },
+    "concepts": {
+      "level": 1,
+      "level_complete_criteria": "Reasons through a novel scenario, not just recalls definitions",
+      "challenges_completed": [],
+      "challenges_attempted": [],
+      "current_challenge": null,
+      "current_challenge_text": null,
+      "last_active": null
+    },
+    "scenarios": {
+      "unlocked": false,
+      "unlock_condition": "Python L2 + Bash L2 + Concepts L2 all complete",
+      "completed": [],
+      "current_scenario": null,
+      "last_active": null
+    }
+  },
+  "weak_points": [],
+  "mastered_points": [],
+  "hint_log": [],
+  "cross_track_links": [],
+  "session_log": [],
+  "checkpoints_reached": [],
+  "totals": {
+    "challenges_completed": 0,
+    "writeups_generated": 0,
+    "writeups_archived": 0,
+    "cross_track_connections": 0,
+    "total_hours": 0
+  },
+  "diagnostic": {
+    "completed": false,
+    "completed_date": null,
+    "results": null
+  },
+  "pickup_note": "First session: run the First Session Diagnostic before anything else.",
+  "last_weekly_summary": null
+}

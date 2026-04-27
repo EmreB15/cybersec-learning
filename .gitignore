@@ -1,0 +1,52 @@
+# Secrets — NEVER commit these
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Lab artifacts (kept local, not for portfolio)
+lab/
+captures/
+*.pcap
+*.pcapng
+
+# Build / install
+build/
+dist/
+node_modules/
+
+# Logs that may contain sensitive data
+*.log
+logs/
