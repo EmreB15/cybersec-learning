@@ -1,9 +1,9 @@
 {
   "schema_version": "3.0",
   "user": "Emre",
-  "started_date": null,
-  "last_session": null,
-  "session_count": 0,
+  "started_date": "2026-04-27",
+  "last_session": "2026-04-27",
+  "session_count": 1,
   "tracks": {
     "python": {
       "level": 1,
@@ -12,16 +12,16 @@
       "challenges_attempted": [],
       "current_challenge": null,
       "current_challenge_text": null,
-      "last_active": null
+      "last_active": "2026-04-27"
     },
     "bash": {
-      "level": 1,
-      "level_complete_criteria": "3 challenges done, pipes and redirection solid",
+      "level": "L0 (scaffolded L1)",
+      "level_complete_criteria": "3 challenges done at L1 standard, pipes and redirection solid",
       "challenges_completed": [],
       "challenges_attempted": [],
       "current_challenge": null,
       "current_challenge_text": null,
-      "last_active": null
+      "last_active": "2026-04-27"
     },
     "concepts": {
       "level": 1,
@@ -30,7 +30,7 @@
       "challenges_attempted": [],
       "current_challenge": null,
       "current_challenge_text": null,
-      "last_active": null
+      "last_active": "2026-04-27"
     },
     "scenarios": {
       "unlocked": false,
@@ -42,10 +42,41 @@
   },
   "weak_points": [],
   "mastered_points": [],
+  "watch_areas": [
+    {
+      "id": "WA001",
+      "track": "python",
+      "issue": "End-to-end task composition: identifies correct tool but does not always assemble the full solution without a nudge",
+      "first_observed": "2026-04-27",
+      "source": "diagnostic task 3 (string split + print)",
+      "status": "watching"
+    },
+    {
+      "id": "WA002",
+      "track": "concepts",
+      "issue": "Phishing indicator inventory is partial: surfaces obvious red flags but misses link inspection, missing account specifics, vague sign-off",
+      "first_observed": "2026-04-27",
+      "source": "diagnostic task 5 (phishing reasoning)",
+      "status": "watching"
+    }
+  ],
   "hint_log": [],
   "cross_track_links": [],
-  "session_log": [],
-  "checkpoints_reached": [],
+  "session_log": [
+    {
+      "date": "2026-04-27",
+      "duration_minutes_planned": 45,
+      "summary": "First Session Diagnostic completed. Starting levels set: Python L1, Bash L0 (scaffolded), Concepts L1. Two watch-areas logged.",
+      "tracks_touched": ["python", "bash", "concepts"]
+    }
+  ],
+  "checkpoints_reached": [
+    {
+      "id": "diagnostic_complete",
+      "date": "2026-04-27",
+      "note": "Diagnostic complete — starting levels confirmed"
+    }
+  ],
   "totals": {
     "challenges_completed": 0,
     "writeups_generated": 0,
@@ -54,10 +85,21 @@
     "total_hours": 0
   },
   "diagnostic": {
-    "completed": false,
-    "completed_date": null,
-    "results": null
+    "completed": true,
+    "completed_date": "2026-04-27",
+    "results": {
+      "task_1_python_print_var": "comfortable",
+      "task_2_python_loop_cond": "comfortable",
+      "task_3_python_string_handling": "shaky",
+      "task_4_bash_navigation": "blocked",
+      "task_5_concepts_phishing": "comfortable",
+      "starting_levels": {
+        "python": "L1 normal",
+        "bash": "L0 scaffolded",
+        "concepts": "L1 normal"
+      }
+    }
   },
-  "pickup_note": "First session: run the First Session Diagnostic before anything else.",
+  "pickup_note": "Pick a track to start: Python L1, Bash L0 (scaffolded), or Concepts L1. Recommend Bash L0 first to remove the only zero-knowledge gap; otherwise Concepts L1 phishing analysis is the lowest-friction start.",
   "last_weekly_summary": null
 }
