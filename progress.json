@@ -2,8 +2,8 @@
   "schema_version": "3.0",
   "user": "Emre",
   "started_date": "2026-04-27",
-  "last_session": "2026-04-27",
-  "session_count": 1,
+  "last_session": "2026-04-28",
+  "session_count": 2,
   "tracks": {
     "python": {
       "level": 1,
@@ -17,11 +17,21 @@
     "bash": {
       "level": "L0 (scaffolded L1)",
       "level_complete_criteria": "3 challenges done at L1 standard, pipes and redirection solid",
-      "challenges_completed": [],
+      "challenges_completed": [
+        {
+          "id": "bash-L0-first-footprints",
+          "title": "First Footprints",
+          "completed_date": "2026-04-28",
+          "hint_tier_reached": 1,
+          "hint_tier_used": "offered, self-served via --help",
+          "weight": 1.0,
+          "writeup_state": "complete"
+        }
+      ],
       "challenges_attempted": [],
       "current_challenge": null,
       "current_challenge_text": null,
-      "last_active": "2026-04-27"
+      "last_active": "2026-04-28"
     },
     "concepts": {
       "level": 1,
@@ -40,17 +50,26 @@
       "last_active": null
     }
   },
-  "weak_points": [],
+  "weak_points": [
+    {
+      "id": "WP001",
+      "track": "cross-track",
+      "issue": "Instruction-precision / end-to-end follow-through: identifies correct tool but does not always assemble the full solution per the exact brief (skips sub-tasks, uses wrong parameter values)",
+      "first_observed": "2026-04-27",
+      "promoted_from": "WA001",
+      "promoted_date": "2026-04-28",
+      "evidence": [
+        "Diagnostic task 3 (Python string split) — partial assembly",
+        "Bash L0 First Footprints Task 2 round 1 — skipped listing entirely",
+        "Bash L0 First Footprints Task 4 round 1 — used -n 5 instead of -n 10"
+      ],
+      "stage": 0,
+      "retest_due": "2026-05-02",
+      "failures": 0
+    }
+  ],
   "mastered_points": [],
   "watch_areas": [
-    {
-      "id": "WA001",
-      "track": "python",
-      "issue": "End-to-end task composition: identifies correct tool but does not always assemble the full solution without a nudge",
-      "first_observed": "2026-04-27",
-      "source": "diagnostic task 3 (string split + print)",
-      "status": "watching"
-    },
     {
       "id": "WA002",
       "track": "concepts",
@@ -60,14 +79,36 @@
       "status": "watching"
     }
   ],
-  "hint_log": [],
-  "cross_track_links": [],
+  "hint_log": [
+    {
+      "date": "2026-04-28",
+      "challenge": "bash-L0-first-footprints",
+      "task": "Task 4 (head first 20 lines)",
+      "tier": 1,
+      "tier_name": "REFRAME",
+      "outcome": "User self-served via --help before applying the reframe; tier offered, not used"
+    }
+  ],
+  "cross_track_links": [
+    {
+      "date": "2026-04-28",
+      "tracks": ["bash", "python"],
+      "concept": "reading first/last N lines of a file",
+      "context": "Bash uses head -n N / tail -n N. Python equivalent is open() + readlines()[:N] / [-N:], or for big files an itertools.islice approach. Bash version is a one-shot pipe-friendly tool; Python version is composable inside a larger script."
+    }
+  ],
   "session_log": [
     {
       "date": "2026-04-27",
       "duration_minutes_planned": 45,
       "summary": "First Session Diagnostic completed. Starting levels set: Python L1, Bash L0 (scaffolded), Concepts L1. Two watch-areas logged.",
       "tracks_touched": ["python", "bash", "concepts"]
+    },
+    {
+      "date": "2026-04-28",
+      "duration_minutes_planned": 50,
+      "summary": "Bash L0 challenge 1 (First Footprints) complete. Covered pwd, cd, ls -a, cat, head -n, tail -n. WA001 promoted to WP001 (instruction-precision pattern across Python + Bash). One cross-track link logged (bash head/tail vs python file slicing).",
+      "tracks_touched": ["bash"]
     }
   ],
   "checkpoints_reached": [
@@ -75,14 +116,19 @@
       "id": "diagnostic_complete",
       "date": "2026-04-27",
       "note": "Diagnostic complete — starting levels confirmed"
+    },
+    {
+      "id": "first_challenge_complete",
+      "date": "2026-04-28",
+      "note": "First challenge completed on any track (Bash L0 First Footprints)"
     }
   ],
   "totals": {
-    "challenges_completed": 0,
-    "writeups_generated": 0,
+    "challenges_completed": 1,
+    "writeups_generated": 1,
     "writeups_archived": 0,
-    "cross_track_connections": 0,
-    "total_hours": 0
+    "cross_track_connections": 1,
+    "total_hours": 1.3
   },
   "diagnostic": {
     "completed": true,
@@ -100,6 +146,6 @@
       }
     }
   },
-  "pickup_note": "Pick a track to start: Python L1, Bash L0 (scaffolded), or Concepts L1. Recommend Bash L0 first to remove the only zero-knowledge gap; otherwise Concepts L1 phishing analysis is the lowest-friction start.",
+  "pickup_note": "Bash L0 challenge 2 of 3 (next: pipes + grep on a small log file) OR pivot to Concepts L1 phishing analysis OR Python L1 first challenge. Also: archive the bash-L0-first-footprints write-up by filling in the user-fillable sections. Note: WP001 retest fires 2026-05-02 — runs first that session regardless of track choice.",
   "last_weekly_summary": null
 }
