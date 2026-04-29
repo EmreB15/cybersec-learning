@@ -3,7 +3,7 @@
   "user": "Emre",
   "started_date": "2026-04-27",
   "last_session": "2026-04-28",
-  "session_count": 2,
+  "session_count": 3,
   "tracks": {
     "python": {
       "level": 1,
@@ -26,6 +26,17 @@
           "hint_tier_used": "offered, self-served via --help",
           "weight": 1.0,
           "writeup_state": "complete"
+        },
+        {
+          "id": "bash-L0-trail-in-the-logs",
+          "title": "Trail in the Logs",
+          "completed_date": "2026-04-28",
+          "hint_tier_reached": 1,
+          "hint_tier_used": "Tier 1 REFRAME on Task 4 (lexicographic-vs-numeric sort)",
+          "weight": 1.0,
+          "writeup_state": "archived",
+          "writeup_archived_date": "2026-04-28",
+          "notes": "Tasks 1-3 clean idiomatic, zero hints. Task 4 had logic bug (sort -r on count column produced lexicographic order); self-corrected after Tier 1 reframe. User flagged elegance concern unprompted ('hard coded in a sense') — security-mindset reflection worth recording. Write-up archived same day with all four user-fillable sections filled."
         }
       ],
       "challenges_attempted": [],
@@ -66,6 +77,20 @@
       "stage": 0,
       "retest_due": "2026-05-02",
       "failures": 0
+    },
+    {
+      "id": "WP002",
+      "track": "bash",
+      "issue": "Frequency-count pipelines: uses `sort | uniq -c | head` without sorting on the count column, or sorts lexicographically instead of numerically (`sort -r` vs `sort -nr`); trusts pipeline output without inspecting intermediate stages",
+      "first_observed": "2026-04-28",
+      "evidence": [
+        "Bash L0 Trail in the Logs Task 4 round 1 — sort | uniq -c | head -n 1 returned alphabetical-first IP, not most-frequent IP",
+        "Bash L0 Trail in the Logs Task 4 round 2 — sort -r used; works on single-digit counts only, would silently misrank ≥10 due to lexicographic comparison"
+      ],
+      "stage": 0,
+      "retest_due": "2026-05-02",
+      "failures": 0,
+      "self_correction_observed": "User flagged elegance concern unprompted on round 2 ('hard coded in a sense'). The reflective instinct that prevents WP002 in future is already showing — track whether retest confirms it stays self-corrected."
     }
   ],
   "mastered_points": [],
@@ -87,6 +112,14 @@
       "tier": 1,
       "tier_name": "REFRAME",
       "outcome": "User self-served via --help before applying the reframe; tier offered, not used"
+    },
+    {
+      "date": "2026-04-28",
+      "challenge": "bash-L0-trail-in-the-logs",
+      "task": "Task 4 (most-frequent IP)",
+      "tier": 1,
+      "tier_name": "REFRAME",
+      "outcome": "Reframe used. Prompt was 'drop head -n 1, look at intermediate output, ask what sort is sorting on.' User identified missing count-column sort and added `sort -r`, then on follow-up self-flagged the lexicographic gotcha and converted to `sort -nr`."
     }
   ],
   "cross_track_links": [
@@ -95,6 +128,18 @@
       "tracks": ["bash", "python"],
       "concept": "reading first/last N lines of a file",
       "context": "Bash uses head -n N / tail -n N. Python equivalent is open() + readlines()[:N] / [-N:], or for big files an itertools.islice approach. Bash version is a one-shot pipe-friendly tool; Python version is composable inside a larger script."
+    },
+    {
+      "date": "2026-04-28",
+      "tracks": ["bash", "python"],
+      "concept": "frequency analysis (top-N most common values)",
+      "context": "Bash idiom is `... | sort | uniq -c | sort -nr | head -n N`. Python equivalent is `collections.Counter(iterable).most_common(N)` — handles the count + sort + top-N in one call. Same gotcha applies in both: default sort/min/max on numeric strings is lexicographic in Python too (`sorted(['10','9'])` returns `['10','9']`). Convert to int before comparing."
+    },
+    {
+      "date": "2026-04-28",
+      "tracks": ["bash", "python"],
+      "concept": "positional field extraction is fragile",
+      "context": "Bash `awk '{print $11}'` and Python `line.split()[10]` both lock you to a column position. If log format shifts, both silently read the wrong word. Real-world fix in either language is regex extraction (`grep -oE` in Bash, `re.search` in Python) targeting the shape of the value (e.g. an IP), not its position."
     }
   ],
   "session_log": [
@@ -108,6 +153,12 @@
       "date": "2026-04-28",
       "duration_minutes_planned": 50,
       "summary": "Bash L0 challenge 1 (First Footprints) complete. Covered pwd, cd, ls -a, cat, head -n, tail -n. WA001 promoted to WP001 (instruction-precision pattern across Python + Bash). One cross-track link logged (bash head/tail vs python file slicing).",
+      "tracks_touched": ["bash"]
+    },
+    {
+      "date": "2026-04-28",
+      "duration_minutes_planned": 40,
+      "summary": "Bash L0 challenge 2 (Trail in the Logs) complete. Covered grep, pipes, awk field extraction, sort | uniq -c | sort -nr | head frequency idiom. Tasks 1-3 clean idiomatic, zero hints. Task 4 needed Tier 1 REFRAME on sort behavior, then user self-flagged lexicographic-vs-numeric gotcha unprompted. WP002 logged. Two new cross-track links (frequency analysis idioms, positional vs regex extraction). External context noted: NDG Linux Unhatched course (permissions, file reading) and Ubuntu VM now running.",
       "tracks_touched": ["bash"]
     }
   ],
@@ -124,11 +175,11 @@
     }
   ],
   "totals": {
-    "challenges_completed": 1,
-    "writeups_generated": 1,
-    "writeups_archived": 0,
-    "cross_track_connections": 1,
-    "total_hours": 1.3
+    "challenges_completed": 2,
+    "writeups_generated": 2,
+    "writeups_archived": 1,
+    "cross_track_connections": 3,
+    "total_hours": 2.0
   },
   "diagnostic": {
     "completed": true,
@@ -146,6 +197,27 @@
       }
     }
   },
-  "pickup_note": "Bash L0 challenge 2 of 3 (next: pipes + grep on a small log file) OR pivot to Concepts L1 phishing analysis OR Python L1 first challenge. Also: archive the bash-L0-first-footprints write-up by filling in the user-fillable sections. Note: WP001 retest fires 2026-05-02 — runs first that session regardless of track choice.",
+  "lab_status": {
+    "ubuntu_vm_running": true,
+    "vulnerable_target_installed": false,
+    "notes": "User confirmed Ubuntu VM up as of 2026-04-28. Vulnerable target (Metasploitable2/DVWA) still required before any scanning challenge."
+  },
+  "external_learning": [
+    {
+      "course": "NDG Linux Unhatched (university)",
+      "noted_date": "2026-04-28",
+      "topics_covered": ["permissions", "reading files", "basic terminal navigation"],
+      "implication": "External Bash skill input the diagnostic did not see. Bash L0 challenge 3 may fold up to normal-difficulty L1 — decision deferred to next session pending challenge-2 performance review (which was strong)."
+    }
+  ],
+  "level_calibration_decisions": [
+    {
+      "date": "2026-04-28",
+      "track": "bash",
+      "decision_pending": true,
+      "context": "L0 challenge 2 performance was strong: zero hints on tasks 1-3, Tier 1 reframe on task 4 with self-correction and unprompted elegance reflection. Combined with NDG course coverage of permissions/file reading, Bash L0 challenge 3 is a candidate to fold into a normal-difficulty L1 challenge (or to promote to L1 outright after challenge 3). Decide at start of next bash session."
+    }
+  ],
+  "pickup_note": "Bash L0 challenge 3 of 3. Open question at start: keep at L0 scaffolding, or fold into normal-difficulty L1 given strong challenge-2 performance + NDG course coverage? Decide before designing the challenge. WP001 + WP002 retests both fire 2026-05-02 — if next session is on or after that date, both retests run first. Side tasks: archive bash-L0-first-footprints write-up (needs real path substituted for `<target>` placeholder) and fill in user-fillable sections of bash-L0-trail-in-the-logs write-up.",
   "last_weekly_summary": null
 }
