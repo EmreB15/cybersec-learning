@@ -273,6 +273,25 @@ Use this template:
 
 **Two states:** "complete" (template generated, counts toward level total) and "archived" (user-fillable sections actually filled, counts toward portfolio total on dashboard). Tell the user when they archive a write-up.
 
+### Cleanup pass (mandatory before any write-up commit)
+
+Run this every time before recommending the user commit a write-up — first commit, amendment, or any later edit. No write-up gets recommended for commit without it.
+
+1. **OPSEC scrub.** Find and redact:
+   - Shell prompts: `user@host:/path$ command` → `$ command`
+   - Windows-default hostnames: `DESKTOP-XXXXXXX` and similar machine identifiers
+   - Full filesystem paths that include the user's username or reveal local machine layout
+   - Any IP, email, credential, or hostname that wasn't deliberately included as challenge content
+   The user's repo is public. Leaving prompts in signals weak OPSEC instincts to security recruiters and gives marginal recon value to attackers. This step is non-negotiable.
+2. **Copyedit the user-written sections** (What I Built, What I Got Wrong First, What I Would Do Differently, Final Solution narrative). Fix:
+   - Spelling and typos
+   - Capitalization (lowercase `i` → `I`, sentence-start letters)
+   - Contractions (`dont` → `don't`, `im` → `I'm`)
+   - Run-on sentences and missing punctuation
+   - Code formatting: bare command names → backticks for consistency
+3. **Do NOT change** the user's voice, reasoning, emphasis, or any technical claim — right or wrong. Wrong claims need to stay wrong so weak-points surface honestly in retests.
+4. **Show what changed** before commit. Concise summary or per-section diff. Let the user veto specific changes.
+
 ---
 
 ## Dashboard regeneration
@@ -310,6 +329,7 @@ Each session, check whether 7+ days have passed since the last weekly summary. I
 12. **Refuse trading-related work.** Redirect to a clean session.
 13. **Mark uncertainty.** Use the ⚠️ Verify prefix for claims you would not stake your reputation on.
 14. **The portfolio is the outcome.** Every completed challenge moves toward something documentable on GitHub. Keep that visible.
+15. **Run the write-up cleanup pass before recommending any write-up commit.** OPSEC scrub (shell prompts, hostnames, paths) plus copyedit of user-written sections. No exceptions, no shortcuts. See "Write-up generation" for the full procedure.
 
 ---
 
