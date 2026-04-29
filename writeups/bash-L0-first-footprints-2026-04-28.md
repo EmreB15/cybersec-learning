@@ -8,7 +8,7 @@ First Bash challenge. Four micro-tasks covering the absolute floor of terminal u
 
 ## What I Built
 
-I wouldn't say i built anything instead i found solutions to simple problems outlined for 4 different tasks. I was able to find the first 5 or last 5 lines of a piece of text. I was able to figure out where i am in the system and understand how to move to somewhere else in the system.
+I wouldn't say I built anything; instead, I found solutions to simple problems outlined for 4 different tasks. I was able to find the first 5 or last 5 lines of a piece of text. I was able to figure out where I am in the system and understand how to move to somewhere else in the system.
 
 ## Key Concepts Used
 
@@ -20,7 +20,7 @@ I wouldn't say i built anything instead i found solutions to simple problems out
 
 ## What I Got Wrong First
 
-I got the hidden directories wrong, i thought that 'ls .' would get me the correct answer but . just stands for the current working directory it doesn't actually show the hidden folders or files. The -a flag fixes that. I also got the flag wrong for the tail and head commands, i read the question without thinking too much about what its asking for and just decided that the output of tail alone was enough but in fact i was being asked for a flag input and i completely missed it.
+I got the hidden directories wrong. I thought that `ls .` would get me the correct answer, but `.` just stands for the current working directory — it doesn't actually show the hidden folders or files. The `-a` flag fixes that. I also got the flag wrong for the tail and head commands. I read the question without thinking too much about what it's asking for and just decided that the output of `tail` alone was enough, but in fact I was being asked for a flag input and I completely missed it.
 
 Hint: there are at least two specific things to write about here. The `.` vs `-a` confusion on Task 2, and the `-n 5` vs `-n 10` precision miss on Task 4.
 

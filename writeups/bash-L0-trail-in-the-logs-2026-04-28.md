@@ -8,7 +8,7 @@ Second Bash challenge. Synthetic SSH auth log (25 lines, mixed `Accepted` / `Fai
 
 ## What I Built
 
-Today i built 4 one line commands that looked through a .log file. I was looking for how many unique users had failed password attempts. This is a direct link to security and seeing if a user has an abnormal amount of failed password attempts. From there i looked at the specific IP address that was having these failed password attempts, i used grep to find a pattern and i used piping to link commands together to form nice one line commands. The IP address then in a real world scenario could potentially be blocked or monitored more closely.
+Today I built 4 one-line commands that looked through a `.log` file. I was looking for how many unique users had failed password attempts. This is a direct link to security — seeing if a user has an abnormal amount of failed password attempts. From there I looked at the specific IP address that was having these failed password attempts. I used `grep` to find a pattern and I used piping to link commands together to form nice one-line commands. The IP address then, in a real-world scenario, could potentially be blocked or monitored more closely.
 
 ## Key Concepts Used
 
@@ -22,7 +22,7 @@ Today i built 4 one line commands that looked through a .log file. I was looking
 
 ## What I Got Wrong First
 
-When sorting by the number of failed IP attempts, for example the number 25 would appear to be smaller than 8 because only the first index is being compared here, but if we compare numerically with flag -n for sort then this avoids this error.
+When sorting by the number of failed IP attempts, for example, the number 25 would appear to be smaller than 8 because only the first index is being compared. If we compare numerically with the `-n` flag for `sort`, this avoids that error.
 
 ## Weak Points Flagged
 
@@ -38,31 +38,39 @@ The secondary lesson: **`awk '{print $11}'` is positional and fragile.** If the 
 
 ## What I Would Do Differently
 
-Next time instead of using cat i would use head -n 1 to only look at 1 line because if this is a long log i dont have time looking for which field is where.
-next time i need to remember to use the man command if im confused anywhere.
+Next time, instead of using `cat`, I would use `head -n 1` to only look at 1 line, because if this is a long log I don't have time looking for which field is where.
+Next time, I need to remember to use the `man` command if I'm confused anywhere.
 
 ## Final Solution
 
-Task 1:
-emre@DESKTOP-76TD8PV:/mnt/d/cybersecurity_learning/labs/bash-L0$ wc -l auth.log
+**Task 1 — total line count:**
+```bash
+$ wc -l auth.log
 25 auth.log
+```
 
-Task 2:
-emre@DESKTOP-76TD8PV:/mnt/d/cybersecurity_learning/labs/bash-L0$ grep "Failed password" auth.log | wc -l
+**Task 2 — count of failed-password lines:**
+```bash
+$ grep "Failed password" auth.log | wc -l
 18
+```
 
-Task 3:
-emre@DESKTOP-76TD8PV:/mnt/d/cybersecurity_learning/labs/bash-L0$ grep "Failed password" auth.log | awk '{print $9}' | sort -u
+**Task 3 — unique usernames in failed-password lines:**
+```bash
+$ grep "Failed password" auth.log | awk '{print $9}' | sort -u
 admin
 backup
 invaliduser
 postgres
 root
 ubuntu
+```
 
-Task 4:
-emre@DESKTOP-76TD8PV:/mnt/d/cybersecurity_learning/labs/bash-L0$ grep "Failed password" auth.log | awk '{print $11}' | sort | uniq -c | sort -nr | head -n 1
+**Task 4 — IP with most failed attempts:**
+```bash
+$ grep "Failed password" auth.log | awk '{print $11}' | sort | uniq -c | sort -nr | head -n 1
 8 203.0.113.45
+```
 
 ---
 
