@@ -1,0 +1,4 @@
+Things to follow up on this week:
+- Renew TLS cert on staging (expires next month)
+- Ask Sam about the new VPN config
+- Review pull request #214 before Friday

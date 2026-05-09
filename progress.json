@@ -2,8 +2,8 @@
   "schema_version": "3.0",
   "user": "Emre",
   "started_date": "2026-04-27",
-  "last_session": "2026-04-28",
-  "session_count": 3,
+  "last_session": "2026-05-08",
+  "session_count": 5,
   "tracks": {
     "python": {
       "level": 1,
@@ -15,8 +15,10 @@
       "last_active": "2026-04-27"
     },
     "bash": {
-      "level": "L0 (scaffolded L1)",
-      "level_complete_criteria": "3 challenges done at L1 standard, pipes and redirection solid",
+      "level": "L1",
+      "level_promoted_from": "L0 (scaffolded L1)",
+      "level_promoted_date": "2026-04-29",
+      "level_complete_criteria": "3 challenges done, pipes and redirection solid. The 2 L0 challenges count toward this total. As of 2026-05-08, 3/3 challenges complete (Find Tour passed) — but REDIRECTION has not yet been covered in any completed challenge. Bash L1 NOT YET COMPLETE: one more challenge needed, redirection-focused, single-concept.",
       "challenges_completed": [
         {
           "id": "bash-L0-first-footprints",
@@ -36,13 +38,45 @@
           "weight": 1.0,
           "writeup_state": "archived",
           "writeup_archived_date": "2026-04-28",
-          "notes": "Tasks 1-3 clean idiomatic, zero hints. Task 4 had logic bug (sort -r on count column produced lexicographic order); self-corrected after Tier 1 reframe. User flagged elegance concern unprompted ('hard coded in a sense') — security-mindset reflection worth recording. Write-up archived same day with all four user-fillable sections filled."
+          "notes": "Tasks 1-3 clean idiomatic, zero hints. Task 4 had logic bug (sort | uniq -c | head with no count-column sort); self-corrected after Tier 1 reframe. User flagged elegance concern unprompted ('hard coded in a sense') — security-mindset reflection worth recording. Write-up archived same day with all four user-fillable sections filled. NOTE 2026-05-08: this archived write-up's 'Key Concepts' and 'Security Implication' sections still propagate the original WP002 claim that `sort -r` silently misranks counts ≥10 — falsified empirically on 2026-05-08. The archived write-up has not been amended (historical record preserved) but a future session may want to revisit and add a correction note."
+        },
+        {
+          "id": "bash-L1-find-tour",
+          "title": "Find Tour",
+          "completed_date": "2026-05-08",
+          "hint_tier_reached": 0,
+          "hint_tier_used": "None on find content. One Tier 1 reframe was deflected — the patterns the user needed were already in the brief but buried in Constraints rather than stated in the task lines (tutor-side brief-design defect, owned, durable feedback memory saved). One jargon clarification needed on the word 'quote'.",
+          "weight": 1.0,
+          "writeup_state": "archived",
+          "writeup_archived_date": "2026-05-08",
+          "lab_data_path": "labs/bash-L1/triage/",
+          "notes": "All 4 tasks correct against pre-verified expected outputs. Strong points: -mtime -14 sign syntax right first try, both globs quoted (avoiding shell pre-expansion), -type f scaffold carried consistently across all 4 commands. No new weak points. WP001/WP002 not retriggered. Task 2 surfaced both deliberately-seeded IOCs (tmp/suspicious_payload.sh + tmp/.hidden_dropper). New durable feedback memory: brief-explicitness — concrete inputs go in task description, not in Constraints. Write-up archived 2026-05-08 with all four user-fillable sections filled (cleanup pass run: 3 copyedits applied, no OPSEC issues, factual flag raised on the 'I initially used ls' claim — no record of that during Find Tour, possibly conflated with the abandoned Forensic Triage attempt; user opted to keep the claim as written)."
         }
       ],
-      "challenges_attempted": [],
+      "challenges_attempted": [
+        {
+          "id": "bash-L1-forensic-triage",
+          "title": "Forensic Triage",
+          "attempted_date": "2026-04-29",
+          "outcome": "abandoned-design-issue",
+          "weight": 0,
+          "reason": "Tutor over-packed three new concepts into the first L1 challenge: find argument grammar, time predicates with the n/-n/+n sign syntax, and three flavours of redirection (>, >>, 2>). User got tangled up in 'ls | find -mtime -2 > ../../recent_files.txt' on Task 1 — errors compounded across all three concepts simultaneously. User flagged the design issue directly: 'redirecting and find could have been two separate things at first... bear in mind when raising difficulty to do so without making it uber challenging.' Retired as abandoned-design-issue, blocks nothing, fails nothing. Saved durable feedback memory: one new concept per challenge at level boundaries.",
+          "lab_data_path": "labs/bash-L1/triage/"
+        },
+        {
+          "id": "bash-L1-find-tour",
+          "title": "Find Tour (scoped find-only restructure)",
+          "attempted_date": "2026-04-29",
+          "outcome": "abandoned-incomplete-trust-break",
+          "weight": 0,
+          "tasks_completed": "Task 1 correct on first try. Task 2 command structurally correct on first try; tutor's 'expect 3 results' answer key was wrong (real answer ~9 in clean lab, ~12 in then-polluted lab) because tutor forgot directories appear in find output by default. User saw the mismatch and reasonably assumed they had broken the lab. Tasks 3 and 4 not attempted.",
+          "reason": "Compounded trust break. Earlier in session: tutor said 'lab is fine, nothing your commands altered the source files' — wrong, stray files (`--help`, `2`, `man`) had been created by user's earlier broken command, tutor had not verified. Tutor said 'hard reset confirmed' meaning *challenge framing retired, lab data persists*; user reasonably read it as *everything cleaned up*. User then ran Task 2, got 6 results against tutor's 'expect 3', assumed they were at fault. User ended session early. User named the failure precisely: 'It's like getting the working out correct but the answer is wrong but it's not your fault because the answer book has an error. That's YOUR mistake.' Two durable feedback memories saved in response: verify-before-claiming (any count/output/reassurance), and precise-meta-comms (no ambiguity outside hint tiers).",
+          "lab_data_path": "labs/bash-L1/triage/"
+        }
+      ],
       "current_challenge": null,
       "current_challenge_text": null,
-      "last_active": "2026-04-28"
+      "last_active": "2026-05-08"
     },
     "concepts": {
       "level": 1,
@@ -69,28 +103,36 @@
       "first_observed": "2026-04-27",
       "promoted_from": "WA001",
       "promoted_date": "2026-04-28",
+      "evidence_2026-05-08": "Re-surfaced briefly during WP002 retest submission (pipeline missed Failed-only filter and intermediate-inspection step, both explicit brief constraints). Not formally counted as a WP001 failure since the dedicated WP001 retest immediately followed and passed cleanly.",
       "evidence": [
         "Diagnostic task 3 (Python string split) — partial assembly",
         "Bash L0 First Footprints Task 2 round 1 — skipped listing entirely",
         "Bash L0 First Footprints Task 4 round 1 — used -n 5 instead of -n 10"
       ],
-      "stage": 0,
-      "retest_due": "2026-05-02",
-      "failures": 0
+      "stage": 1,
+      "retest_due": "2026-05-15",
+      "failures": 0,
+      "retest_history": [
+        {"date": "2026-05-08", "outcome": "passed", "challenge": "Brief Precision (3 sub-tasks: head -5 syslog, tail -3 auth.log, grep -c 'sudo' auth.log)", "notes": "All three sub-tasks correct first try. Used grep -c rather than piping to wc -l (single-tool idiomatic). Quoted 'sudo' defensively. Each sub-task its own command, no chaining. Tier 1 reframe used on task 3 (two valid shapes pointed out without naming the flag); user self-served from there."}
+      ]
     },
     {
       "id": "WP002",
       "track": "bash",
-      "issue": "Frequency-count pipelines: uses `sort | uniq -c | head` without sorting on the count column, or sorts lexicographically instead of numerically (`sort -r` vs `sort -nr`); trusts pipeline output without inspecting intermediate stages",
+      "issue": "Frequency-count pipelines: skips count-column sorting (`sort | uniq -c | head` without a numeric sort step) and trusts pipeline output without inspecting intermediate stages.",
       "first_observed": "2026-04-28",
       "evidence": [
-        "Bash L0 Trail in the Logs Task 4 round 1 — sort | uniq -c | head -n 1 returned alphabetical-first IP, not most-frequent IP",
-        "Bash L0 Trail in the Logs Task 4 round 2 — sort -r used; works on single-digit counts only, would silently misrank ≥10 due to lexicographic comparison"
+        "Bash L0 Trail in the Logs Task 4 round 1 — sort | uniq -c | head -n 1 returned alphabetically-first IP, not most-frequent IP. Count column never sorted. Real, demonstrated bug.",
+        "Bash L0 Trail in the Logs Task 4 round 2 — sort -r used; produces correct answer on column-padded uniq-c output, but user flagged elegance concern unprompted ('hard coded in a sense'). Self-correction toward sort -nr recorded as positive signal."
       ],
       "stage": 0,
-      "retest_due": "2026-05-02",
-      "failures": 0,
-      "self_correction_observed": "User flagged elegance concern unprompted on round 2 ('hard coded in a sense'). The reflective instinct that prevents WP002 in future is already showing — track whether retest confirms it stays self-corrected."
+      "retest_due": "2026-05-12",
+      "failures": 1,
+      "retest_history": [
+        {"date": "2026-05-08", "outcome": "failed", "challenge": "Frequency Recall (find IP with most failed login attempts in retest-wp002/auth-snippet.log)", "notes": "Pipeline produced the correct answer (203.0.113.45 with 11 failed attempts) but failed two explicit brief criteria: (1) no Failed-only filter — awk $13 ran on every line, including 3 Accepted lines where $13 is the source port not the IP; correct top IP surfaced only because port-number rows each had count 1 and could not outrank 11; (2) no intermediate-stage inspection performed before stating the answer, despite the brief explicitly requiring it. Discipline only surfaced post-hoc after tutor pushed for the inspection step. Stage stays 0, failures incremented to 1. Next retest 2026-05-12."}
+      ],
+      "self_correction_observed": "User flagged elegance concern unprompted on round 2 ('hard coded in a sense'). The reflective instinct that prevents WP002 in future is already showing — track whether retest confirms it stays self-corrected.",
+      "correction_2026-05-08": "Earlier evidence claimed `sort -r` would misrank counts ≥10 by lexicographic comparison. Verified empirically against original Trail in the Logs auth.log AND a fresh retest dataset with counts spanning 3..11. Claim is wrong on raw `uniq -c | sort -r` output: column padding from uniq -c right-aligns the count field, so lexicographic order matches numeric order on this pipeline shape. Trap only fires if leading whitespace is stripped (e.g., post-awk processing). Original weak-point logging overstated the round 2 failure mode. Description and evidence above rewritten to reflect what is empirically true: round 1 was a real bug (no count-column sort), round 2 was semantically iffy but functionally correct."
     }
   ],
   "mastered_points": [],
@@ -120,6 +162,54 @@
       "tier": 1,
       "tier_name": "REFRAME",
       "outcome": "Reframe used. Prompt was 'drop head -n 1, look at intermediate output, ask what sort is sorting on.' User identified missing count-column sort and added `sort -r`, then on follow-up self-flagged the lexicographic gotcha and converted to `sort -nr`."
+    },
+    {
+      "date": "2026-04-29",
+      "challenge": "bash-L1-forensic-triage",
+      "task": "Task 1 (find recently modified files)",
+      "tier": 1,
+      "tier_name": "REFRAME",
+      "outcome": "User reached for ls flags. Tier 1 reframe redirected from 'list this directory' to 'search-with-filter', which surfaced the need for `find` as the right tool. Concept teaching followed (atime/ctime/mtime distinction; n/-n/+n sign syntax) — provided as concept explanation, not as a hint tier escalation. User correctly identified `mtime` + 'within last N days' = `-mtime -2` as the mapping. Did not get to apply cleanly because the surrounding challenge was over-scoped — see attempted-challenges note for bash-L1-forensic-triage."
+    },
+    {
+      "date": "2026-05-08",
+      "challenge": "wp002-retest-frequency-recall",
+      "task": "awk recall (which tool takes a field number)",
+      "tier": 2,
+      "tier_name": "CONCEPT NUDGE",
+      "outcome": "User had ~10-day gap; reached for 'field number' concept correctly but could not recall the tool name. T1 reframe (which tool takes a field-number argument, used on Trail in the Logs) did not unblock. T2 named `awk` and the `{print $N}` syntax. User self-served the field number by inspecting one line."
+    },
+    {
+      "date": "2026-05-08",
+      "challenge": "wp002-retest-frequency-recall",
+      "task": "uniq -c recall (counting unique values)",
+      "tier": 1,
+      "tier_name": "REFRAME",
+      "outcome": "T1 pointed at the cross-track-link entry in dashboard.md as a memory jog without naming uniq -c. User self-served from there."
+    },
+    {
+      "date": "2026-05-08",
+      "challenge": "wp002-retest-frequency-recall",
+      "task": "filter for Failed-only lines (after first failed pass)",
+      "tier": 1,
+      "tier_name": "REFRAME",
+      "outcome": "User had tried to make awk do filter+extract; T1 reframe redirected to one-tool-per-job (filter with grep, extract with awk). User correctly recalled grep on confirmation."
+    },
+    {
+      "date": "2026-05-08",
+      "challenge": "wp001-retest-brief-precision",
+      "task": "Task 3 (count of lines containing 'sudo')",
+      "tier": 1,
+      "tier_name": "REFRAME",
+      "outcome": "User unsure how to produce a count in one line. T1 reframe described two valid shapes (single-tool grep flag vs grep | counting tool) without naming `-c` or `wc -l`. User chose grep -c and self-served."
+    },
+    {
+      "date": "2026-05-08",
+      "challenge": "bash-L1-find-tour",
+      "task": "tasks 3 and 4 (-name glob patterns)",
+      "tier": "deflected",
+      "tier_name": "BRIEF DESIGN DEFECT",
+      "outcome": "User asked about glob patterns and complained the man page was dense. The patterns they needed were already in the brief but buried in the Constraints section as 'examples of quoting' rather than stated in the task lines. Tutor-side defect — not a knowledge gap. Re-stated the patterns inline; user proceeded. New durable feedback memory saved (feedback_brief_explicitness)."
     }
   ],
   "cross_track_links": [
@@ -160,6 +250,35 @@
       "duration_minutes_planned": 40,
       "summary": "Bash L0 challenge 2 (Trail in the Logs) complete. Covered grep, pipes, awk field extraction, sort | uniq -c | sort -nr | head frequency idiom. Tasks 1-3 clean idiomatic, zero hints. Task 4 needed Tier 1 REFRAME on sort behavior, then user self-flagged lexicographic-vs-numeric gotcha unprompted. WP002 logged. Two new cross-track links (frequency analysis idioms, positional vs regex extraction). External context noted: NDG Linux Unhatched course (permissions, file reading) and Ubuntu VM now running.",
       "tracks_touched": ["bash"]
+    },
+    {
+      "date": "2026-04-29",
+      "duration_minutes_planned": 60,
+      "duration_minutes_actual_approx": 50,
+      "ended_early": true,
+      "summary": "Bash promoted L0 (scaffolded) → L1 normal at session start (calibration decision held over from session 3). First L1 challenge 'Forensic Triage' was over-packed: three new concepts in one challenge (find argument grammar, time predicates with sign syntax, three flavours of redirection). User flagged the design issue mid-Task-1 ('redirecting and find could have been two separate things'). Tutor restructured to a smaller find-only challenge 'Find Tour'. User completed Task 1 correctly. On Task 2, user's command was structurally correct but tutor's 'expect 3 results' answer key was wrong (forgot directories appear in find output by default; real count was 9 in clean lab) — and the lab itself had stray files from an earlier failed user command that tutor had falsely reassured was clean. User saw the mismatch, reasonably assumed they had broken the lab, lost trust, ended session. No challenge completed. No write-up generated. Lab cleaned and verified (8 source files, mtimes intact). Three durable feedback memories captured: (1) one-concept-per-challenge at level boundaries, (2) verify-before-claiming any count/output/reassurance, (3) precise-meta-comms — pedagogical ambiguity inside hint tiers is fine, conversational ambiguity outside them is a defect.",
+      "tracks_touched": ["bash"],
+      "tutor_failures_logged": [
+        "Over-packed first L1 challenge with 3 new concepts (design issue)",
+        "Stated 'lab is fine' without verifying — was wrong",
+        "Stated 'expect 3 results' for Task 2 without running the command — was wrong",
+        "Used scope-ambiguous 'hard reset' in meta-comms without disambiguating concretely"
+      ]
+    },
+    {
+      "date": "2026-05-08",
+      "duration_minutes_planned": 90,
+      "duration_minutes_actual_approx": 70,
+      "summary": "Returning session after 9-day gap and stated trust break ('you really put me off last time'). Plan: WP001 + WP002 retests first, then Bash L1 Find Tour re-attempt, Python only if budget allowed. WP002 retest formally failed — pipeline produced correct top IP but lacked Failed-only filter (awk $13 ran on Accepted lines too where $13 is port not IP, polluting output with 3 rogue port-number rows; correct answer surfaced by luck of count ordering) and skipped the explicitly-required intermediate-stage inspection. Discipline practiced post-hoc after tutor pushed. WP002 description corrected mid-session — the original 'sort -r misranks counts ≥10 lexicographically' claim was empirically falsified (verified against original Trail in the Logs auth.log AND a fresh retest dataset; uniq -c column padding makes lex order match numeric order on the raw pipeline output). WP001 retest passed cleanly (head -5, tail -3, grep -c 'sudo') — used grep -c rather than piping to wc -l, quoted the literal defensively, three commands three outputs no chaining. Bash L1 Find Tour passed — 4/4 tasks correct against pre-verified outputs, mtime sign syntax right first try, both globs quoted, -type f scaffold carried consistently. Bash L1 NOT YET COMPLETE: 3/3 challenges done but redirection criterion still unmet, one more challenge needed next session. Python and Concepts not touched. New durable feedback memory: brief-explicitness — concrete inputs go in task description, not buried as examples in Constraints. Tutor process discipline (verify-before-claiming + precise-meta-comms + one-concept-per-challenge) held throughout, including a mid-session retraction of the WP002 claim when verification falsified it. Trust rebuilding: visible.",
+      "tracks_touched": ["bash"],
+      "retests_run": [
+        {"id": "WP001", "outcome": "passed", "stage": "0 → 1", "next_due": "2026-05-15"},
+        {"id": "WP002", "outcome": "failed", "stage": "0 → 0", "failures": "0 → 1", "next_due": "2026-05-12"}
+      ],
+      "tutor_corrections_logged": [
+        "WP002 description corrected mid-session — falsified the 'sort -r misranks ≥10' claim via empirical verification on two datasets; rewrote issue and evidence to reflect what is actually demonstrated (round 1 was a real bug — no count-column sort; round 2 was semantically iffy but functionally correct)",
+        "Brief-design defect on Find Tour — patterns for tasks 3 and 4 were buried in Constraints as 'examples of quoting' rather than stated inline in the task lines; new durable feedback memory saved (feedback_brief_explicitness)"
+      ]
     }
   ],
   "checkpoints_reached": [
@@ -172,14 +291,20 @@
       "id": "first_challenge_complete",
       "date": "2026-04-28",
       "note": "First challenge completed on any track (Bash L0 First Footprints)"
+    },
+    {
+      "id": "first_l1_challenge_complete",
+      "date": "2026-05-08",
+      "note": "First L1-grade challenge completed cleanly (Bash L1 Find Tour) — closes the trust-break arc from session 4 where two L1 attempts were abandoned for tutor-side issues"
     }
   ],
   "totals": {
-    "challenges_completed": 2,
-    "writeups_generated": 2,
-    "writeups_archived": 1,
+    "challenges_completed": 3,
+    "challenges_attempted_unfinished": 2,
+    "writeups_generated": 3,
+    "writeups_archived": 2,
     "cross_track_connections": 3,
-    "total_hours": 2.0
+    "total_hours": 3.9
   },
   "diagnostic": {
     "completed": true,
@@ -207,17 +332,37 @@
       "course": "NDG Linux Unhatched (university)",
       "noted_date": "2026-04-28",
       "topics_covered": ["permissions", "reading files", "basic terminal navigation"],
-      "implication": "External Bash skill input the diagnostic did not see. Bash L0 challenge 3 may fold up to normal-difficulty L1 — decision deferred to next session pending challenge-2 performance review (which was strong)."
+      "implication": "External Bash skill input the diagnostic did not see. Contributed to L0 → L1 promotion decision on 2026-04-29."
     }
   ],
   "level_calibration_decisions": [
     {
-      "date": "2026-04-28",
+      "date_proposed": "2026-04-28",
+      "date_decided": "2026-04-29",
       "track": "bash",
-      "decision_pending": true,
-      "context": "L0 challenge 2 performance was strong: zero hints on tasks 1-3, Tier 1 reframe on task 4 with self-correction and unprompted elegance reflection. Combined with NDG course coverage of permissions/file reading, Bash L0 challenge 3 is a candidate to fold into a normal-difficulty L1 challenge (or to promote to L1 outright after challenge 3). Decide at start of next bash session."
+      "decision_pending": false,
+      "decision": "Promoted L0 (scaffolded L1) → L1 normal at start of session 4.",
+      "reasoning": "Zero hints on tasks 1-3 of L0 challenge 2; Tier 1 reframe + self-correction on task 4; unprompted elegance reflection ('hard coded in a sense'); NDG Linux Unhatched course covering permissions and file reading externally. Combined evidence pointed to L1-grade behaviour, not L0.",
+      "validity_note": "Promotion remains valid despite both L1 attempts on 2026-04-29 ending unfinished. Both abandonments were tutor-side issues (over-packed challenge design + unverified confident claims), not evidence the user is not at L1."
     }
   ],
-  "pickup_note": "Bash L0 challenge 3 of 3. Open question at start: keep at L0 scaffolding, or fold into normal-difficulty L1 given strong challenge-2 performance + NDG course coverage? Decide before designing the challenge. WP001 + WP002 retests both fire 2026-05-02 — if next session is on or after that date, both retests run first. Side tasks: archive bash-L0-first-footprints write-up (needs real path substituted for `<target>` placeholder) and fill in user-fillable sections of bash-L0-trail-in-the-logs write-up.",
-  "last_weekly_summary": null
+  "labs": {
+    "bash-L1/triage/": {
+      "built_date": "2026-04-29",
+      "purpose": "Forensic triage practice — used for Find Tour 2026-05-08; reusable for redirection challenge in next session",
+      "files": 8,
+      "state_verified_date": "2026-05-08",
+      "notes": "8 source files at varied mtimes. As of 2026-05-08: 3 files within last 14 days (notes.txt, .hidden_dropper, suspicious_payload.sh — all dated 2026-04-29), 5 older. Find Tour ran cleanly on this lab. Reusable for redirection challenge — file mtimes are not load-bearing for redirection material."
+    },
+    "bash-L1/retest-wp002/": {
+      "built_date": "2026-05-08",
+      "purpose": "WP002 retest data — synthetic auth log for frequency-count discipline practice",
+      "files": 1,
+      "file_path": "auth-snippet.log",
+      "state_verified_date": "2026-05-08",
+      "notes": "30-line synthetic auth log. 27 Failed password lines + 3 Accepted password lines. Top failed-source IP is 203.0.113.45 with 11 hits; second is 192.168.1.10 with 9. Important verified property: on a raw `grep Failed | awk '{print $13}' | sort | uniq -c | sort -r` pipeline (using -r not -nr), the column-padded uniq -c output makes lexicographic order match numeric order — both pipelines produce the same answer on this data shape. Trap fires only if the leading whitespace is stripped (e.g., post-awk processing). Reusable for next WP002 retest 2026-05-12."
+    }
+  },
+  "pickup_note": "BASH L1 NEEDS REDIRECTION CHALLENGE TO CLOSE THE LEVEL. 3/3 challenges done (Find Tour passed 2026-05-08) but the redirection criterion is still unmet. Next session opener: a single-concept redirection-focused challenge — `>`, `>>`, `2>`, `2>&1`, all four flavours, scoped tight (one new concept per challenge rule). Lab labs/bash-L1/triage/ is reusable. PRIORITISED RETESTS BEFORE NEW CONTENT: WP002 retest 2026-05-12 (failures = 1, stage 0 — third failure triggers a remediation challenge); WP001 retest 2026-05-15 (stage 1, 0 failures). Both run before redirection challenge if session date is on/after the retest date. Stale tracks: Python and Concepts both untouched since 2026-04-27 — at 11 days as of 2026-05-08, will trip the 14-day flag if untouched by 2026-05-11. SIDE TASKS STILL OPEN: (1) archive bash-L0-first-footprints write-up — still has <target> placeholder; (2) consider whether bash-L0-trail-in-the-logs write-up needs an amendment note — its 'Key Concepts' and 'Security Implication' sections still propagate the original WP002 'sort -r misranks ≥10' claim that was empirically falsified 2026-05-08. Trust rebuilding visible — verify-before-claiming was held throughout 2026-05-08 including a mid-session retraction; continue.",
+  "last_weekly_summary": "2026-05-08"
 }

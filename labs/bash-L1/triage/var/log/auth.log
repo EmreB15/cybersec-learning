@@ -1,0 +1,5 @@
+Mar 22 09:01:14 srv01 sshd[2001]: Accepted publickey for emre from 10.0.0.5 port 51221 ssh2
+Mar 22 09:01:14 srv01 sshd[2001]: pam_unix(sshd:session): session opened for user emre
+Mar 22 11:14:02 srv01 sudo: emre : TTY=pts/0 ; PWD=/home/emre ; USER=root ; COMMAND=/usr/bin/apt update
+Mar 22 11:14:09 srv01 sudo: pam_unix(sudo:session): session opened for user root
+Mar 22 17:20:50 srv01 sshd[2001]: pam_unix(sshd:session): session closed for user emre
