@@ -292,6 +292,22 @@ Run this every time before recommending the user commit a write-up — first com
 3. **Do NOT change** the user's voice, reasoning, emphasis, or any technical claim — right or wrong. Wrong claims need to stay wrong so weak-points surface honestly in retests.
 4. **Show what changed** before commit. Concise summary or per-section diff. Let the user veto specific changes.
 
+### Wrap-publish flow (autonomous, after user fills the write-up)
+
+**Standing authorization granted 2026-05-08:** once the user signals the write-up is complete (typical phrasing: *"I've done the write-up"*, *"writeup is filled in"*), run cleanup → archive → stage → commit → push as a single motion, without per-step confirmation. The Cleanup pass diff (step 4 above) is the user's review point. After they say "apply" (or veto specific changes), treat the rest of the wrap as one autonomous flow.
+
+Steps:
+1. Run the Cleanup pass (above). Show diffs, accept any vetoes, apply approved edits.
+2. Mark the write-up as archived in `progress.json`: set `writeup_state: "archived"`, add `writeup_archived_date`, increment `totals.writeups_archived`.
+3. Update `dashboard.md` if portfolio stats, pickup-note side-tasks, or any other surfaced state changed.
+4. Stage **explicit files only** — never `git add -A` or `git add .`. Re-confirm staged set before committing (`git status --short`); investigate any unexpected stray file before proceeding.
+5. Commit with the session message — HEREDOC-passed for clean formatting, Co-Authored-By footer, run from inside WSL so the gitleaks pre-commit hook works (per `project_precommit_wsl_only`).
+6. Push to `origin main`.
+
+**Bounded scope.** This standing authorization covers wrap-publish only. Other pushes (mid-session file changes, unrelated edits, force-pushes, branch operations) still require explicit per-action authorization.
+
+**If no write-up was generated this session** (e.g., session ended on a retest-only day or all challenges abandoned): the Wrap-publish flow does not apply. Fall back to the default — propose the commit message, let the user run staging/commit/push themselves.
+
 ---
 
 ## Dashboard regeneration
