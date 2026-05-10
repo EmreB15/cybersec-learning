@@ -22,8 +22,6 @@ I wouldn't say I built anything; instead, I found solutions to simple problems o
 
 I got the hidden directories wrong. I thought that `ls .` would get me the correct answer, but `.` just stands for the current working directory — it doesn't actually show the hidden folders or files. The `-a` flag fixes that. I also got the flag wrong for the tail and head commands. I read the question without thinking too much about what it's asking for and just decided that the output of `tail` alone was enough, but in fact I was being asked for a flag input and I completely missed it.
 
-Hint: there are at least two specific things to write about here. The `.` vs `-a` confusion on Task 2, and the `-n 5` vs `-n 10` precision miss on Task 4.
-
 ## Weak Points Flagged
 
 - **WP001** — Instruction-precision / end-to-end follow-through. Identified right tool but missed parts of the brief twice in one session (Task 2 listing skipped on round 1; Task 4 line count wrong on round 1). Promoted from WA001 (Python diagnostic). Stage 0, retest 2026-05-02.
@@ -38,9 +36,11 @@ Read the questions thoroughly next time.
 
 ## Final Solution
 
-pwd
-cd <target>
-ls -a <target>
-cat CLAUDE.md
-head -n 20 progress.json
-tail -n 10 README.md
+```bash
+$ pwd
+$ cd /mnt/d/cybersecurity_learning/
+$ ls -a /mnt/d/cybersecurity_learning/
+$ cat CLAUDE.md
+$ head -n 20 progress.json
+$ tail -n 10 README.md
+```

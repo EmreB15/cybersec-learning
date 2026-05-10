@@ -27,7 +27,6 @@
 > 6. **NEW (2026-05-10):** When using real-world brand impersonations as phishing props, preface with *"X is a real company that does Y."* (User assumed DocuSign was made up.)
 
 **Side tasks still open (portfolio polish):**
-- Archive `bash-L0-first-footprints` write-up — still has `<target>` placeholder.
 - Decide whether `bash-L0-trail-in-the-logs` write-up needs a correction note for the WP002 falsification.
 
 ---
@@ -173,7 +172,7 @@ Neither saved as new durable feedback memory — both are restatements/refinemen
 ## 📁 Portfolio Stats
 
 - Write-ups generated: **5** *(↑ from 3)*
-- Write-ups archived (with reflections filled): **4** *(↑ from 2; only 1 still awaiting user fill — bash-L0-first-footprints with `<target>` placeholder)*
+- Write-ups archived (with reflections filled): **5** *(↑ from 4 — all generated write-ups archived; bash-L0-first-footprints archived 2026-05-10 in session 7)*
 - Total challenges completed: **5** *(↑ from 3)*
 - Total challenges attempted-unfinished: 2
 - Total sessions: **6** *(↑ from 5)*

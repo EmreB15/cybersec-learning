@@ -40,7 +40,9 @@
           "hint_tier_reached": 1,
           "hint_tier_used": "offered, self-served via --help",
           "weight": 1.0,
-          "writeup_state": "complete"
+          "writeup_state": "archived",
+          "writeup_archived_date": "2026-05-10",
+          "archived_notes": "Archived in session 7 (same-day return after session 6). Cleanup pass: stripped stale tutor-scaffold hint line below 'What I Got Wrong First' (now redundant since user filled both items it pointed at). Filled <target> placeholder in Final Solution with /mnt/d/cybersecurity_learning/. Wrapped Final Solution in fenced bash code block with bare $ prefix to match find-tour convention. No copyedits to user prose — voice held. OPSEC scrub clean. The 'first 5 or last 5 lines' phrasing in 'What I Built' is technically imprecise (final commands used -n 20 and -n 10) but kept as-written per cleanup rule (technical claims stay even if imprecise, so retest signal stays honest)."
         },
         {
           "id": "bash-L0-trail-in-the-logs",
@@ -380,7 +382,7 @@
     "challenges_completed": 5,
     "challenges_attempted_unfinished": 2,
     "writeups_generated": 5,
-    "writeups_archived": 4,
+    "writeups_archived": 5,
     "cross_track_connections": 4,
     "total_hours": 5.4
   },
