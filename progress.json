@@ -3,11 +3,11 @@
   "user": "Emre",
   "started_date": "2026-04-27",
   "last_session": "2026-05-10",
-  "session_count": 6,
+  "session_count": 7,
   "tracks": {
     "python": {
       "level": 1,
-      "level_complete_criteria": "4 challenges done, no unresolved critical or moderate weak points (or escape via remediation)",
+      "level_complete_criteria": "4 challenges done, no unresolved critical or moderate weak points (or escape via remediation). STATUS 2026-05-10: 2/4 challenges done.",
       "challenges_completed": [
         {
           "id": "python-L1-log-filter",
@@ -20,18 +20,33 @@
           "writeup_archived_date": "2026-05-10",
           "lab_data_path": "labs/bash-L1/retest-wp002/auth-snippet.log",
           "notes": "First Python L1. New concept (with open as f context manager) landed first try, properly indented, default read mode. Scope discipline held — 4 lines, one job, no count/IP-filter/formatting embellishment despite open-ended objective. Output: 27 Failed lines correctly extracted from 30-line synthetic SSH auth log; 3 Accepted lines correctly excluded. Initial submission used f.readlines() (eager full-file load) and print(line) (extra newline) — both flagged, both self-corrected on revision. WP004 logged on the readlines pattern (real defender concern at production log scale, not a small-file bug). Cross-track link logged: Bash grep \"Failed\" file vs Python with-open + for-line + if-in + print — same filter, different machinery, different reuse profile."
+        },
+        {
+          "id": "python-L1-ip-extractor",
+          "title": "Brute Force Source",
+          "completed_date": "2026-05-10",
+          "hint_tier_reached": 0,
+          "hint_tier_used": "None — self-served end-to-end. Zero revision passes needed. Closing-step (Python output > Bash redirect to file) confused by tutor-side meta-comms defect (gave the working command with `>` pre-filled, then said 'pick the operator yourself' — contradictory; user flagged it; tutor owned it). User picked `>` correctly anyway.",
+          "weight": 1.0,
+          "writeup_state": "archived",
+          "writeup_archived_date": "2026-05-10",
+          "lab_data_path": "labs/bash-L1/retest-wp002/auth-snippet.log",
+          "script_path": "python/L1/ip_extractor.py",
+          "notes": "Second Python L1. New concept: str.split() + indexed access into the resulting list. 4-line script, scope discipline held again (now a pattern, not a fluke). All three positive signals: (1) WP004 reinforcement landed unprompted — used `for line in f:` directly, no readlines reach; (2) WP002 family trap avoided — filter held, Accepted lines correctly skipped despite the simpler-looking path being to skip the filter; (3) chose .split() over manual char indexing — token-based abstraction tolerates whitespace variation (handled the 'May  5' two-space gap silently). Closing-step: cross-track moment built into the brief at user's request — Python script output redirected to python/L1/ips.txt with `>` operator. Reason: user proactively flagged 'without practice i will 100% forget' the redirection operators learned 30 min earlier in Evidence Trail. Closing-step is targeted retention reinforcement, not a separate task. Tutor-side meta-comms defect surfaced in the closing-step instructions (gave working command then said 'pick yourself' — incompatible). Owned in session, no new feedback memory needed (precise_meta_comms already covers it). Diagnostic 2026-04-27 task 3 (split admin:password123, scored 'shaky') addressed through application — same skill applied to log lines, no separate drill needed. Single quotes vs double quotes minor inconsistency with log_filter.py — purely cosmetic, no flag."
         }
       ],
       "challenges_attempted": [],
       "current_challenge": null,
       "current_challenge_text": null,
-      "last_active": "2026-05-10"
+      "last_active": "2026-05-10",
+      "last_active_session": 7
     },
     "bash": {
       "level": "L1",
       "level_promoted_from": "L0 (scaffolded L1)",
       "level_promoted_date": "2026-04-29",
-      "level_complete_criteria": "3 challenges done, pipes and redirection solid. The 2 L0 challenges count toward this total. As of 2026-05-08, 3/3 challenges complete (Find Tour passed) — but REDIRECTION has not yet been covered in any completed challenge. Bash L1 NOT YET COMPLETE: one more challenge needed, redirection-focused, single-concept.",
+      "level_complete_criteria": "3 challenges done, pipes and redirection solid. The 2 L0 challenges count toward this total. STATUS 2026-05-10: 4/3 challenges done (First Footprints, Trail in the Logs, Find Tour, Evidence Trail). Pipes solid (Trail in the Logs, WP001/WP002 retests). Redirection solid (Evidence Trail, all 4 operators clean). BASH L1 COMPLETE — checkpoint logged.",
+      "level_complete_date": "2026-05-10",
       "challenges_completed": [
         {
           "id": "bash-L0-first-footprints",
@@ -66,6 +81,18 @@
           "writeup_archived_date": "2026-05-08",
           "lab_data_path": "labs/bash-L1/triage/",
           "notes": "All 4 tasks correct against pre-verified expected outputs. Strong points: -mtime -14 sign syntax right first try, both globs quoted (avoiding shell pre-expansion), -type f scaffold carried consistently across all 4 commands. No new weak points. WP001/WP002 not retriggered. Task 2 surfaced both deliberately-seeded IOCs (tmp/suspicious_payload.sh + tmp/.hidden_dropper). New durable feedback memory: brief-explicitness — concrete inputs go in task description, not in Constraints. Write-up archived 2026-05-08 with all four user-fillable sections filled (cleanup pass run: 3 copyedits applied, no OPSEC issues, factual flag raised on the 'I initially used ls' claim — no record of that during Find Tour, possibly conflated with the abandoned Forensic Triage attempt; user opted to keep the claim as written)."
+        },
+        {
+          "id": "bash-L1-evidence-trail",
+          "title": "Evidence Trail",
+          "completed_date": "2026-05-10",
+          "hint_tier_reached": 1,
+          "hint_tier_used": "Tier 1 REFRAME on Task 4 (find with multiple path arguments). Tasks 1-3 zero hints. One tutor-side brief-wording defect on Task 4 ('BOTH X AND Y' clashed with shell &&) owned in session.",
+          "weight": 1.0,
+          "writeup_state": "archived",
+          "writeup_archived_date": "2026-05-10",
+          "lab_data_path": "labs/bash-L1/triage/",
+          "notes": "All 4 tasks correct against pre-verified expected outputs. Closes Bash L1 — redirection criterion now met (4 operators covered cleanly: >, >>, 2>, 2>&1). Strong points: (1) Task 4 redirection-operator order right first time — `> file 2>&1`, not the broken `2>&1 > file` reversal; (2) Task 3 ran the unredirected `cat var/log/syslog.99` first to observe the natural error before redirecting — verify-before-commit instinct, same family as the inspect-intermediate-output discipline WP002 tracks, doing it unprompted is the right reflex; (3) lab cleanup of stray `file` artifact done without re-prompting; (4) unstuck via single Tier 1 reframe with no further escalation. Moderate weakness: three failed Task 4 attempts each printed `find .` output to terminal (because `&&` was splitting the command into two and only the right side was redirected) — that terminal output was hard evidence the command shape was wrong, but was not read as a tell. Same family as WP002. NO new WP opened; cross-track evidence note added to WP002 instead. Tutor process notes: (i) when a single command takes multiple inputs, never describe them as 'X AND Y' in caps — operator-clash with `&&`; (ii) the 'redirection creates the destination file before the command runs' detail surfaced naturally in Tasks 1 and 4 as a teachable shell quirk."
         }
       ],
       "challenges_attempted": [
@@ -91,7 +118,7 @@
       ],
       "current_challenge": null,
       "current_challenge_text": null,
-      "last_active": "2026-05-08"
+      "last_active": "2026-05-10"
     },
     "concepts": {
       "level": 1,
@@ -146,11 +173,12 @@
     {
       "id": "WP002",
       "track": "bash",
-      "issue": "Frequency-count pipelines: skips count-column sorting (`sort | uniq -c | head` without a numeric sort step) and trusts pipeline output without inspecting intermediate stages.",
+      "issue": "Frequency-count pipelines: skips count-column sorting (`sort | uniq -c | head` without a numeric sort step) and trusts pipeline output without inspecting intermediate stages. CROSS-TRACK GENERALIZATION (2026-05-10): the underlying habit is broader than frequency-counting — it's 'trust visible output without inspecting adjacent evidence that contradicts the assumption'. Same pattern surfaces in any context where stream-redirection, intermediate stages, or multi-source output streams hide a wrong assumption.",
       "first_observed": "2026-04-28",
       "evidence": [
         "Bash L0 Trail in the Logs Task 4 round 1 — sort | uniq -c | head -n 1 returned alphabetically-first IP, not most-frequent IP. Count column never sorted. Real, demonstrated bug.",
-        "Bash L0 Trail in the Logs Task 4 round 2 — sort -r used; produces correct answer on column-padded uniq-c output, but user flagged elegance concern unprompted ('hard coded in a sense'). Self-correction toward sort -nr recorded as positive signal."
+        "Bash L0 Trail in the Logs Task 4 round 2 — sort -r used; produces correct answer on column-padded uniq-c output, but user flagged elegance concern unprompted ('hard coded in a sense'). Self-correction toward sort -nr recorded as positive signal.",
+        "Bash L1 Evidence Trail Task 4 first three attempts (2026-05-10) — each `find . && /nonexistent_path -type f > full-capture.txt 2>&1` attempt printed `find .` output to terminal (because `&&` split the command and only the right side was redirected). Terminal output was hard evidence the command shape was wrong, but the user kept submitting and reading only `cat full-capture.txt` to check the file. The adjacent terminal evidence (output that should not have been there if redirection was working) was skipped. Same WP002 family — inspecting only the named output, not the full state. Cross-track signal — not opening a new WP, this evidence reinforces WP002's broader description."
       ],
       "stage": 0,
       "retest_due": "2026-05-12",
@@ -272,6 +300,14 @@
       "tier": "review-correction",
       "tier_name": "BRIEF-FRAMING DEFECT",
       "outcome": "First-pass review framed missed indicators as knowledge gaps ('you should have known DocuSign uses .com'). User pushed back: legitimate question — 'how am i meant to know the actual address is docusign.com?'. Tutor acknowledged framing error: the lens demands a verification habit (look it up or name the gap), not prior brand knowledge. Re-explained how to apply lenses 1, 5, 6 with no prior knowledge: verify in 10 seconds, OR name the structural suspicion AND what you'd verify. Redo landed correctly. Tutor process notes captured: brief-explicitness on framework wording (say 'verify if you don't know' explicitly); preface unfamiliar brand props with one-line context."
+    },
+    {
+      "date": "2026-05-10",
+      "challenge": "bash-L1-evidence-trail",
+      "task": "Task 4 (find with multiple path arguments)",
+      "tier": 1,
+      "tier_name": "REFRAME",
+      "outcome": "User initially read 'BOTH X AND Y' in the brief as the shell `&&` operator (run command-1; if-success run command-2). Three failed attempts using `find . && /nonexistent_path ...`. Tutor owned the brief-wording defect (capital AND clashing with `&&`), then offered Tier 1 reframe: 'in every find command you've written, what's right after find before any flag? Could that position hold more than one path?' User self-served immediately to `find . /nonexistent_path -type f > full-capture.txt 2>&1`. No further escalation needed. Tutor process note saved: when a single command takes multiple inputs, never describe them as 'X AND Y' in caps — operator-clash with `&&`."
     }
   ],
   "cross_track_links": [
@@ -298,6 +334,18 @@
       "tracks": ["bash", "python"],
       "concept": "log line filtering by substring",
       "context": "Bash one-shot: `grep \"Failed\" auth.log`. Python equivalent in 4 lines: `with open(path) as f: for line in f: if \"Failed\" in line: print(line, end=\"\")`. Both produce identical output for a simple substring filter. Decision factor: Bash version is pipe-friendly and ephemeral; Python version is a building block you can extend (count by IP, alert on threshold, generate report). Same task, different reuse profiles. Important shared concern: in Python, must iterate the file object directly (`for line in f:`) rather than `f.readlines()` — the latter loads the entire file into memory and crashes on production-scale logs. Bash `grep` handles arbitrary file sizes by streaming, so no equivalent gotcha exists there. This is a case where Python defaults to a footgun that Bash doesn't have."
+    },
+    {
+      "date": "2026-05-10",
+      "tracks": ["bash", "python"],
+      "concept": "positional field extraction in Python (.split()[N]) vs Bash (awk '{print $N}')",
+      "context": "Bash idiom: `awk '{print $13}' file` extracts the 13th whitespace-separated field. Python equivalent: `line.split()[12]` — same idea, zero-indexed instead of one-indexed. Both have the same brittleness: if log format shifts, the index points at the wrong field silently. The robust fix in either language is regex extraction targeting the SHAPE of the value (Bash: `grep -oE '[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+'`; Python: `re.search(r'from (\\d+\\.\\d+\\.\\d+\\.\\d+)', line)`). Surfaced naturally in Brute Force Source (Python L1 #2): user used .split()[12] correctly because the brief filtered to one line shape (Failed) and warned about the Accepted-line trap — but the brittleness of the index itself is real and worth re-flagging. Note: Python's .split() with no args (vs .split(' ') with explicit single space) auto-handles whitespace runs (e.g., the 'May  5' two-space gap in syslog format) — same default-handling Bash awk gives you for free. Both languages reward token-based parsing over byte-based parsing."
+    },
+    {
+      "date": "2026-05-10",
+      "tracks": ["python", "bash"],
+      "concept": "Python script output captured to file via Bash redirection (>)",
+      "context": "Real triage workflow: Python script extracts/parses; Bash redirection captures the output to a file you can hand to the next step or analyst. `python3 ip_extractor.py > python/L1/ips.txt` saves the 27 IPs to a file in one command. Use `>` (overwrite) when each run produces a complete fresh result; use `>>` (append) when building up a running log across runs. The decision is the same as in Evidence Trail Tasks 1 and 2 — overwrite for snapshot data, append for accumulation. Built into Python L1 #2 as a closing-step at user's request — proactive retention reinforcement on the redirection operators learned 30 minutes earlier. Demonstrates the natural Python-script + Bash-redirection pipeline real triage scripts use."
     }
   ],
   "session_log": [
@@ -359,6 +407,33 @@
         "Brief-framing on Concepts L1 #1: framework introduced 'compare display domain to actual domain' without telling the user what to do when they don't know the actual domain. The lens skill is verification habit, not prior knowledge — needed to be in the brief, not surfaced via review correction.",
         "Brand-context: used DocuSign as the phishing impersonation target without naming it as a real B2B SaaS. User assumed it was made up. Should preface unfamiliar real-world brands used in challenges with one-line 'X is a real Y'."
       ]
+    },
+    {
+      "date": "2026-05-10",
+      "session_number": 7,
+      "duration_minutes_planned": 180,
+      "duration_minutes_actual_approx": 150,
+      "same_day_return": "second sitting — session 6 closed earlier the same day (~90min); user returned with 3hr budget for more work",
+      "summary": "Substantial session. Three discrete tasks all completed. SIDE TASK — bash-L0-first-footprints write-up ARCHIVED (cleanup pass: stripped stale tutor-scaffold hint line, filled <target> placeholder with /mnt/d/cybersecurity_learning/, wrapped Final Solution in fenced bash block per find-tour convention; OPSEC clean; technical claim about 'first 5 or last 5 lines' kept as-written despite imprecision per cleanup rule 3). BASH L1 EVIDENCE TRAIL — closes Bash L1. 4-task redirection challenge (>, >>, 2>, > file 2>&1). All 4 tasks correct against pre-verified expected outputs. Tasks 1-3 zero hints. Task 4 needed Tier 1 REFRAME after user read 'BOTH X AND Y' as shell `&&` operator (3 failed `find . && /nonexistent_path` attempts). Tutor-side brief-wording defect owned in session — capital AND clashed with `&&`. After reframe, user found `find path1 path2` syntax immediately, no further escalation. Strong points: redirection-operator order in Task 4 right first time (`> file 2>&1`, not the broken `2>&1 > file` reversal); ran unredirected `cat var/log/syslog.99` first to observe error before redirecting (verify-before-commit instinct, unprompted); cleaned up stray `file` artifact without re-prompting. Moderate weakness: failed Task 4 attempts each printed `find .` to terminal — hard evidence the `&&` was splitting the command — not noticed before reframe. SAME FAMILY AS WP002 (trust visible output without inspecting adjacent evidence). NO new WP opened; cross-track evidence note added to WP002 description (broader generalization: 'inspect-intermediate-stages' habit applies beyond frequency-counting). PYTHON L1 #2 BRUTE FORCE SOURCE — 2/4 Python L1. New concept: str.split() + indexed access (parts[12]). Same auth-snippet.log as L1 #1, different goal (extract IP, not just filter). 4-line script, scope discipline held again (now a pattern, not a fluke). Three positive signals: (1) WP004 reinforcement landed unprompted — `for line in f:` directly used, no readlines reach; (2) WP002 family trap avoided — Failed-only filter held, Accepted lines correctly skipped despite simpler-looking path being to skip the filter; (3) chose .split() over manual char indexing (token-based abstraction tolerates whitespace variation; handled 'May  5' two-space gap silently). Diagnostic 2026-04-27 task 3 (split admin:password123, scored 'shaky') addressed through application — same skill applied to log lines. Closing-step: cross-track moment built into the brief at user's request — Python script output redirected to python/L1/ips.txt via `>`. User raised proactive retention concern: 'without practice i will 100% forget' the redirection operators. Closing-step is targeted reinforcement; redirection refresher also scheduled 2026-05-14 (joins WP003/WP004 retest day). Tutor-side meta-comms defect in closing-step instructions — gave the working command with `>` pre-filled then said 'pick the operator yourself' (contradictory). User flagged it; owned in session; no new feedback memory needed (precise_meta_comms already covers this exact pattern). TWO WRITE-UPS ARCHIVED in session: bash-L1-evidence-trail and python-L1-ip-extractor. Cleanup pass on both: baseline copyedits + formal-grammar layer at user's request (capital I sentence-start, stdout instead of stout, 'use redirection' instead of 'use redirect', operator-vs-conjunction disambiguation, pronoun-antecedent agreement). UK spelling preserved (`realise` not `realize`). THREE NEW CROSS-TRACK LINKS LOGGED: positional-field-extraction in Python vs Bash awk (Python's .split()[N] mirrors awk $N); Python script output captured via Bash redirection (real triage workflow); reinforcement note on .split() with no args vs .split(' '). CHECKPOINT: `bash_l1_complete` reached. Bash track now ready for L2 (scripting basics: variables, loops, conditionals, exit codes). First track to reach L1 complete. Trust trajectory: visibly held — three challenges done in one extended day across two sittings, all clean.",
+      "tracks_touched": ["bash", "python"],
+      "retests_run": [],
+      "checkpoints_reached_this_session": ["bash_l1_complete"],
+      "challenges_completed_this_session": [
+        "bash-L1-evidence-trail (Bash L1 redirection close-out — closes the level)",
+        "python-L1-ip-extractor (Python L1 #2 — string parsing on log lines)"
+      ],
+      "writeups_archived_this_session": [
+        "bash-L0-first-footprints (was awaiting <target> placeholder fill since session 2)",
+        "bash-L1-evidence-trail (filled + cleanup-passed in same session)",
+        "python-L1-ip-extractor (filled + cleanup-passed in same session)"
+      ],
+      "tutor_process_notes": [
+        "Brief-wording defect on Evidence Trail Task 4: 'BOTH X AND Y' read as shell `&&`. Saved tutor process note for next briefs — when a single command takes multiple inputs, never describe them as 'X AND Y' in caps. Use 'two paths together' or list them with commas.",
+        "Meta-comms defect on Python L1 #2 closing-step: gave working command with `>` pre-filled, then said 'pick the operator yourself' — contradictory. User flagged. Restating existing memory (precise_meta_comms) — pedagogical ambiguity outside hint tiers is a defect. No new memory needed."
+      ],
+      "scheduled_refreshers_set_this_session": [
+        {"id": "redirection-recall-2026-05-14", "concept": "Bash redirection operators (>, >>, 2>, 2>&1)", "type": "forward-looking recall check, NOT a WP", "due": "2026-05-14", "reason": "User proactively flagged forecasted forgetting after Evidence Trail. Joins WP003/WP004 retest day. Format: 4 cold prompts on operator behavior, no scaffold. Pass = recall confirmed, no further action. Fail = formalize as WP."}
+      ]
     }
   ],
   "checkpoints_reached": [
@@ -376,15 +451,20 @@
       "id": "first_l1_challenge_complete",
       "date": "2026-05-08",
       "note": "First L1-grade challenge completed cleanly (Bash L1 Find Tour) — closes the trust-break arc from session 4 where two L1 attempts were abandoned for tutor-side issues"
+    },
+    {
+      "id": "bash_l1_complete",
+      "date": "2026-05-10",
+      "note": "Bash Level 1 complete — Evidence Trail closed the redirection criterion. 4 challenges done (First Footprints, Trail in the Logs, Find Tour, Evidence Trail). Pipes solid, redirection solid (>, >>, 2>, 2>&1). First track to reach L1 complete. Bash track ready for L2 (scripting basics: variables, loops, conditionals, exit codes). Session 7 work."
     }
   ],
   "totals": {
-    "challenges_completed": 5,
+    "challenges_completed": 7,
     "challenges_attempted_unfinished": 2,
-    "writeups_generated": 5,
-    "writeups_archived": 5,
-    "cross_track_connections": 4,
-    "total_hours": 5.4
+    "writeups_generated": 7,
+    "writeups_archived": 7,
+    "cross_track_connections": 6,
+    "total_hours": 7.4
   },
   "diagnostic": {
     "completed": true,
@@ -443,6 +523,6 @@
       "notes": "30-line synthetic auth log. 27 Failed password lines + 3 Accepted password lines. Top failed-source IP is 203.0.113.45 with 11 hits; second is 192.168.1.10 with 9. Important verified property: on a raw `grep Failed | awk '{print $13}' | sort | uniq -c | sort -r` pipeline (using -r not -nr), the column-padded uniq -c output makes lexicographic order match numeric order — both pipelines produce the same answer on this data shape. Trap fires only if the leading whitespace is stripped (e.g., post-awk processing). Reusable for next WP002 retest 2026-05-12."
     }
   },
-  "pickup_note": "FOUR RETESTS DUE BEFORE NEW CONTENT, IN PRIORITY ORDER: (1) WP002 retest 2026-05-12 — bash frequency-count discipline; failures = 1, stage 0; THIRD FAILURE TRIGGERS A REMEDIATION CHALLENGE so this is the highest-stakes retest. (2) WP003 retest 2026-05-14 — concepts phishing analysis, verification-habit on a NEW phishing email (no redo pressure, no scaffold) — fresh email needed, prep one in advance. (3) WP004 retest 2026-05-14 — python file iteration, on a challenge that exposes a real or simulated large-file scenario (the readlines footgun must be visible, not theoretical). (4) WP001 retest 2026-05-15 — cross-track instruction precision, stage 1 → 2 if pass. Run all due retests at start of next session before new content. THEN NEW CONTENT, USER PICKS: Bash L1 redirection close-out (still outstanding — single-concept challenge on `>`, `>>`, `2>`, `2>&1`; lab labs/bash-L1/triage/ reusable); Python L1 #2 (string parsing on log lines — extract IPs from Failed entries, addresses diagnostic-flagged shaky string handling); Concepts L1 #2 (likely network/CIA reasoning scenario, deferred until phishing retest passes). SIDE TASKS STILL OPEN: (1) archive bash-L0-first-footprints write-up — still has <target> placeholder; (2) consider whether bash-L0-trail-in-the-logs write-up needs amendment note for the WP002 falsification. TUTOR PROCESS NOTE FOR NEXT CHALLENGE BRIEFS: when introducing analysis frameworks, explicitly state 'if you don't know X, the lens output is verify X, not no indicator'. When using real-world brand impersonations as phishing props, preface with 'X is a real company that does Y'.",
+  "pickup_note": "SESSION 7 CLOSED 2026-05-10. SESSION 8 ENTRY POINT: BASH L1 COMPLETE — first track to clear L1. Bash track ready for L2 (scripting basics — variables, loops, conditionals, exit codes; CLAUDE.md L2 examples: ping sweep [needs Metasploitable target — still uninstalled], log monitor, file organiser). FIVE RETESTS / RECALL CHECKS DUE BEFORE NEW CONTENT, IN PRIORITY ORDER: (1) WP002 retest 2026-05-12 — bash frequency-count discipline; failures = 1, stage 0; THIRD FAILURE TRIGGERS A REMEDIATION CHALLENGE so this is the highest-stakes retest. Cross-track evidence from session 7 reinforces WP002's broader description (Evidence Trail Task 4 trusted file content without inspecting adjacent terminal output that contradicted the assumption — same family). (2) WP003 retest 2026-05-14 — concepts phishing analysis, verification-habit on a NEW phishing email (no redo pressure, no scaffold) — fresh email needed, prep one in advance. (3) WP004 retest 2026-05-14 — python file iteration, on a challenge that exposes a real or simulated large-file scenario (the readlines footgun must be visible, not theoretical). Note: WP004 already showed positive reinforcement signal in Brute Force Source (used for-line-in-f directly without prompt) — prognosis good, but still test on a NEW challenge with a NEW twist. (4) REDIRECTION RECALL CHECK 2026-05-14 — NEW from session 7. NOT a WP, forward-looking recall check at user's proactive request. Format: 4 cold prompts on operator behavior (overwrite, append, stderr-only, merge), no scaffold, no scrollback. Pass = recall confirmed. Fail = formalize as WP. (5) WP001 retest 2026-05-15 — cross-track instruction precision, stage 1 → 2 if pass. THEN NEW CONTENT, USER PICKS: Bash L2 #1 (NEW — first L2 challenge; lab depends on choice — file organiser/log monitor reuse existing labs, ping sweep needs Metasploitable target); Python L1 #3 (next L1 — likely socket basics, IP address validator, or password strength evaluator per CLAUDE.md); Concepts L1 #2 — STILL DEFERRED until WP003 retest passes 2026-05-14. SIDE TASKS STILL OPEN: bash-L0-trail-in-the-logs write-up — consider whether to add an amendment note about the WP002 'sort -r misranks ≥10' falsification (decision deferred from session 6, still open). TUTOR PROCESS NOTES TO CARRY FORWARD: (i) when a single command takes multiple inputs, never describe them as 'X AND Y' in caps — operator-clash with `&&` (from Evidence Trail Task 4 brief defect); (ii) precise_meta_comms — never give a working answer and ask the user to 'pick' from inside it (from Python L1 #2 closing-step defect). Both restate existing memories — no new durable feedback needed. LAB STATUS: vulnerable target VM (Metasploitable2/DVWA) STILL NOT installed — required before any scanning challenge; gates Bash L2 ping sweep AND most Python L3 work. If user wants to unblock the broadest L2/L3 paths, install Metasploitable as a side task.",
   "last_weekly_summary": "2026-05-08"
 }

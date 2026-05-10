@@ -1,0 +1,13 @@
+./findings.txt
+./home/emre/.bashrc
+./home/emre/notes.txt
+./home/emre/old_script.sh
+./tmp/.hidden_dropper
+./tmp/cache.tmp
+./tmp/suspicious_payload.sh
+./var/log/auth.log
+./var/log/syslog
+./findings.txt
+./home/emre/notes.txt
+./tmp/.hidden_dropper
+./tmp/suspicious_payload.sh

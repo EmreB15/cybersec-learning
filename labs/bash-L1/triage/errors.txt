@@ -1,0 +1,1 @@
+cat: var/log/syslog.99: No such file or directory
