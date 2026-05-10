@@ -2,17 +2,30 @@
   "schema_version": "3.0",
   "user": "Emre",
   "started_date": "2026-04-27",
-  "last_session": "2026-05-08",
-  "session_count": 5,
+  "last_session": "2026-05-10",
+  "session_count": 6,
   "tracks": {
     "python": {
       "level": 1,
       "level_complete_criteria": "4 challenges done, no unresolved critical or moderate weak points (or escape via remediation)",
-      "challenges_completed": [],
+      "challenges_completed": [
+        {
+          "id": "python-L1-log-filter",
+          "title": "Log Line Reader",
+          "completed_date": "2026-05-10",
+          "hint_tier_reached": 0,
+          "hint_tier_used": "None — self-served. One revision pass after review (readlines→file iter, suppress double newline) — both fixes applied without hints.",
+          "weight": 1.0,
+          "writeup_state": "archived",
+          "writeup_archived_date": "2026-05-10",
+          "lab_data_path": "labs/bash-L1/retest-wp002/auth-snippet.log",
+          "notes": "First Python L1. New concept (with open as f context manager) landed first try, properly indented, default read mode. Scope discipline held — 4 lines, one job, no count/IP-filter/formatting embellishment despite open-ended objective. Output: 27 Failed lines correctly extracted from 30-line synthetic SSH auth log; 3 Accepted lines correctly excluded. Initial submission used f.readlines() (eager full-file load) and print(line) (extra newline) — both flagged, both self-corrected on revision. WP004 logged on the readlines pattern (real defender concern at production log scale, not a small-file bug). Cross-track link logged: Bash grep \"Failed\" file vs Python with-open + for-line + if-in + print — same filter, different machinery, different reuse profile."
+        }
+      ],
       "challenges_attempted": [],
       "current_challenge": null,
       "current_challenge_text": null,
-      "last_active": "2026-04-27"
+      "last_active": "2026-05-10"
     },
     "bash": {
       "level": "L1",
@@ -81,11 +94,23 @@
     "concepts": {
       "level": 1,
       "level_complete_criteria": "Reasons through a novel scenario, not just recalls definitions",
-      "challenges_completed": [],
+      "challenges_completed": [
+        {
+          "id": "concepts-L1-phishing-anatomy",
+          "title": "Phishing Anatomy",
+          "completed_date": "2026-05-10",
+          "hint_tier_reached": "tutor-walked",
+          "hint_tier_used": "1 tutor explanation provided on lens 6 (footer absence). User closed lens 6 cleanly on second attempt after the explanation. No formal hint tiers used elsewhere — but first pass missed lens 1 entirely and gave partial lens 5; redo (after review framing-correction) addressed both with method.",
+          "weight": 1.0,
+          "writeup_state": "archived",
+          "writeup_archived_date": "2026-05-10",
+          "notes": "First Concepts L1. 6-lens phishing analysis framework (Sender / Subject / Body / Call to Action / Links / Footer) introduced, then applied to a fake DocuSign signature request. First pass: lenses 2/3/4 strong (incl. unprompted catches on the disarming 'safely ignore' line and the credential-replay attack inference); lens 1 declared 'no indicator' without doing the verification step (WA002 pattern repeating); lens 5 jumped to attack-pattern inference without inspecting the URL itself; lens 6 abandoned. Tutor framing-error flagged mid-review: original feedback implied prior knowledge (knowing DocuSign's real domain, .tk reputation) when the actual lens skill is verification habit + naming gaps openly. Redo with corrected framing: lens 1 caught domain mismatch + organizational-coherence (department-from-Security-team is itself a phishing trope); lens 5 hypothesised on .tk (wrong fact — .tk is Tokelau ccTLD, not 'tokens' — but right behaviour: name the gap rather than skip the lens); summary sentence added. Lens 6 closed cleanly after walk-through (no footer, no copyright, no legal disclaimer = absence is the indicator). WA002 promoted to WP003. Tutor process notes: brief-explicitness defect on framework wording (say 'verify if you don't know' explicitly); user did not recognise DocuSign as a real company — should preface unfamiliar brand props with one-line context."
+        }
+      ],
       "challenges_attempted": [],
       "current_challenge": null,
       "current_challenge_text": null,
-      "last_active": "2026-04-27"
+      "last_active": "2026-05-10"
     },
     "scenarios": {
       "unlocked": false,
@@ -133,19 +158,38 @@
       ],
       "self_correction_observed": "User flagged elegance concern unprompted on round 2 ('hard coded in a sense'). The reflective instinct that prevents WP002 in future is already showing — track whether retest confirms it stays self-corrected.",
       "correction_2026-05-08": "Earlier evidence claimed `sort -r` would misrank counts ≥10 by lexicographic comparison. Verified empirically against original Trail in the Logs auth.log AND a fresh retest dataset with counts spanning 3..11. Claim is wrong on raw `uniq -c | sort -r` output: column padding from uniq -c right-aligns the count field, so lexicographic order matches numeric order on this pipeline shape. Trap only fires if leading whitespace is stripped (e.g., post-awk processing). Original weak-point logging overstated the round 2 failure mode. Description and evidence above rewritten to reflect what is empirically true: round 1 was a real bug (no count-column sort), round 2 was semantically iffy but functionally correct."
+    },
+    {
+      "id": "WP003",
+      "track": "concepts",
+      "issue": "Phishing analysis: declares 'no indicator' on a framework lens without doing or naming the verification step the lens requires. Not a knowledge gap — a method gap. The skill: when a lens needs information the analyst doesn't have (e.g. the company's real domain), the lens output should be 'I'd verify X' not 'no indicator'.",
+      "first_observed": "2026-05-10",
+      "promoted_from": "WA002",
+      "promoted_date": "2026-05-10",
+      "evidence": [
+        "Diagnostic 2026-04-27 (WA002 origin): phishing indicator inventory partial — surfaced obvious red flags but missed link inspection, account specifics, vague sign-off.",
+        "Concepts L1 #1 Phishing Anatomy first pass 2026-05-10: lens 1 declared 'no indicator' without comparing the sender domain (docusign-secure.net) to the real DocuSign domain (docusign.com). Same partial-inventory pattern as the diagnostic — skipped the systematic check on a less-obvious indicator. Redo with corrected framing landed cleanly."
+      ],
+      "stage": 0,
+      "retest_due": "2026-05-14",
+      "failures": 0,
+      "self_correction_observed": "On the redo, lens 5 demonstrated the corrected behaviour without prompting: user didn't know what .tk meant, hypothesised 'tokens' (wrong fact), and named the hypothesis openly — the right behaviour even when the answer was wrong. The verification-habit lesson appears to have landed on the redo. Real test is whether it persists on a NEW phishing email with no redo pressure (next retest)."
+    },
+    {
+      "id": "WP004",
+      "track": "python",
+      "issue": "Python file iteration: defaults to f.readlines() (eager, full-file load into memory as a list) instead of iterating the file object directly with `for line in f:` (lazy, one line at a time). Identical output on small files; crashes with MemoryError on production-scale logs. Real defender concern because security-relevant log files (auth.log, packet captures, threat-intel feeds) are unbounded in practice.",
+      "first_observed": "2026-05-10",
+      "evidence": [
+        "Python L1 #1 Log Line Reader first version (2026-05-10): used `for line in f.readlines():` instead of `for line in f:`. Worked correctly on the 30-line synthetic log (output identical to the lazy version) but the pattern would fail on a large file. Self-corrected on revision after review explained the operational implication."
+      ],
+      "stage": 0,
+      "retest_due": "2026-05-14",
+      "failures": 0
     }
   ],
   "mastered_points": [],
-  "watch_areas": [
-    {
-      "id": "WA002",
-      "track": "concepts",
-      "issue": "Phishing indicator inventory is partial: surfaces obvious red flags but misses link inspection, missing account specifics, vague sign-off",
-      "first_observed": "2026-04-27",
-      "source": "diagnostic task 5 (phishing reasoning)",
-      "status": "watching"
-    }
-  ],
+  "watch_areas": [],
   "hint_log": [
     {
       "date": "2026-04-28",
@@ -210,6 +254,22 @@
       "tier": "deflected",
       "tier_name": "BRIEF DESIGN DEFECT",
       "outcome": "User asked about glob patterns and complained the man page was dense. The patterns they needed were already in the brief but buried in the Constraints section as 'examples of quoting' rather than stated in the task lines. Tutor-side defect — not a knowledge gap. Re-stated the patterns inline; user proceeded. New durable feedback memory saved (feedback_brief_explicitness)."
+    },
+    {
+      "date": "2026-05-10",
+      "challenge": "concepts-L1-phishing-anatomy",
+      "task": "lens 6 (sign-off / footer)",
+      "tier": "tutor-walked",
+      "tier_name": "EXPLAIN-AND-APPLY",
+      "outcome": "First pass: user said 'I am confused about this section'. Tutor walked through what the lens is checking (footer presence + corporate-mail standard contents like physical address, unsubscribe, copyright, legal disclaimer) and made the absence-as-indicator point explicit. User redo (after a prompt to look at the blank space below the sign-off): 'No footer, nothing showing the legitimacy of the email. No copyright line, no legal disclaimer.' Lens closed cleanly with the correct principle stated."
+    },
+    {
+      "date": "2026-05-10",
+      "challenge": "concepts-L1-phishing-anatomy",
+      "task": "lens 1 (sender) and lens 5 (links) — first pass",
+      "tier": "review-correction",
+      "tier_name": "BRIEF-FRAMING DEFECT",
+      "outcome": "First-pass review framed missed indicators as knowledge gaps ('you should have known DocuSign uses .com'). User pushed back: legitimate question — 'how am i meant to know the actual address is docusign.com?'. Tutor acknowledged framing error: the lens demands a verification habit (look it up or name the gap), not prior brand knowledge. Re-explained how to apply lenses 1, 5, 6 with no prior knowledge: verify in 10 seconds, OR name the structural suspicion AND what you'd verify. Redo landed correctly. Tutor process notes captured: brief-explicitness on framework wording (say 'verify if you don't know' explicitly); preface unfamiliar brand props with one-line context."
     }
   ],
   "cross_track_links": [
@@ -230,6 +290,12 @@
       "tracks": ["bash", "python"],
       "concept": "positional field extraction is fragile",
       "context": "Bash `awk '{print $11}'` and Python `line.split()[10]` both lock you to a column position. If log format shifts, both silently read the wrong word. Real-world fix in either language is regex extraction (`grep -oE` in Bash, `re.search` in Python) targeting the shape of the value (e.g. an IP), not its position."
+    },
+    {
+      "date": "2026-05-10",
+      "tracks": ["bash", "python"],
+      "concept": "log line filtering by substring",
+      "context": "Bash one-shot: `grep \"Failed\" auth.log`. Python equivalent in 4 lines: `with open(path) as f: for line in f: if \"Failed\" in line: print(line, end=\"\")`. Both produce identical output for a simple substring filter. Decision factor: Bash version is pipe-friendly and ephemeral; Python version is a building block you can extend (count by IP, alert on threshold, generate report). Same task, different reuse profiles. Important shared concern: in Python, must iterate the file object directly (`for line in f:`) rather than `f.readlines()` — the latter loads the entire file into memory and crashes on production-scale logs. Bash `grep` handles arbitrary file sizes by streaming, so no equivalent gotcha exists there. This is a case where Python defaults to a footgun that Bash doesn't have."
     }
   ],
   "session_log": [
@@ -279,6 +345,18 @@
         "WP002 description corrected mid-session — falsified the 'sort -r misranks ≥10' claim via empirical verification on two datasets; rewrote issue and evidence to reflect what is actually demonstrated (round 1 was a real bug — no count-column sort; round 2 was semantically iffy but functionally correct)",
         "Brief-design defect on Find Tour — patterns for tasks 3 and 4 were buried in Constraints as 'examples of quoting' rather than stated inline in the task lines; new durable feedback memory saved (feedback_brief_explicitness)"
       ]
+    },
+    {
+      "date": "2026-05-10",
+      "duration_minutes_planned": 90,
+      "duration_minutes_actual_approx": 90,
+      "summary": "Concepts L1 #1 + Python L1 #1 both completed. Two stale tracks (untouched 13 days) reactivated — neither tripped the 14-day flag. CONCEPTS L1 #1 PHISHING ANATOMY: 6-lens framework introduced (Sender / Subject / Body / Call to Action / Links / Footer), applied to fake DocuSign signature request. First pass: lenses 2/3/4 strong with unprompted catches (disarming-line, credential-replay attack inference); lens 1 missed entirely (declared 'no indicator' without verifying domain — WA002 pattern repeating); lens 5 partial (jumped to attack inference, skipped URL inspection); lens 6 abandoned. Tutor framing error caught mid-review: original feedback implied prior brand knowledge when the actual lens skill is verification habit. Reframed; redo landed: lens 1 caught domain mismatch + organizational-coherence insight (security-team-as-sender = phishing trope); lens 5 hypothesised on .tk (wrong fact, right behaviour); lens 6 closed cleanly after walk-through. WA002 promoted to WP003 (concepts; method gap, not knowledge gap; retest 2026-05-14). PYTHON L1 #1 LOG LINE READER: scope-tight challenge, one new concept (with-open context manager). 4 lines, one job, scope discipline held throughout. Output: 27 Failed lines correctly extracted from synthetic auth log. Initial submission used f.readlines() + print(line) — both flagged in review (eager full-file load = production-scale footgun; double newline = output noise), both self-corrected on revision. WP004 logged on the readlines pattern (retest 2026-05-14). New cross-track link logged: Bash grep vs Python with-open + for-line + if-in (4th total). Two tutor process notes for next time: brief-explicitness on framework wording (say 'verify if you don't know' explicitly when introducing analysis lenses), and preface unfamiliar brand props with one-line context (user did not recognise DocuSign as a real company). No feedback memories saved — both notes are restatements of existing memories (brief_explicitness, audit_as_you_go), not new durable feedback.",
+      "tracks_touched": ["concepts", "python"],
+      "retests_run": [],
+      "tutor_process_notes": [
+        "Brief-framing on Concepts L1 #1: framework introduced 'compare display domain to actual domain' without telling the user what to do when they don't know the actual domain. The lens skill is verification habit, not prior knowledge — needed to be in the brief, not surfaced via review correction.",
+        "Brand-context: used DocuSign as the phishing impersonation target without naming it as a real B2B SaaS. User assumed it was made up. Should preface unfamiliar real-world brands used in challenges with one-line 'X is a real Y'."
+      ]
     }
   ],
   "checkpoints_reached": [
@@ -299,12 +377,12 @@
     }
   ],
   "totals": {
-    "challenges_completed": 3,
+    "challenges_completed": 5,
     "challenges_attempted_unfinished": 2,
-    "writeups_generated": 3,
-    "writeups_archived": 2,
-    "cross_track_connections": 3,
-    "total_hours": 3.9
+    "writeups_generated": 5,
+    "writeups_archived": 4,
+    "cross_track_connections": 4,
+    "total_hours": 5.4
   },
   "diagnostic": {
     "completed": true,
@@ -363,6 +441,6 @@
       "notes": "30-line synthetic auth log. 27 Failed password lines + 3 Accepted password lines. Top failed-source IP is 203.0.113.45 with 11 hits; second is 192.168.1.10 with 9. Important verified property: on a raw `grep Failed | awk '{print $13}' | sort | uniq -c | sort -r` pipeline (using -r not -nr), the column-padded uniq -c output makes lexicographic order match numeric order — both pipelines produce the same answer on this data shape. Trap fires only if the leading whitespace is stripped (e.g., post-awk processing). Reusable for next WP002 retest 2026-05-12."
     }
   },
-  "pickup_note": "BASH L1 NEEDS REDIRECTION CHALLENGE TO CLOSE THE LEVEL. 3/3 challenges done (Find Tour passed 2026-05-08) but the redirection criterion is still unmet. Next session opener: a single-concept redirection-focused challenge — `>`, `>>`, `2>`, `2>&1`, all four flavours, scoped tight (one new concept per challenge rule). Lab labs/bash-L1/triage/ is reusable. PRIORITISED RETESTS BEFORE NEW CONTENT: WP002 retest 2026-05-12 (failures = 1, stage 0 — third failure triggers a remediation challenge); WP001 retest 2026-05-15 (stage 1, 0 failures). Both run before redirection challenge if session date is on/after the retest date. Stale tracks: Python and Concepts both untouched since 2026-04-27 — at 11 days as of 2026-05-08, will trip the 14-day flag if untouched by 2026-05-11. SIDE TASKS STILL OPEN: (1) archive bash-L0-first-footprints write-up — still has <target> placeholder; (2) consider whether bash-L0-trail-in-the-logs write-up needs an amendment note — its 'Key Concepts' and 'Security Implication' sections still propagate the original WP002 'sort -r misranks ≥10' claim that was empirically falsified 2026-05-08. Trust rebuilding visible — verify-before-claiming was held throughout 2026-05-08 including a mid-session retraction; continue.",
+  "pickup_note": "FOUR RETESTS DUE BEFORE NEW CONTENT, IN PRIORITY ORDER: (1) WP002 retest 2026-05-12 — bash frequency-count discipline; failures = 1, stage 0; THIRD FAILURE TRIGGERS A REMEDIATION CHALLENGE so this is the highest-stakes retest. (2) WP003 retest 2026-05-14 — concepts phishing analysis, verification-habit on a NEW phishing email (no redo pressure, no scaffold) — fresh email needed, prep one in advance. (3) WP004 retest 2026-05-14 — python file iteration, on a challenge that exposes a real or simulated large-file scenario (the readlines footgun must be visible, not theoretical). (4) WP001 retest 2026-05-15 — cross-track instruction precision, stage 1 → 2 if pass. Run all due retests at start of next session before new content. THEN NEW CONTENT, USER PICKS: Bash L1 redirection close-out (still outstanding — single-concept challenge on `>`, `>>`, `2>`, `2>&1`; lab labs/bash-L1/triage/ reusable); Python L1 #2 (string parsing on log lines — extract IPs from Failed entries, addresses diagnostic-flagged shaky string handling); Concepts L1 #2 (likely network/CIA reasoning scenario, deferred until phishing retest passes). SIDE TASKS STILL OPEN: (1) archive bash-L0-first-footprints write-up — still has <target> placeholder; (2) consider whether bash-L0-trail-in-the-logs write-up needs amendment note for the WP002 falsification. TUTOR PROCESS NOTE FOR NEXT CHALLENGE BRIEFS: when introducing analysis frameworks, explicitly state 'if you don't know X, the lens output is verify X, not no indicator'. When using real-world brand impersonations as phishing props, preface with 'X is a real company that does Y'.",
   "last_weekly_summary": "2026-05-08"
 }

@@ -71,7 +71,3 @@ ubuntu
 $ grep "Failed password" auth.log | awk '{print $11}' | sort | uniq -c | sort -nr | head -n 1
 8 203.0.113.45
 ```
-
----
-
-_Part of the OU Cyber Security practical learning portfolio_

@@ -85,7 +85,3 @@ $ find . -type f -name ".*"
 ./home/emre/.bashrc
 ./tmp/.hidden_dropper
 ```
-
----
-
-_Part of the OU Cyber Security practical learning portfolio_

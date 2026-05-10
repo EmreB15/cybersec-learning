@@ -266,9 +266,6 @@ Use this template:
 
 ## Final Solution
 [User adds their final working code here]
-
----
-*Part of the OU Cyber Security practical learning portfolio*
 ```
 
 **Two states:** "complete" (template generated, counts toward level total) and "archived" (user-fillable sections actually filled, counts toward portfolio total on dashboard). Tell the user when they archive a write-up.

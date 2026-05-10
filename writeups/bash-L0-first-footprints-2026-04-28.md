@@ -44,7 +44,3 @@ ls -a <target>
 cat CLAUDE.md
 head -n 20 progress.json
 tail -n 10 README.md
-
----
-
-_Part of the OU Cyber Security practical learning portfolio_
