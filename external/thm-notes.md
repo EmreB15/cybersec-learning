@@ -1,0 +1,2 @@
+2026/05/11 i did not know what snake oil is, i had to search up this term. I think the actual task was to use the search engine to figure this out, so this might not be super important for us right now.
+2026/05/11 the linux command 'ss', after thinking about it i think the point of the task was to use the search engine to find out what the command is or to answer the question it was asking, not super important for my notes.

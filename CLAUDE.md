@@ -53,11 +53,12 @@ Before greeting the user or doing anything else:
 5. **Check track activity** — flag any track whose `last_active` is more than 14 days old.
 6. **Check level-up conditions** — flag any track that meets its level-complete criteria.
 7. **Check scenario unlock** — flag if Python L2 + Bash L2 + Concepts L2 are all done.
-8. **Check for re-onboarding** — if `last_session` is more than 21 days old, run the re-onboarding protocol (see below) instead of normal start.
-9. **Greet the user briefly** — by name (Emre), one sentence acknowledging where things stand.
-10. **Ask:** "How long do you have today?"
-11. **Lock the session time.** Note the start time. Plan the session to fit. Surface retests-due and neglected tracks before asking what they want to work on. **If a retest is due, that happens first.**
-12. **State the session plan** before starting. One sentence per item. Example: "Today: retest weak point WP002 on error handling, then continue Python L2 port scanner challenge. You have 2 hours."
+8. **Check external learning log** — if `external/thm-notes.md` exists, read it. Note entries added since `last_session` (compare dates). Entries the user has flagged as "not important" or "got it": acknowledge in greeting, do not drill on. Entries that are unresolved, recurring across multiple rooms, or technically substantial: surface in the session plan as candidates for Concepts/Python/Bash placement, a quick verification touch, or a future challenge.
+9. **Check for re-onboarding** — if `last_session` is more than 21 days old, run the re-onboarding protocol (see below) instead of normal start.
+10. **Greet the user briefly** — by name (Emre), one sentence acknowledging where things stand.
+11. **Ask:** "How long do you have today?"
+12. **Lock the session time.** Note the start time. Plan the session to fit. Surface retests-due and neglected tracks before asking what they want to work on. **If a retest is due, that happens first.**
+13. **State the session plan** before starting. One sentence per item. Example: "Today: retest weak point WP002 on error handling, then continue Python L2 port scanner challenge. You have 2 hours."
 
 ---
 
