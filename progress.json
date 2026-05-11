@@ -2,12 +2,12 @@
   "schema_version": "3.0",
   "user": "Emre",
   "started_date": "2026-04-27",
-  "last_session": "2026-05-10",
-  "session_count": 7,
+  "last_session": "2026-05-11",
+  "session_count": 8,
   "tracks": {
     "python": {
       "level": 1,
-      "level_complete_criteria": "4 challenges done, no unresolved critical or moderate weak points (or escape via remediation). STATUS 2026-05-10: 2/4 challenges done.",
+      "level_complete_criteria": "4 challenges done, no unresolved critical or moderate weak points (or escape via remediation). STATUS 2026-05-11: 3/4 challenges done.",
       "challenges_completed": [
         {
           "id": "python-L1-log-filter",
@@ -33,13 +33,25 @@
           "lab_data_path": "labs/bash-L1/retest-wp002/auth-snippet.log",
           "script_path": "python/L1/ip_extractor.py",
           "notes": "Second Python L1. New concept: str.split() + indexed access into the resulting list. 4-line script, scope discipline held again (now a pattern, not a fluke). All three positive signals: (1) WP004 reinforcement landed unprompted — used `for line in f:` directly, no readlines reach; (2) WP002 family trap avoided — filter held, Accepted lines correctly skipped despite the simpler-looking path being to skip the filter; (3) chose .split() over manual char indexing — token-based abstraction tolerates whitespace variation (handled the 'May  5' two-space gap silently). Closing-step: cross-track moment built into the brief at user's request — Python script output redirected to python/L1/ips.txt with `>` operator. Reason: user proactively flagged 'without practice i will 100% forget' the redirection operators learned 30 min earlier in Evidence Trail. Closing-step is targeted retention reinforcement, not a separate task. Tutor-side meta-comms defect surfaced in the closing-step instructions (gave working command then said 'pick yourself' — incompatible). Owned in session, no new feedback memory needed (precise_meta_comms already covers it). Diagnostic 2026-04-27 task 3 (split admin:password123, scored 'shaky') addressed through application — same skill applied to log lines, no separate drill needed. Single quotes vs double quotes minor inconsistency with log_filter.py — purely cosmetic, no flag."
+        },
+        {
+          "id": "python-L1-password-audit",
+          "title": "Password Auditor",
+          "completed_date": "2026-05-11",
+          "hint_tier_reached": 2,
+          "hint_tier_used": "Tier 1 REFRAME on the 'without hardcoding' output question (write the hardcoded version then abstract — user shortcut to hardcoded version on revision 1; abstraction landed on revision 2 after concept nudge in review). Tier 2 CONCEPT NUDGES delivered in review 2 (tuple unpacking + ', '.join() — user identified .join as the specific gap they were missing). Predicate-proxy bug (c.upper()==c instead of c.isupper()) flagged Critical 1 in review 1; self-corrected on first revision after concept nudge ('what's another built-in like .isdigit()?'). Brief-precision miss (call on 4 not 1 test passwords) needed an explicit nudge to close — flagged review 1, partial revision 2, full revision 3.",
+          "weight": 1.0,
+          "writeup_state": "archived",
+          "writeup_archived_date": "2026-05-11",
+          "script_path": "python/L1/password_audit.py",
+          "notes": "Third Python L1. First challenge outside log-parsing domain — input validation territory. New concepts that landed: string predicate methods (.isupper/.islower/.isdigit), boolean composition with `and` chain for verdict, list-as-accumulator pattern for dynamic output, tuple return + tuple unpacking, ', '.join() for delimited list-to-string. CONVERGENT-FIX MOMENT on revision 2: the list+join refactor simultaneously addressed three issues — 'without hardcoding' question, brief's required return type (tuple of bool + list), and trailing-comma bug in earlier string-concat output. One refactor closed three problems. CRITICAL BUG SELF-CORRECTED: first version used `c.upper() == c` and `c.lower() == c` as proxies for is-uppercase / is-lowercase. The proxy is True for any character without case (digits, spaces, punctuation), so a password like 'abcdef12345678' would falsely satisfy a 'must contain uppercase' check. Bug was hidden by the four test passwords (none mixed letters with digits in a way that exposed it). Flagged Critical 1 in review; concept nudge ('what's another built-in like .isdigit()?'); self-corrected to .isupper() / .islower() on first revision. Single occurrence, lesson landed — NOT opening a new WP. SAME FAMILY AS WP002's broader generalisation: verify what you claim, not a proxy that doesn't hold under adversarial input. Real defender concern — auth systems making this mistake silently accept policy-violating passwords. BRIEF-PRECISION MISS: first two submissions called audit() on only one of four required test passwords. Flagged in review 1; revision 2 still on one; revision 3 closed cleanly after explicit nudge. WP001 family — added as soft evidence to WP001 (needed a prompt to close, not outright failure). BOUNDARY-CASE PRECISION (positive): user proactively asked at challenge start whether length 12 passes the 'at least 12' criterion before writing any code. Off-by-one on length bounds is a real auth-system bug class; the verify-before-coding instinct is the right reflex. MICRO-OPT DISCIPLINE (positive): on final tidy-up, user defended their `and not one_X` predicate guards on engineering grounds. Discussion separated the outer break (real win on long happy-path inputs, kept) from the inner predicate guards (micro-opt at password-sized inputs, dropped on consistency grounds). User dropped the guards correctly — three predicate checks now read symmetrically. Engineering principle stated: optimise for readability first; reach for micro-opts only when profiling data tells you to. PRE-SESSION META-QUESTION on external courses addressed at length: user has TryHackMe subscription. Tier 1 recommendations: TryHackMe Cyber Security 101 path → Jr Pen Tester / SOC Analyst L1; PortSwigger Web Security Academy (free) when at Python L2; OverTheWire Bandit (free) alongside Bash L2. Tier 2: Security+ (London cert signal, defer 9-12 months); HackTheBox Academy (later); LetsDefend (blue-team option). Avoid Udemy bundles, premature OSCP."
         }
       ],
       "challenges_attempted": [],
       "current_challenge": null,
       "current_challenge_text": null,
-      "last_active": "2026-05-10",
-      "last_active_session": 7
+      "last_active": "2026-05-11",
+      "last_active_session": 8
     },
     "bash": {
       "level": "L1",
@@ -158,6 +170,7 @@
       "promoted_from": "WA001",
       "promoted_date": "2026-04-28",
       "evidence_2026-05-08": "Re-surfaced briefly during WP002 retest submission (pipeline missed Failed-only filter and intermediate-inspection step, both explicit brief constraints). Not formally counted as a WP001 failure since the dedicated WP001 retest immediately followed and passed cleanly.",
+      "evidence_2026-05-11": "Soft evidence — Python L1 #3 (Password Auditor) brief required calling audit() on all four test passwords; first two submissions called on one. Closed on revision 3 after explicit nudge in review 2. Not a formal failure (WP001 retest is 2026-05-15, this was in-challenge brief execution), but the pattern recurred. Same flavour as Bash L0 First Footprints Task 2/4 — right tool selected, partial brief executed until nudged. Implication for 2026-05-15 retest design: include a multi-sub-task brief that tests whether all parts are executed without prompting.",
       "evidence": [
         "Diagnostic task 3 (Python string split) — partial assembly",
         "Bash L0 First Footprints Task 2 round 1 — skipped listing entirely",
@@ -308,6 +321,30 @@
       "tier": 1,
       "tier_name": "REFRAME",
       "outcome": "User initially read 'BOTH X AND Y' in the brief as the shell `&&` operator (run command-1; if-success run command-2). Three failed attempts using `find . && /nonexistent_path ...`. Tutor owned the brief-wording defect (capital AND clashing with `&&`), then offered Tier 1 reframe: 'in every find command you've written, what's right after find before any flag? Could that position hold more than one path?' User self-served immediately to `find . /nonexistent_path -type f > full-capture.txt 2>&1`. No further escalation needed. Tutor process note saved: when a single command takes multiple inputs, never describe them as 'X AND Y' in caps — operator-clash with `&&`."
+    },
+    {
+      "date": "2026-05-11",
+      "challenge": "python-L1-password-audit",
+      "task": "output formatting ('how do I print without hardcoding')",
+      "tier": 1,
+      "tier_name": "REFRAME",
+      "outcome": "User asked how to format the failed-criteria output dynamically. Tier 1 reframe: 'write the hardcoded version first; once you see the pattern of repetition, the unhardcoded version becomes visible by abstraction. Second angle: you have four booleans and four labels — what's the gap between what you have and what you need at print time?' User shortcut to the hardcoded version (four if-blocks each appending a fixed label) and stopped. Did NOT take the abstraction step the reframe pointed at. Lesson surfaced in review and addressed on revision 2."
+    },
+    {
+      "date": "2026-05-11",
+      "challenge": "python-L1-password-audit",
+      "task": "predicate-proxy bug (c.upper() == c)",
+      "tier": 2,
+      "tier_name": "CONCEPT NUDGE",
+      "outcome": "Bug flagged Critical 1 in review 1 with explanation of why the proxy is wrong (True for any character without case). Concept nudge: 'use the right predicate. Python has built-in methods that test the property directly — you already used one of them (.isdigit()). What are the other two in that family?' User self-served to c.isupper() / c.islower() on first revision. Single occurrence; lesson landed. Not opening a new WP."
+    },
+    {
+      "date": "2026-05-11",
+      "challenge": "python-L1-password-audit",
+      "task": "calling code structure (tuple unpacking + .join)",
+      "tier": 2,
+      "tier_name": "CONCEPT NUDGE",
+      "outcome": "Review 2 delivered two concept nudges for the printing layer: tuple unpacking (`result, failures = audit(p)` rather than indexing), and `', '.join(failures)` for delimited output from a list (solves trailing-comma + empty-list cases in one). User responded 'the .join is what i was struggling to find' — confirmed the specific gap. Both concepts applied correctly on revision 3."
     }
   ],
   "cross_track_links": [
@@ -434,6 +471,25 @@
       "scheduled_refreshers_set_this_session": [
         {"id": "redirection-recall-2026-05-14", "concept": "Bash redirection operators (>, >>, 2>, 2>&1)", "type": "forward-looking recall check, NOT a WP", "due": "2026-05-14", "reason": "User proactively flagged forecasted forgetting after Evidence Trail. Joins WP003/WP004 retest day. Format: 4 cold prompts on operator behavior, no scaffold. Pass = recall confirmed, no further action. Fail = formalize as WP."}
       ]
+    },
+    {
+      "date": "2026-05-11",
+      "session_number": 8,
+      "duration_minutes_planned": 60,
+      "duration_minutes_actual_approx": 60,
+      "summary": "1-hour session. Single challenge: Python L1 #3 Password Auditor — COMPLETE (3/4 Python L1). New concepts that landed: string predicate methods (.isupper / .islower / .isdigit), boolean composition with `and` chain for verdict, list-as-accumulator pattern for dynamic output, tuple return + tuple unpacking, ', '.join() for delimited list-to-string. CONVERGENT-FIX MOMENT on revision 2: the list+join refactor simultaneously addressed three issues — 'without hardcoding' question (Tier 1 reframe asked them to abstract; they shortcut to hardcoded version first; abstraction landed on revision 2 after concept nudge in review), brief's required tuple return type, and trailing-comma bug. One refactor closed three problems. CRITICAL BUG (self-corrected): first version used `c.upper() == c` and `c.lower() == c` as proxies for is-uppercase / is-lowercase. The proxy is True for digits, spaces, punctuation — any character without case. So a password like 'abcdef12345678' would falsely satisfy a 'must contain uppercase' check. Real defender bug class. Hidden by the four test passwords (none mixed letters with digits adversarially). Concept nudge in review 1 ('what's another built-in like .isdigit()?'); self-corrected to .isupper / .islower on first revision. SAME FAMILY AS WP002 generalisation — verify what you claim, not a proxy. NOT opening new WP — single occurrence, lesson landed. BRIEF-PRECISION MISS (WP001 family): brief required calling audit() on all four test passwords; first two submissions called on one. Soft WP001 evidence added (not full failure, needed an explicit nudge to close on revision 3). Implication for 2026-05-15 WP001 retest design: include multi-sub-task brief to test brief-execution discipline directly. BOUNDARY-CASE PRECISION (positive): user proactively asked at challenge start whether length 12 satisfies 'at least 12' before writing code — verify-before-coding instinct, off-by-one is a real auth-bug class. ENGINEERING DISCUSSION on final tidy-up: user defended `and not one_X` per-predicate guards on efficiency grounds. Discussion separated outer break (real win on long happy-path inputs, kept) from inner guards (micro-opt at password-sized inputs, dropped on consistency grounds — three predicate checks now read symmetrically). User dropped guards correctly. Stated principle: optimise for readability first; reach for micro-opts only when profile data tells you to. EXTERNAL COURSES META-QUESTION addressed pre-session: user has TryHackMe subscription unused. Tier 1 recs: TryHackMe Cyber Security 101 path → Jr Pen Tester or SOC Analyst L1 (London market signal); PortSwigger Web Security Academy (free, defer to Python L2); OverTheWire Bandit (free, run alongside Bash L2). Tier 2: Security+ (defer 9-12 months, UK recruiter signal); HackTheBox Academy + LetsDefend as later options. Avoid Udemy bundles, premature OSCP. WRITE-UP GENERATED, awaiting fill.",
+      "tracks_touched": ["python"],
+      "retests_run": [],
+      "challenges_completed_this_session": [
+        "python-L1-password-audit (Python L1 #3 — input validation, string predicate methods, list+join pattern)"
+      ],
+      "writeups_archived_this_session": [
+        "python-L1-password-audit (filled + cleanup-passed in same session — 4 user-fillable sections completed, 12 copyedits applied: typos, contractions, capital I, backticks on bare command names, missing punctuation, plural fix; Output block filled with verified 4-line script output; technical claim re .upper() returning true for digits left as written per voice-preservation rule)"
+      ],
+      "tutor_process_notes": [
+        "Tier 1 reframe on 'without hardcoding' output question got shortcut — user wrote the hardcoded version and stopped at step one of the reframe. Abstraction landed on revision 2 after the lesson surfaced in review. Confirmed pattern: when Tier 1 reframe gets shortcut, don't escalate tiers during the challenge; flag in review and let revision force the abstraction. Worked here.",
+        "Brief-precision (WP001 family) recurred — first two submissions called audit() on 1 of 4 test passwords. Explicit nudge in review 2 closed it on revision 3. Worth designing 2026-05-15 WP001 retest around multi-sub-task brief to test brief-execution discipline directly."
+      ]
     }
   ],
   "checkpoints_reached": [
@@ -459,12 +515,12 @@
     }
   ],
   "totals": {
-    "challenges_completed": 7,
+    "challenges_completed": 8,
     "challenges_attempted_unfinished": 2,
-    "writeups_generated": 7,
-    "writeups_archived": 7,
+    "writeups_generated": 8,
+    "writeups_archived": 8,
     "cross_track_connections": 6,
-    "total_hours": 7.4
+    "total_hours": 8.4
   },
   "diagnostic": {
     "completed": true,
@@ -523,6 +579,6 @@
       "notes": "30-line synthetic auth log. 27 Failed password lines + 3 Accepted password lines. Top failed-source IP is 203.0.113.45 with 11 hits; second is 192.168.1.10 with 9. Important verified property: on a raw `grep Failed | awk '{print $13}' | sort | uniq -c | sort -r` pipeline (using -r not -nr), the column-padded uniq -c output makes lexicographic order match numeric order — both pipelines produce the same answer on this data shape. Trap fires only if the leading whitespace is stripped (e.g., post-awk processing). Reusable for next WP002 retest 2026-05-12."
     }
   },
-  "pickup_note": "SESSION 7 CLOSED 2026-05-10. SESSION 8 ENTRY POINT: BASH L1 COMPLETE — first track to clear L1. Bash track ready for L2 (scripting basics — variables, loops, conditionals, exit codes; CLAUDE.md L2 examples: ping sweep [needs Metasploitable target — still uninstalled], log monitor, file organiser). FIVE RETESTS / RECALL CHECKS DUE BEFORE NEW CONTENT, IN PRIORITY ORDER: (1) WP002 retest 2026-05-12 — bash frequency-count discipline; failures = 1, stage 0; THIRD FAILURE TRIGGERS A REMEDIATION CHALLENGE so this is the highest-stakes retest. Cross-track evidence from session 7 reinforces WP002's broader description (Evidence Trail Task 4 trusted file content without inspecting adjacent terminal output that contradicted the assumption — same family). (2) WP003 retest 2026-05-14 — concepts phishing analysis, verification-habit on a NEW phishing email (no redo pressure, no scaffold) — fresh email needed, prep one in advance. (3) WP004 retest 2026-05-14 — python file iteration, on a challenge that exposes a real or simulated large-file scenario (the readlines footgun must be visible, not theoretical). Note: WP004 already showed positive reinforcement signal in Brute Force Source (used for-line-in-f directly without prompt) — prognosis good, but still test on a NEW challenge with a NEW twist. (4) REDIRECTION RECALL CHECK 2026-05-14 — NEW from session 7. NOT a WP, forward-looking recall check at user's proactive request. Format: 4 cold prompts on operator behavior (overwrite, append, stderr-only, merge), no scaffold, no scrollback. Pass = recall confirmed. Fail = formalize as WP. (5) WP001 retest 2026-05-15 — cross-track instruction precision, stage 1 → 2 if pass. THEN NEW CONTENT, USER PICKS: Bash L2 #1 (NEW — first L2 challenge; lab depends on choice — file organiser/log monitor reuse existing labs, ping sweep needs Metasploitable target); Python L1 #3 (next L1 — likely socket basics, IP address validator, or password strength evaluator per CLAUDE.md); Concepts L1 #2 — STILL DEFERRED until WP003 retest passes 2026-05-14. SIDE TASKS STILL OPEN: bash-L0-trail-in-the-logs write-up — consider whether to add an amendment note about the WP002 'sort -r misranks ≥10' falsification (decision deferred from session 6, still open). TUTOR PROCESS NOTES TO CARRY FORWARD: (i) when a single command takes multiple inputs, never describe them as 'X AND Y' in caps — operator-clash with `&&` (from Evidence Trail Task 4 brief defect); (ii) precise_meta_comms — never give a working answer and ask the user to 'pick' from inside it (from Python L1 #2 closing-step defect). Both restate existing memories — no new durable feedback needed. LAB STATUS: vulnerable target VM (Metasploitable2/DVWA) STILL NOT installed — required before any scanning challenge; gates Bash L2 ping sweep AND most Python L3 work. If user wants to unblock the broadest L2/L3 paths, install Metasploitable as a side task.",
+  "pickup_note": "SESSION 8 CLOSED 2026-05-11. SESSION 9 ENTRY POINT: PYTHON L1 = 3/4 — one challenge remaining to close Python L1. FIVE RETESTS / RECALL CHECKS STILL ON SCHEDULE (unchanged from session 7 plan): (1) WP002 retest 2026-05-12 — bash frequency-count discipline; failures = 1, stage 0; THIRD FAILURE TRIGGERS A REMEDIATION CHALLENGE — highest-stakes retest. Cross-track evidence from session 7 (Evidence Trail Task 4) reinforces WP002's broader generalisation: trust visible output without inspecting adjacent evidence that contradicts the assumption. Session 8 NEW evidence in the same family but a one-shot self-correction, not WP-promoted: predicate-proxy bug (c.upper() == c) is the exact same shape — verify what you claim, not a proxy. (2) WP003 retest 2026-05-14 — concepts phishing analysis, verification-habit on a NEW phishing email (no redo pressure, no scaffold) — prep email in advance. (3) WP004 retest 2026-05-14 — python file iteration, on a challenge that exposes a real or simulated large-file scenario. Positive signal still holding — Brute Force Source used lazy iteration unprompted. (4) REDIRECTION RECALL CHECK 2026-05-14 — 4 cold prompts on operator behaviour, no scaffold, no scrollback. (5) WP001 retest 2026-05-15 — cross-track instruction precision, stage 1 → 2 if pass. NEW SOFT WP001 EVIDENCE FROM SESSION 8: brief-precision miss recurred on Password Auditor (called audit() on 1 of 4 test passwords; closed on revision 3 after explicit nudge). Implication for 2026-05-15 retest design: include a multi-sub-task brief that tests brief-execution discipline directly. THEN NEW CONTENT, USER PICKS: Bash L2 #1 (first L2 challenge; lab depends on choice — file organiser/log monitor reuse existing labs, ping sweep needs Metasploitable target); Python L1 #4 (closes Python L1 — likely socket basics, IP validator, or another L1-grade concept; avoid repeating password / auth-log territory); Concepts L1 #2 — STILL DEFERRED until WP003 retest passes 2026-05-14. SIDE TASKS OPEN: (i) bash-L0-trail-in-the-logs amendment note re WP002 falsification — carried since session 6, still open. (ii) NEW — external courses budget decision: user has TryHackMe subscription unused. Session 8 recommended Tier 1 = TryHackMe Cyber Security 101 path → Jr Pen Tester / SOC Analyst L1, PortSwigger Web Security Academy at Python L2, OverTheWire Bandit alongside Bash L2. User to decide whether to budget external time alongside tutor sessions; recommend tagging one THM room per week as 'session homework' so the tutor can convert external exposure into portfolio. LAB STATUS: vulnerable target VM (Metasploitable2/DVWA) STILL NOT installed — required before any scanning challenge; gates Bash L2 ping sweep AND most Python L3 work. TUTOR PROCESS NOTES TO CARRY FORWARD: (i) when a Tier 1 reframe gets shortcut, do NOT escalate tiers during the challenge — flag in review and let revision force the abstraction (worked on Password Auditor 'without hardcoding'); (ii) brief-precision miss recurred — when designing briefs, count concrete deliverables (e.g. 'four test passwords') and make execution against ALL of them explicit not implicit.",
   "last_weekly_summary": "2026-05-08"
 }
