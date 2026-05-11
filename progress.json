@@ -3,11 +3,12 @@
   "user": "Emre",
   "started_date": "2026-04-27",
   "last_session": "2026-05-11",
-  "session_count": 8,
+  "session_count": 9,
   "tracks": {
     "python": {
       "level": 1,
-      "level_complete_criteria": "4 challenges done, no unresolved critical or moderate weak points (or escape via remediation). STATUS 2026-05-11: 3/4 challenges done.",
+      "level_complete_criteria": "4 challenges done, no unresolved critical or moderate weak points (or escape via remediation). STATUS 2026-05-11 SESSION 9: 4/4 challenges done — PYTHON L1 COMPLETE. WP004 retest 2026-05-14 is the conditional verification gate (same standard as Bash L1's WP002 carry).",
+      "level_complete_date": "2026-05-11",
       "challenges_completed": [
         {
           "id": "python-L1-log-filter",
@@ -45,13 +46,25 @@
           "writeup_archived_date": "2026-05-11",
           "script_path": "python/L1/password_audit.py",
           "notes": "Third Python L1. First challenge outside log-parsing domain — input validation territory. New concepts that landed: string predicate methods (.isupper/.islower/.isdigit), boolean composition with `and` chain for verdict, list-as-accumulator pattern for dynamic output, tuple return + tuple unpacking, ', '.join() for delimited list-to-string. CONVERGENT-FIX MOMENT on revision 2: the list+join refactor simultaneously addressed three issues — 'without hardcoding' question, brief's required return type (tuple of bool + list), and trailing-comma bug in earlier string-concat output. One refactor closed three problems. CRITICAL BUG SELF-CORRECTED: first version used `c.upper() == c` and `c.lower() == c` as proxies for is-uppercase / is-lowercase. The proxy is True for any character without case (digits, spaces, punctuation), so a password like 'abcdef12345678' would falsely satisfy a 'must contain uppercase' check. Bug was hidden by the four test passwords (none mixed letters with digits in a way that exposed it). Flagged Critical 1 in review; concept nudge ('what's another built-in like .isdigit()?'); self-corrected to .isupper() / .islower() on first revision. Single occurrence, lesson landed — NOT opening a new WP. SAME FAMILY AS WP002's broader generalisation: verify what you claim, not a proxy that doesn't hold under adversarial input. Real defender concern — auth systems making this mistake silently accept policy-violating passwords. BRIEF-PRECISION MISS: first two submissions called audit() on only one of four required test passwords. Flagged in review 1; revision 2 still on one; revision 3 closed cleanly after explicit nudge. WP001 family — added as soft evidence to WP001 (needed a prompt to close, not outright failure). BOUNDARY-CASE PRECISION (positive): user proactively asked at challenge start whether length 12 passes the 'at least 12' criterion before writing any code. Off-by-one on length bounds is a real auth-system bug class; the verify-before-coding instinct is the right reflex. MICRO-OPT DISCIPLINE (positive): on final tidy-up, user defended their `and not one_X` predicate guards on engineering grounds. Discussion separated the outer break (real win on long happy-path inputs, kept) from the inner predicate guards (micro-opt at password-sized inputs, dropped on consistency grounds). User dropped the guards correctly — three predicate checks now read symmetrically. Engineering principle stated: optimise for readability first; reach for micro-opts only when profiling data tells you to. PRE-SESSION META-QUESTION on external courses addressed at length: user has TryHackMe subscription. Tier 1 recommendations: TryHackMe Cyber Security 101 path → Jr Pen Tester / SOC Analyst L1; PortSwigger Web Security Academy (free) when at Python L2; OverTheWire Bandit (free) alongside Bash L2. Tier 2: Security+ (London cert signal, defer 9-12 months); HackTheBox Academy (later); LetsDefend (blue-team option). Avoid Udemy bundles, premature OSCP."
+        },
+        {
+          "id": "python-L1-first-knock",
+          "title": "First Knock",
+          "completed_date": "2026-05-11",
+          "hint_tier_reached": 1,
+          "hint_tier_used": "Tier 1 REFRAME only (sustained — three iterations same mode, no tier escalation). (1) 'When 9999 is closed, what does create_connection actually do on that line?' — user answered 'returns a socket'. (2) 'Test it — add print(socket_1), run against 9999, observe.' — user ran, reported TimeoutError. (3) 'How do you write code that runs one way when a line succeeds, and a different way when that line raises?' — user reached for try/except, wrote try/except OSError / return False / return True. No tier escalation.",
+          "weight": 1.0,
+          "writeup_state": "archived",
+          "writeup_archived_date": "2026-05-11",
+          "script_path": "python/L1/port_check.py",
+          "notes": "Fourth and final Python L1 — CLOSES THE LEVEL (2nd track after Bash L1). First Python challenge to touch socket module. New concept zone: TCP connection attempt as port-state probe; exception-as-failure-signal control flow; OSError as parent class of socket-level connection failures (PEP 3151). Brief explicitly named three failure modes (refused, timeout, otherwise fails). Revision 1 caught only TimeoutError — that was the user's empirical observation on WSL2 against 127.0.0.1:9999. Revision 2 broadened to OSError after Moderate flag in review. WP002 FAMILY CROSS-LANGUAGE EVIDENCE — THIRD INSTANCE IN THREE SESSIONS (bash sort-column round 1 → python predicate-proxy session 8 → python exception-class session 9): user empirically observed one failure mode and generalised that observation to the whole class without probing other failure modes named in the brief. Same fingerprint each time. Not opening new WP — WP002's generalised description already covers it; today's data strengthens it. WP001 POSITIVE SIGNAL: brief enumerated two test cases; both exercised without nudge (third L1 challenge in a row clean on enumeration discipline — Brute Force Source first, Password Auditor needed nudge, First Knock clean). Minor issues fixed in same revision 2: source_address=None default-arg noise stripped; socket explicitly closed on success path. ETHICS FRAMING delivered pre-challenge — first network-touching Python challenge. UK Computer Misuse Act 1990 §1 named, ⚠️ Verify markers on DPP v Bignell + R v Bow Street Magistrates ex parte US (No 2) citations. Rule stated for the programme: target must be (a) own machine, (b) own VM, (c) written-authorisation lab. Today restricted to 127.0.0.1. Sets up Python L2 port scanner — same primitive iterated across a port range with concurrency. Verification-discipline lesson trained mid-challenge: user asserted 'returns a socket', tutor pushed 'test it', user discovered exception behaviour empirically. Write-up confirmed lesson landed — user named the empirical-verification step in 'What I Would Do Differently' ('Take it a step further before asking for help')."
         }
       ],
       "challenges_attempted": [],
       "current_challenge": null,
       "current_challenge_text": null,
       "last_active": "2026-05-11",
-      "last_active_session": 8
+      "last_active_session": 9
     },
     "bash": {
       "level": "L1",
@@ -345,6 +358,14 @@
       "tier": 2,
       "tier_name": "CONCEPT NUDGE",
       "outcome": "Review 2 delivered two concept nudges for the printing layer: tuple unpacking (`result, failures = audit(p)` rather than indexing), and `', '.join(failures)` for delimited output from a list (solves trailing-comma + empty-list cases in one). User responded 'the .join is what i was struggling to find' — confirmed the specific gap. Both concepts applied correctly on revision 3."
+    },
+    {
+      "date": "2026-05-11",
+      "challenge": "python-L1-first-knock",
+      "task": "main unblock — bridging from 'create_connection returns a socket' to try/except control flow",
+      "tier": 1,
+      "tier_name": "REFRAME (sustained — three iterations, no escalation)",
+      "outcome": "(1) 'When 9999 is closed, what does create_connection actually do on that line?' — user answered 'returns a socket'. (2) 'Test it — add print(socket_1), run against 9999, observe what Python actually does.' — user ran, reported TimeoutError. (3) 'How do you write code that runs one way when a line succeeds, and a different way when that line raises?' — user reached for try/except, wrote try/except OSError / return False / return True. Single Tier 1 mode carried through the full unblock. Empirical-verification middle step is the WP002 lesson being trained mid-challenge. Pattern note: when the gap is conceptual rather than syntactic, Tier 1 can carry an entire challenge without escalation if reframes are well-staged."
     }
   ],
   "cross_track_links": [
@@ -383,6 +404,12 @@
       "tracks": ["python", "bash"],
       "concept": "Python script output captured to file via Bash redirection (>)",
       "context": "Real triage workflow: Python script extracts/parses; Bash redirection captures the output to a file you can hand to the next step or analyst. `python3 ip_extractor.py > python/L1/ips.txt` saves the 27 IPs to a file in one command. Use `>` (overwrite) when each run produces a complete fresh result; use `>>` (append) when building up a running log across runs. The decision is the same as in Evidence Trail Tasks 1 and 2 — overwrite for snapshot data, append for accumulation. Built into Python L1 #2 as a closing-step at user's request — proactive retention reinforcement on the redirection operators learned 30 minutes earlier. Demonstrates the natural Python-script + Bash-redirection pipeline real triage scripts use."
+    },
+    {
+      "date": "2026-05-11",
+      "tracks": ["python", "bash"],
+      "concept": "single-port TCP availability check",
+      "context": "Python: `socket.create_connection((host, port), timeout)` inside try/except OSError — returns True/False from a wrapper function. Bash equivalents: `nc -zv host port` (netcat zero-IO probe; exit 0 = open) or `timeout 1 bash -c \"</dev/tcp/host/port\"` (bash's built-in pseudo-device for TCP probes; exit 0 = open). Python wins when you build composable tooling (output capture, loops, structured results, parallel scanning); Bash wins as a one-shot pipe-ready probe inside a shell pipeline. Both share the same legality gate — TCP connection probes against hosts you don't own or have written permission to test are unauthorised access under UK Computer Misuse Act 1990 §1. Sets up Python L2 (port scanner = this primitive iterated across a range with concurrency)."
     }
   ],
   "session_log": [
@@ -490,6 +517,27 @@
         "Tier 1 reframe on 'without hardcoding' output question got shortcut — user wrote the hardcoded version and stopped at step one of the reframe. Abstraction landed on revision 2 after the lesson surfaced in review. Confirmed pattern: when Tier 1 reframe gets shortcut, don't escalate tiers during the challenge; flag in review and let revision force the abstraction. Worked here.",
         "Brief-precision (WP001 family) recurred — first two submissions called audit() on 1 of 4 test passwords. Explicit nudge in review 2 closed it on revision 3. Worth designing 2026-05-15 WP001 retest around multi-sub-task brief to test brief-execution discipline directly."
       ]
+    },
+    {
+      "date": "2026-05-11",
+      "session_number": 9,
+      "duration_minutes_planned": 75,
+      "duration_minutes_actual_approx": 60,
+      "same_day_return": "second session of the day — session 8 closed earlier same day with Password Auditor; user returned after eating with 1h-1h30 budget",
+      "summary": "1h15-locked session. Python L1 #4 First Knock — COMPLETE (4/4 Python L1 — LEVEL COMPLETE, conditional on WP004 retest 2026-05-14). Second track to clear L1 (after Bash L1 on 2026-05-10). First Python challenge to touch the socket module; sets up Python L2 port scanner. Single Tier 1 REFRAME (sustained, three iterations, no escalation) carried the entire unblock from 'create_connection returns a socket' through empirical verification (test it, observe TimeoutError) to try/except control flow. MODERATE WEAKNESS in revision 1: caught only TimeoutError because that was the user's empirical observation; brief had explicitly named three failure modes (refused, timeout, otherwise fails). Same fingerprint as WP002 (trust the one observation, don't probe the class) — THIRD CROSS-LANGUAGE INSTANCE IN THREE SESSIONS (bash sort-column → python predicate-proxy → python exception-class). Not opening new WP — WP002's generalised description already covers it; today's data strengthens it. Fix on revision 2: OSError catch (PEP 3151 parent class of all socket-level connection failures). Two minor issues also cleaned up in same revision: source_address=None default-arg noise stripped, socket explicitly closed on success path. WP001 POSITIVE SIGNAL: brief enumerated two test cases; both exercised without nudge (third L1 challenge in a row clean on enumeration discipline — Brute Force Source clean, Password Auditor needed nudge, First Knock clean). ETHICS FRAMING delivered pre-challenge — first network-touching Python challenge. UK CMA 1990 §1 named, rule stated for the programme: target must be (a) own machine, (b) own VM, (c) written-authorisation lab. Today restricted to 127.0.0.1 only. ⚠️ Verify on case law citations (DPP v Bignell, R v Bow Street Magistrates ex parte US No 2) — primary-source verification not run in session. WRITE-UP filled and archived in same session — 3 user-fillable sections completed, 8 copyedits applied (capital I ×5, comma splice fix, present-tense, backticks on TimeoutError/OSError, typo 'excpet' → 'except', past-tense 'I was wrong'). Voice preserved on technical claims (port scanner phrasing kept; 'closed socket' phrasing kept). PYTHON L1 CHECKPOINT REACHED — second of three core tracks to clear L1. Concepts L1 still deferred until WP003 retest 2026-05-14. One new cross-track link logged (Python socket.create_connection ↔ Bash nc -zv / </dev/tcp/host/port; total 7).",
+      "tracks_touched": ["python"],
+      "retests_run": [],
+      "challenges_completed_this_session": [
+        "python-L1-first-knock (Python L1 #4 — socket basics, TCP probe primitive; CLOSES Python L1)"
+      ],
+      "writeups_archived_this_session": [
+        "python-L1-first-knock (filled + cleanup-passed in same session — 3 user-fillable sections completed, 8 copyedits applied)"
+      ],
+      "checkpoints_reached_this_session": ["python_l1_complete"],
+      "ethics_framing_delivered": "UK Computer Misuse Act 1990 §1 — first network-touching Python challenge gated the framing. Rule for the programme stated: target must be (a) own machine, (b) own VM, (c) written-authorisation lab. Today's target: 127.0.0.1 only. ⚠️ Verify on case law citations (DPP v Bignell, R v Bow Street Magistrates ex parte US No 2) — surfaced from memory, primary-source verification not run in session.",
+      "tutor_process_notes": [
+        "Sustained Tier 1 (three iterations same mode, no escalation) worked cleanly on a single conceptual gap. Write-up confirmed user identified empirical-verification as the key takeaway ('Take it a step further before asking for help'). Pattern worth noting: when the gap is conceptual rather than syntactic, Tier 1 can carry an entire challenge without escalation if reframes are well-staged. Different shape from session 8's shortcut pattern (where Tier 1 partially landed and revision closed the rest)."
+      ]
     }
   ],
   "checkpoints_reached": [
@@ -512,15 +560,20 @@
       "id": "bash_l1_complete",
       "date": "2026-05-10",
       "note": "Bash Level 1 complete — Evidence Trail closed the redirection criterion. 4 challenges done (First Footprints, Trail in the Logs, Find Tour, Evidence Trail). Pipes solid, redirection solid (>, >>, 2>, 2>&1). First track to reach L1 complete. Bash track ready for L2 (scripting basics: variables, loops, conditionals, exit codes). Session 7 work."
+    },
+    {
+      "id": "python_l1_complete",
+      "date": "2026-05-11",
+      "note": "Python Level 1 complete — First Knock closed the level (4/4 challenges: log_filter, ip_extractor, password_audit, port_check). Second track to reach L1 complete after Bash L1 (2026-05-10). Closure conditional on WP004 retest 2026-05-14 — same standard as Bash L1's WP002 carry. Python track ready for L2 (subprocess, argparse, output suitable for piping — examples: port scanner [scales First Knock primitive across a port range with concurrency], subdomain enumerator, log anomaly detector, hash identifier). Session 9 work."
     }
   ],
   "totals": {
-    "challenges_completed": 8,
+    "challenges_completed": 9,
     "challenges_attempted_unfinished": 2,
-    "writeups_generated": 8,
-    "writeups_archived": 8,
-    "cross_track_connections": 6,
-    "total_hours": 8.4
+    "writeups_generated": 9,
+    "writeups_archived": 9,
+    "cross_track_connections": 7,
+    "total_hours": 9.4
   },
   "diagnostic": {
     "completed": true,
@@ -579,6 +632,6 @@
       "notes": "30-line synthetic auth log. 27 Failed password lines + 3 Accepted password lines. Top failed-source IP is 203.0.113.45 with 11 hits; second is 192.168.1.10 with 9. Important verified property: on a raw `grep Failed | awk '{print $13}' | sort | uniq -c | sort -r` pipeline (using -r not -nr), the column-padded uniq -c output makes lexicographic order match numeric order — both pipelines produce the same answer on this data shape. Trap fires only if the leading whitespace is stripped (e.g., post-awk processing). Reusable for next WP002 retest 2026-05-12."
     }
   },
-  "pickup_note": "SESSION 8 CLOSED 2026-05-11. SESSION 9 ENTRY POINT: PYTHON L1 = 3/4 — one challenge remaining to close Python L1. FIVE RETESTS / RECALL CHECKS STILL ON SCHEDULE (unchanged from session 7 plan): (1) WP002 retest 2026-05-12 — bash frequency-count discipline; failures = 1, stage 0; THIRD FAILURE TRIGGERS A REMEDIATION CHALLENGE — highest-stakes retest. Cross-track evidence from session 7 (Evidence Trail Task 4) reinforces WP002's broader generalisation: trust visible output without inspecting adjacent evidence that contradicts the assumption. Session 8 NEW evidence in the same family but a one-shot self-correction, not WP-promoted: predicate-proxy bug (c.upper() == c) is the exact same shape — verify what you claim, not a proxy. (2) WP003 retest 2026-05-14 — concepts phishing analysis, verification-habit on a NEW phishing email (no redo pressure, no scaffold) — prep email in advance. (3) WP004 retest 2026-05-14 — python file iteration, on a challenge that exposes a real or simulated large-file scenario. Positive signal still holding — Brute Force Source used lazy iteration unprompted. (4) REDIRECTION RECALL CHECK 2026-05-14 — 4 cold prompts on operator behaviour, no scaffold, no scrollback. (5) WP001 retest 2026-05-15 — cross-track instruction precision, stage 1 → 2 if pass. NEW SOFT WP001 EVIDENCE FROM SESSION 8: brief-precision miss recurred on Password Auditor (called audit() on 1 of 4 test passwords; closed on revision 3 after explicit nudge). Implication for 2026-05-15 retest design: include a multi-sub-task brief that tests brief-execution discipline directly. THEN NEW CONTENT, USER PICKS: Bash L2 #1 (first L2 challenge; lab depends on choice — file organiser/log monitor reuse existing labs, ping sweep needs Metasploitable target); Python L1 #4 (closes Python L1 — likely socket basics, IP validator, or another L1-grade concept; avoid repeating password / auth-log territory); Concepts L1 #2 — STILL DEFERRED until WP003 retest passes 2026-05-14. SIDE TASKS OPEN: (i) bash-L0-trail-in-the-logs amendment note re WP002 falsification — carried since session 6, still open. (ii) NEW — external courses budget decision: user has TryHackMe subscription unused. Session 8 recommended Tier 1 = TryHackMe Cyber Security 101 path → Jr Pen Tester / SOC Analyst L1, PortSwigger Web Security Academy at Python L2, OverTheWire Bandit alongside Bash L2. User to decide whether to budget external time alongside tutor sessions; recommend tagging one THM room per week as 'session homework' so the tutor can convert external exposure into portfolio. LAB STATUS: vulnerable target VM (Metasploitable2/DVWA) STILL NOT installed — required before any scanning challenge; gates Bash L2 ping sweep AND most Python L3 work. TUTOR PROCESS NOTES TO CARRY FORWARD: (i) when a Tier 1 reframe gets shortcut, do NOT escalate tiers during the challenge — flag in review and let revision force the abstraction (worked on Password Auditor 'without hardcoding'); (ii) brief-precision miss recurred — when designing briefs, count concrete deliverables (e.g. 'four test passwords') and make execution against ALL of them explicit not implicit.",
+  "pickup_note": "SESSION 9 CLOSED 2026-05-11. PYTHON L1 COMPLETE — Second of three core tracks to clear L1 (Bash 2026-05-10, Python 2026-05-11). Closure conditional on WP004 retest 2026-05-14. SESSION 10 ENTRY POINT: FIVE RETESTS / RECALL CHECKS STILL ON SCHEDULE: (1) WP002 retest 2026-05-12 — bash frequency-count discipline; failures = 1, stage 0; THIRD FAILURE TRIGGERS A REMEDIATION CHALLENGE — highest-stakes retest. WP002's GENERALISED DESCRIPTION NOW HAS THREE CROSS-LANGUAGE DATA POINTS (bash sort-column round 1 → python predicate-proxy session 8 → python exception-class session 9). Pattern is durable: trust the one observation without probing the class. (2) WP003 retest 2026-05-14 — concepts phishing analysis, verification-habit on a NEW phishing email (no redo pressure, no scaffold) — prep email in advance. (3) WP004 retest 2026-05-14 — python file iteration, on a challenge that exposes a real or simulated large-file scenario. Positive signal still holding — Brute Force Source used lazy iteration unprompted; First Knock used try/except cleanly with no readlines-style memory misstep. (4) REDIRECTION RECALL CHECK 2026-05-14 — 4 cold prompts on operator behaviour, no scaffold, no scrollback. (5) WP001 retest 2026-05-15 — cross-track instruction precision, stage 1 → 2 if pass. WP001 EVIDENCE MIXED: session 8 SOFT FAILURE (Password Auditor brief-precision miss); session 9 CLEAN PASS (First Knock brief enumerated two test cases; both exercised without nudge — third L1 challenge in a row clean on enumeration). Implication for 2026-05-15 retest design: multi-sub-task brief to test brief-execution discipline directly. THEN NEW CONTENT, USER PICKS: Bash L2 #1 (first L2 challenge; lab depends on choice — file organiser/log monitor reuse existing labs, ping sweep needs Metasploitable target); Python L2 #1 (NEW — first Python L2 challenge; subprocess/argparse/pipe-friendly output; examples: port scanner [scales First Knock primitive across a range with concurrency], subdomain enumerator, log anomaly detector, hash identifier); Concepts L1 #2 — STILL DEFERRED until WP003 retest passes 2026-05-14. SIDE TASKS OPEN: (i) bash-L0-trail-in-the-logs amendment note re WP002 falsification — carried since session 6, still open. (ii) External courses budget decision: user has TryHackMe subscription unused — session 8 Tier 1 recommendations stand (TryHackMe Cyber Security 101 path; PortSwigger Web Security Academy at Python L2; OverTheWire Bandit alongside Bash L2). User to decide whether to budget external time and tag one THM room per week as 'session homework'. LAB STATUS: vulnerable target VM (Metasploitable2/DVWA) STILL NOT installed — required before any scanning challenge; gates Bash L2 ping sweep AND most Python L3 work. With Python L2 now unlocked, Metasploitable becomes higher priority. ETHICS FRAMING delivered session 9 (UK CMA 1990 §1) — restate at start of each subsequent network-touching challenge in shorter form (target must be own machine / own VM / written-auth lab). TUTOR PROCESS NOTES TO CARRY FORWARD: (i) when a Tier 1 reframe gets shortcut, do NOT escalate tiers during the challenge — flag in review and let revision force the abstraction (validated session 8); (ii) sustained Tier 1 across multiple iterations works when the conceptual gap is clean (validated session 9 — three iterations no escalation, full unblock); (iii) brief-precision still designing 2026-05-15 retest around multi-sub-task brief.",
   "last_weekly_summary": "2026-05-08"
 }
