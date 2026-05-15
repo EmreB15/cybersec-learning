@@ -2,8 +2,8 @@
   "schema_version": "3.0",
   "user": "Emre",
   "started_date": "2026-04-27",
-  "last_session": "2026-05-11",
-  "session_count": 9,
+  "last_session": "2026-05-15",
+  "session_count": 10,
   "tracks": {
     "python": {
       "level": 1,
@@ -189,12 +189,14 @@
         "Bash L0 First Footprints Task 2 round 1 — skipped listing entirely",
         "Bash L0 First Footprints Task 4 round 1 — used -n 5 instead of -n 10"
       ],
-      "stage": 1,
-      "retest_due": "2026-05-15",
+      "stage": 2,
+      "retest_due": "2026-05-29",
       "failures": 0,
       "retest_history": [
-        {"date": "2026-05-08", "outcome": "passed", "challenge": "Brief Precision (3 sub-tasks: head -5 syslog, tail -3 auth.log, grep -c 'sudo' auth.log)", "notes": "All three sub-tasks correct first try. Used grep -c rather than piping to wc -l (single-tool idiomatic). Quoted 'sudo' defensively. Each sub-task its own command, no chaining. Tier 1 reframe used on task 3 (two valid shapes pointed out without naming the flag); user self-served from there."}
-      ]
+        {"date": "2026-05-08", "outcome": "passed", "challenge": "Brief Precision (3 sub-tasks: head -5 syslog, tail -3 auth.log, grep -c 'sudo' auth.log)", "notes": "All three sub-tasks correct first try. Used grep -c rather than piping to wc -l (single-tool idiomatic). Quoted 'sudo' defensively. Each sub-task its own command, no chaining. Tier 1 reframe used on task 3 (two valid shapes pointed out without naming the flag); user self-served from there."},
+        {"date": "2026-05-15", "outcome": "passed", "challenge": "Multi-Sub-Task Brief Precision (4 sub-tasks A/B/C/D on auth-snippet log: count Accepted, last 3 Failed, unique Failed-IPs sorted, count of unique Failed-IPs)", "notes": "All 4 sub-tasks delivered clean on first submission, zero nudges. Task B trap explicitly avoided — user wrote `grep 'Failed' | tail -3` rather than `tail -3 auth-snippet.log` (which would have contaminated with the Accepted line at position 29). Output-type discipline held: numbers where 'a single number' specified, IPs without counts where 'just IPs' specified. Brief-design discipline (count concrete deliverables explicitly, per dashboard process note 10) validated by clean result. Stage 1 → 2. Two soft WP001 misses ELSEWHERE in same session (head -1 vs head -5 on WP002 retest; counted IPs vs usernames on WP004 retest) — both on implicit-enumeration briefs. Reading: when briefs explicitly enumerate concrete deliverables, WP001 holds; when implicit, substitution still surfaces. One more clean retest at stage 2 → mastered."}
+      ],
+      "evidence_2026-05-15": "Two soft WP001 hits same session as the WP001 retest passed cleanly. (1) WP002 retest first submission: brief said top 5, user wrote head -1 (number substitution). (2) WP004 retest first submission: brief said count distinct invalid USERNAMES, user counted distinct source IPs (parameter substitution; variable name 'failed_ips' revealed the gap). Both on briefs where the concrete deliverable was implicit. Dedicated WP001 retest brief was explicitly enumerated and passed 4/4 clean. The contrast itself is the signal: enumeration discipline closes the gap."
     },
     {
       "id": "WP002",
@@ -207,10 +209,11 @@
         "Bash L1 Evidence Trail Task 4 first three attempts (2026-05-10) — each `find . && /nonexistent_path -type f > full-capture.txt 2>&1` attempt printed `find .` output to terminal (because `&&` split the command and only the right side was redirected). Terminal output was hard evidence the command shape was wrong, but the user kept submitting and reading only `cat full-capture.txt` to check the file. The adjacent terminal evidence (output that should not have been there if redirection was working) was skipped. Same WP002 family — inspecting only the named output, not the full state. Cross-track signal — not opening a new WP, this evidence reinforces WP002's broader description."
       ],
       "stage": 0,
-      "retest_due": "2026-05-12",
-      "failures": 1,
+      "retest_due": "2026-05-19",
+      "failures": 2,
       "retest_history": [
-        {"date": "2026-05-08", "outcome": "failed", "challenge": "Frequency Recall (find IP with most failed login attempts in retest-wp002/auth-snippet.log)", "notes": "Pipeline produced the correct answer (203.0.113.45 with 11 failed attempts) but failed two explicit brief criteria: (1) no Failed-only filter — awk $13 ran on every line, including 3 Accepted lines where $13 is the source port not the IP; correct top IP surfaced only because port-number rows each had count 1 and could not outrank 11; (2) no intermediate-stage inspection performed before stating the answer, despite the brief explicitly requiring it. Discipline only surfaced post-hoc after tutor pushed for the inspection step. Stage stays 0, failures incremented to 1. Next retest 2026-05-12."}
+        {"date": "2026-05-08", "outcome": "failed", "challenge": "Frequency Recall (find IP with most failed login attempts in retest-wp002/auth-snippet.log)", "notes": "Pipeline produced the correct answer (203.0.113.45 with 11 failed attempts) but failed two explicit brief criteria: (1) no Failed-only filter — awk $13 ran on every line, including 3 Accepted lines where $13 is the source port not the IP; correct top IP surfaced only because port-number rows each had count 1 and could not outrank 11; (2) no intermediate-stage inspection performed before stating the answer, despite the brief explicitly requiring it. Discipline only surfaced post-hoc after tutor pushed for the inspection step. Stage stays 0, failures incremented to 1. Next retest 2026-05-12."},
+        {"date": "2026-05-15", "outcome": "failed", "challenge": "Failed-Login Frequency Audit (Retest r2) — fresh 30-line auth-snippet at labs/bash-L1/retest-wp002-r2/, different IPs/usernames/counts from 2026-05-08 to prevent pattern-matching", "notes": "First submission: pipeline construction correct (grep Failed | awk '{print $13}' | sort | uniq -c | sort -nr) but ran zero of two brief-required verification checks (filter-stage wc -l + pre-head sorted list); used head -1 instead of head -5. Same fingerprint as 2026-05-08 — correct top answer surfaces, verification discipline does NOT fire unprompted. Revision: ran both verification steps cleanly and head -5 once gaps were explicitly named in review. 28 Failed lines, top 4 IPs (45.142.122.81=12, 92.118.39.74=8, 185.220.101.50=5, 134.122.27.18=3) — counts cross-checked, 12+8+5+3=28. Filter trap (185.220.101.50 in BOTH Failed and Accepted) avoided correctly by the pipeline, but verification not run meant the user didn't see the cross-check. Stage stays 0. Failures 1 → 2. Next retest 2026-05-19. ONE MORE FAILURE = REMEDIATION CHALLENGE. The discipline can be applied when prompted (revision was clean, no further nudges); the unprompted application is the gap. Pedagogically: the head -1 substitution is WP001 family — same submission was scored as soft WP001 evidence (see WP001 evidence_2026-05-15). Hint tiers used on the awk syntax recall mid-challenge: T1 (count fields to IP — landed), T2 (look at prior writeup / man awk — did not unblock; user reported the man page 'makes 0 sense'), T3 (plain English awk-action-block syntax — landed). Awk syntax recall flagged for spaced-repetition revisit: three exposures across L0/L1 and the action-block syntax is not sticking."}
       ],
       "self_correction_observed": "User flagged elegance concern unprompted on round 2 ('hard coded in a sense'). The reflective instinct that prevents WP002 in future is already showing — track whether retest confirms it stays self-corrected.",
       "correction_2026-05-08": "Earlier evidence claimed `sort -r` would misrank counts ≥10 by lexicographic comparison. Verified empirically against original Trail in the Logs auth.log AND a fresh retest dataset with counts spanning 3..11. Claim is wrong on raw `uniq -c | sort -r` output: column padding from uniq -c right-aligns the count field, so lexicographic order matches numeric order on this pipeline shape. Trap only fires if leading whitespace is stripped (e.g., post-awk processing). Original weak-point logging overstated the round 2 failure mode. Description and evidence above rewritten to reflect what is empirically true: round 1 was a real bug (no count-column sort), round 2 was semantically iffy but functionally correct."
@@ -239,9 +242,12 @@
       "evidence": [
         "Python L1 #1 Log Line Reader first version (2026-05-10): used `for line in f.readlines():` instead of `for line in f:`. Worked correctly on the 30-line synthetic log (output identical to the lazy version) but the pattern would fail on a large file. Self-corrected on revision after review explained the operational implication."
       ],
-      "stage": 0,
-      "retest_due": "2026-05-14",
-      "failures": 0
+      "stage": 1,
+      "retest_due": "2026-05-22",
+      "failures": 0,
+      "retest_history": [
+        {"date": "2026-05-15", "outcome": "passed", "challenge": "Distinct Invalid Users (Python L1 retest) — count distinct invalid usernames in Failed lines of auth-snippet log; production-target multi-GB framing; no explicit 'don't use readlines' telegraph", "notes": "WP004 DISCIPLINE TEST PASSED CLEANLY: `for line in f:` reached for unprompted on first submission. Lazy iteration held under fatigue, Windows-path friction, and visible frustration — strongest positive signal of the session. First submission counted distinct source IPs (4) instead of distinct usernames (5) — WP001 family wrong-question miss, variable name 'failed_ips' and index [12] revealed the gap. Revised cleanly after review (changed [12]→[10], renamed failed_ips→failed_users); output 5 (admin, root, ubuntu, www-data, postgres) verified against the lab data. Style note (not flagged): used list + 'not in' for distinct collection rather than set + .add — works on 30 lines but O(N²); demonstrated set/.add pattern post-completion. Stage 0 → 1. Next retest 2026-05-22. TWO MID-CHALLENGE FRICTION POINTS LOGGED: (a) Windows backslash path escape gotcha — wrote D:\\cybersecurity_learning\\labs\\bash-L1\\... as a regular string literal, hit OSError because \\b became backspace (0x08), \\a became bell (0x07); needed T2 with the three standard fixes (raw string literal, double-backslash, forward slashes); user picked raw string and unblocked. (b) Python relative-path / CWD confusion — needed T1 reframe on what open() resolves relative paths against (script location vs terminal CWD). Both are environment-friction gaps, not WP004 territory; flagged in hint_log."}
+      ]
     }
   ],
   "mastered_points": [],
@@ -366,6 +372,30 @@
       "tier": 1,
       "tier_name": "REFRAME (sustained — three iterations, no escalation)",
       "outcome": "(1) 'When 9999 is closed, what does create_connection actually do on that line?' — user answered 'returns a socket'. (2) 'Test it — add print(socket_1), run against 9999, observe what Python actually does.' — user ran, reported TimeoutError. (3) 'How do you write code that runs one way when a line succeeds, and a different way when that line raises?' — user reached for try/except, wrote try/except OSError / return False / return True. Single Tier 1 mode carried through the full unblock. Empirical-verification middle step is the WP002 lesson being trained mid-challenge. Pattern note: when the gap is conceptual rather than syntactic, Tier 1 can carry an entire challenge without escalation if reframes are well-staged."
+    },
+    {
+      "date": "2026-05-15",
+      "challenge": "wp002-retest-r2",
+      "task": "awk action-block syntax recall (extract field 13)",
+      "tier": 3,
+      "tier_name": "REFRAME → CONCEPT NUDGE → PLAIN ENGLISH LOGIC (full escalation)",
+      "outcome": "T1: 'Take one Failed line, count the whitespace-separated chunks up to and including the source IP — what position number?' User answered 13 cleanly (inspection landed). T2: pointed at bash-L0-trail-in-the-logs write-up + man awk for action-block syntax. User reported 'the man page makes 0 sense to me. awk just doesn't sit in my mind' — honest gap report, not making excuses. T3: plain-English description of awk's read-line-split-on-whitespace-then-run-action-block-on-each behaviour; named the `$N` field-reference convention, the action-block curly braces, the surrounding single quotes — user typed `awk '{print $13}'` themselves from the description and unblocked. THIRD EXPOSURE TO AWK ACTION-BLOCK SYNTAX ACROSS L0/L1 and the syntax is still not durable — flagged for spaced-repetition revisit as a syntax-recall gap (similar shape to redirection operators: pure recall, not conceptual). Mid-T3, user self-diagnosed their earlier confusion: 'i was so close before but i kept using the single quotes within the curly braces' — quote-nesting was the specific bug; once T3 named the structure (single quotes wrap the entire program from outside), the fix was self-articulated."
+    },
+    {
+      "date": "2026-05-15",
+      "challenge": "wp004-retest",
+      "task": "Python relative-path / open() CWD resolution",
+      "tier": 1,
+      "tier_name": "REFRAME",
+      "outcome": "T1: 'When Python open() is given a relative path, what does it resolve against — your script's location, or the terminal's CWD?' Plus a two-option fork (cd to project root + relative path, OR absolute path). User chose absolute path, applied immediately."
+    },
+    {
+      "date": "2026-05-15",
+      "challenge": "wp004-retest",
+      "task": "Python string literal escape sequences on Windows paths",
+      "tier": 2,
+      "tier_name": "REFRAME → CONCEPT NUDGE",
+      "outcome": "User wrote `open(\"D:\\cybersecurity_learning\\labs\\bash-L1\\...\")` and hit OSError because \\b → backspace (0x08), \\a → bell (0x07). T1 reframe asked user to compare the path Python actually tried to open vs the typed string — user spotted the escape-interpretation, named the issue ('it thinks its being escaped'), then explicitly asked for the fix. T2: three standard fixes named (raw string literal with `r` prefix, double-backslashes, forward slashes — Python on Windows accepts forward slashes). User picked raw string. Niche Windows-Python interaction; user genuinely hadn't seen the gotcha before; not a recall miss. No WP, no spaced repetition — single exposure of a fixed bit of knowledge."
     }
   ],
   "cross_track_links": [
@@ -497,6 +527,9 @@
       ],
       "scheduled_refreshers_set_this_session": [
         {"id": "redirection-recall-2026-05-14", "concept": "Bash redirection operators (>, >>, 2>, 2>&1)", "type": "forward-looking recall check, NOT a WP", "due": "2026-05-14", "reason": "User proactively flagged forecasted forgetting after Evidence Trail. Joins WP003/WP004 retest day. Format: 4 cold prompts on operator behavior, no scaffold. Pass = recall confirmed, no further action. Fail = formalize as WP."}
+      ],
+      "scheduled_refreshers_executed": [
+        {"id": "redirection-recall-2026-05-14", "executed_date": "2026-05-15", "outcome": "partial", "score": "2.5/4", "details": "Q1 (> overwrite): CLEAN. Q2 (>> append): CLEAN. Q3 (2> stderr-only): PARTIAL — got stderr-to-file half right; missed that stdout (unredirected) still goes to terminal. The 'where does stdout go when only stderr is redirected' question is the key gap. Q4 (< stdin redirection): BLANK — user reported 'i dont remember learning this one' and post-prompt confirmed they think it was never trained. Tutor-side scope check pending: `<` was not in Evidence Trail's covered set (which was >, >>, 2>, 2>&1 per session 7 notes). Q4 was out-of-scope on tutor's part; the recall check should be re-issued without Q4 in a future session OR `<` should be introduced as new content. Not promoting to WP. Two trajectories holding cleanly (> and >>); stderr split needs one more touch; stdin redirection needs initial training."}
       ]
     },
     {
@@ -538,6 +571,32 @@
       "tutor_process_notes": [
         "Sustained Tier 1 (three iterations same mode, no escalation) worked cleanly on a single conceptual gap. Write-up confirmed user identified empirical-verification as the key takeaway ('Take it a step further before asking for help'). Pattern worth noting: when the gap is conceptual rather than syntactic, Tier 1 can carry an entire challenge without escalation if reframes are well-staged. Different shape from session 8's shortcut pattern (where Tier 1 partially landed and revision closed the rest)."
       ]
+    },
+    {
+      "date": "2026-05-15",
+      "session_number": 10,
+      "duration_minutes_planned": 60,
+      "duration_minutes_actual_approx": 70,
+      "summary": "RETEST-DENSE SESSION. Four discrete items run, three retests scored. WP001 RETEST PASSED CLEAN — multi-sub-task brief (4 sub-tasks A/B/C/D), all delivered first pass no nudges, Task B trap (Accepted line at file position 29 between two Failed lines) avoided correctly with filter-then-tail; stage 1 → 2; one more clean retest = mastered. Validates dashboard process note 10 (count concrete deliverables explicitly). WP002 RETEST FAILED (failures 1 → 2, stage stays 0, next 2026-05-19, ONE MORE FAILURE = REMEDIATION CHALLENGE) — first submission pipeline construction was correct but ran zero of two brief-required verification checks AND used head -1 not head -5; same fingerprint as 2026-05-08 retest (correct top answer surfaces, verification discipline does not fire unprompted). Revision was clean once gaps were named explicitly. Awk action-block syntax recall needed full T1→T2→T3 escalation; user reported 'awk just doesn't sit in my mind' — honest gap report; third L0/L1 exposure and syntax is still not durable; flagged for spaced-repetition revisit as syntax-recall gap (similar shape to redirection operators). WP004 RETEST PASSED — `for line in f:` reached for unprompted on first submission, lazy iteration discipline held under fatigue + Windows-path friction + visible frustration (strongest positive signal of the session); stage 0 → 1, next 2026-05-22. First submission counted distinct source IPs instead of distinct usernames (WP001 family wrong-question miss, variable name 'failed_ips' revealed the gap); revised cleanly after review (index [12]→[10], variable rename). BASH REDIRECTION RECALL CHECK SCORED 2.5/4 — `>` and `>>` clean; `2>` partial (missed that unredirected stdout still goes to terminal); `<` blank (user reports never trained — tutor-side scope check pending; if confirmed, Q4 was out-of-scope and `<` needs to be introduced as new content in a future session). Not promoting to WP. WP003 RETEST DEFERRED to next session — was already 1 day overdue today; rolled forward; lower-stakes-than-WP002, no fresh Concepts content blocked. SOFT WP001 EVIDENCE TWICE TODAY OUTSIDE the dedicated WP001 retest (head -1 vs head -5 on WP002 retest; IPs vs usernames on WP004 retest) — both on briefs where the concrete deliverable was implicit. The contrast with the clean dedicated WP001 retest (explicitly enumerated brief) is the signal: enumeration discipline closes the gap. THM NOTES SINCE LAST SESSION: 3 entries on 2026/05/11 — 'snake oil' and 'ss' user flagged not important (acknowledged, no drill); shodan/censys/virustotal/exploit database user flagged 'not too sure why they are important' — UNRESOLVED, surfaced in session greeting, deferred to future session for placement decision. WEEKLY SUMMARY REGEN DUE — see weekly_summary section. NEW FRICTION POINTS LOGGED IN HINT_LOG: (a) Python relative-path / open() CWD resolution — T1 unblocked, two-option fork (cd + relative path OR absolute path); (b) Windows backslash escape gotcha in Python string literals — T2 with three fixes (raw string, double-backslash, forward slashes); user picked raw string. Both are environment-friction, not WP territory.",
+      "tracks_touched": ["bash", "python"],
+      "retests_run": [
+        {"id": "WP001", "outcome": "passed", "stage": "1 → 2", "failures": "0", "next_due": "2026-05-29"},
+        {"id": "WP002", "outcome": "failed", "stage": "0 → 0", "failures": "1 → 2", "next_due": "2026-05-19", "note": "ONE MORE FAILURE TRIGGERS REMEDIATION CHALLENGE"},
+        {"id": "WP004", "outcome": "passed", "stage": "0 → 1", "failures": "0", "next_due": "2026-05-22"}
+      ],
+      "retests_deferred": [
+        {"id": "WP003", "original_due": "2026-05-14", "deferred_to": "next session", "reason": "Insufficient time in 60-min window after three retests + recall check; Concepts retest needs proper reasoning space, not a time-pressured squeeze; lower stakes than WP002 (which was 3 days overdue and highest-stakes); no fresh Concepts content blocked by the slip. Retest_due unchanged — overdue date preserved as truth."}
+      ],
+      "challenges_completed_this_session": [],
+      "writeups_archived_this_session": [],
+      "spaced_repetition_flags_set": [
+        "awk action-block syntax recall (3rd L0/L1 exposure, still not durable — needs spaced-repetition revisit; treat as syntax-recall gap like redirection operators)"
+      ],
+      "tutor_process_notes": [
+        "WP001 enumeration discipline (count concrete deliverables explicitly) demonstrably closes the gap — clean retest pass on explicitly-enumerated brief, soft misses on two same-session briefs where deliverables were implicit. Process note 10 is validated; carry forward unchanged.",
+        "Redirection recall Q4 may have been out-of-scope — user reports `<` was never trained, session 7 Evidence Trail notes only list >, >>, 2>, 2>&1 as the covered set. Tutor-side: do not score this recall miss as a fail; introduce `<` as new content in a future session or amend the recall check to drop Q4.",
+        "Three honest gap reports from user this session: 'awk just doesn't sit in my mind', 'im sorry i literally cant, the man page makes 0 sense to me', 'i dont remember learning this one'. All three honest — not making excuses. The honest reporting is exactly the behaviour that lets the spaced-repetition system actually work. Strong process signal."
+      ]
     }
   ],
   "checkpoints_reached": [
@@ -573,7 +632,7 @@
     "writeups_generated": 9,
     "writeups_archived": 9,
     "cross_track_connections": 7,
-    "total_hours": 9.4
+    "total_hours": 10.6
   },
   "diagnostic": {
     "completed": true,
@@ -629,9 +688,17 @@
       "files": 1,
       "file_path": "auth-snippet.log",
       "state_verified_date": "2026-05-08",
-      "notes": "30-line synthetic auth log. 27 Failed password lines + 3 Accepted password lines. Top failed-source IP is 203.0.113.45 with 11 hits; second is 192.168.1.10 with 9. Important verified property: on a raw `grep Failed | awk '{print $13}' | sort | uniq -c | sort -r` pipeline (using -r not -nr), the column-padded uniq -c output makes lexicographic order match numeric order — both pipelines produce the same answer on this data shape. Trap fires only if the leading whitespace is stripped (e.g., post-awk processing). Reusable for next WP002 retest 2026-05-12."
+      "notes": "30-line synthetic auth log. 27 Failed password lines + 3 Accepted password lines. Top failed-source IP is 203.0.113.45 with 11 hits; second is 192.168.1.10 with 9. Important verified property: on a raw `grep Failed | awk '{print $13}' | sort | uniq -c | sort -r` pipeline (using -r not -nr), the column-padded uniq -c output makes lexicographic order match numeric order — both pipelines produce the same answer on this data shape. Trap fires only if the leading whitespace is stripped (e.g., post-awk processing). Used in 2026-05-08 retest (failed); retired for subsequent retests in favour of retest-wp002-r2 to prevent pattern-matching."
+    },
+    "bash-L1/retest-wp002-r2/": {
+      "built_date": "2026-05-15",
+      "purpose": "WP002 retest r2 data — fresh synthetic auth log, different IPs/usernames/counts from the 2026-05-08 set to prevent pattern-matching. Also used in WP001 retest (multi-sub-task brief) and WP004 retest (distinct invalid users) same session.",
+      "files": 1,
+      "file_path": "auth-snippet.log",
+      "state_verified_date": "2026-05-15",
+      "notes": "30-line synthetic auth log. 28 Failed password lines + 2 Accepted password lines. Top failed-source IP is 45.142.122.81 with 12 hits (≥10 to test numeric vs lex sort). Filter trap: 185.220.101.50 appears in BOTH Failed (5×) and Accepted (1×) — same-IP brute-force-then-successful-login IOC pattern; correct Failed-only count is 5, naive no-filter count would be 6. Five distinct invalid usernames across Failed lines (admin, root, ubuntu, www-data, postgres). Reusable for next WP002 retest 2026-05-19 IF pattern-matching is not a concern by then; otherwise generate r3 set."
     }
   },
-  "pickup_note": "SESSION 9 CLOSED 2026-05-11. PYTHON L1 COMPLETE — Second of three core tracks to clear L1 (Bash 2026-05-10, Python 2026-05-11). Closure conditional on WP004 retest 2026-05-14. SESSION 10 ENTRY POINT: FIVE RETESTS / RECALL CHECKS STILL ON SCHEDULE: (1) WP002 retest 2026-05-12 — bash frequency-count discipline; failures = 1, stage 0; THIRD FAILURE TRIGGERS A REMEDIATION CHALLENGE — highest-stakes retest. WP002's GENERALISED DESCRIPTION NOW HAS THREE CROSS-LANGUAGE DATA POINTS (bash sort-column round 1 → python predicate-proxy session 8 → python exception-class session 9). Pattern is durable: trust the one observation without probing the class. (2) WP003 retest 2026-05-14 — concepts phishing analysis, verification-habit on a NEW phishing email (no redo pressure, no scaffold) — prep email in advance. (3) WP004 retest 2026-05-14 — python file iteration, on a challenge that exposes a real or simulated large-file scenario. Positive signal still holding — Brute Force Source used lazy iteration unprompted; First Knock used try/except cleanly with no readlines-style memory misstep. (4) REDIRECTION RECALL CHECK 2026-05-14 — 4 cold prompts on operator behaviour, no scaffold, no scrollback. (5) WP001 retest 2026-05-15 — cross-track instruction precision, stage 1 → 2 if pass. WP001 EVIDENCE MIXED: session 8 SOFT FAILURE (Password Auditor brief-precision miss); session 9 CLEAN PASS (First Knock brief enumerated two test cases; both exercised without nudge — third L1 challenge in a row clean on enumeration). Implication for 2026-05-15 retest design: multi-sub-task brief to test brief-execution discipline directly. THEN NEW CONTENT, USER PICKS: Bash L2 #1 (first L2 challenge; lab depends on choice — file organiser/log monitor reuse existing labs, ping sweep needs Metasploitable target); Python L2 #1 (NEW — first Python L2 challenge; subprocess/argparse/pipe-friendly output; examples: port scanner [scales First Knock primitive across a range with concurrency], subdomain enumerator, log anomaly detector, hash identifier); Concepts L1 #2 — STILL DEFERRED until WP003 retest passes 2026-05-14. SIDE TASKS OPEN: (i) bash-L0-trail-in-the-logs amendment note re WP002 falsification — carried since session 6, still open. (ii) External courses budget decision: user has TryHackMe subscription unused — session 8 Tier 1 recommendations stand (TryHackMe Cyber Security 101 path; PortSwigger Web Security Academy at Python L2; OverTheWire Bandit alongside Bash L2). User to decide whether to budget external time and tag one THM room per week as 'session homework'. LAB STATUS: vulnerable target VM (Metasploitable2/DVWA) STILL NOT installed — required before any scanning challenge; gates Bash L2 ping sweep AND most Python L3 work. With Python L2 now unlocked, Metasploitable becomes higher priority. ETHICS FRAMING delivered session 9 (UK CMA 1990 §1) — restate at start of each subsequent network-touching challenge in shorter form (target must be own machine / own VM / written-auth lab). TUTOR PROCESS NOTES TO CARRY FORWARD: (i) when a Tier 1 reframe gets shortcut, do NOT escalate tiers during the challenge — flag in review and let revision force the abstraction (validated session 8); (ii) sustained Tier 1 across multiple iterations works when the conceptual gap is clean (validated session 9 — three iterations no escalation, full unblock); (iii) brief-precision still designing 2026-05-15 retest around multi-sub-task brief.",
-  "last_weekly_summary": "2026-05-08"
+  "pickup_note": "SESSION 10 CLOSED 2026-05-15. Retest-dense session, ~70 min (slight overrun). Three retests scored, one deferred, one recall check executed. WP001 PASSED stage 1→2 (next 2026-05-29; one more clean = mastered). WP002 FAILED failures 1→2 stage 0 (next 2026-05-19; ONE MORE FAILURE TRIGGERS REMEDIATION CHALLENGE — HIGHEST STAKES). WP004 PASSED stage 0→1 (next 2026-05-22). WP003 DEFERRED, still at original retest_due 2026-05-14 (now 1 day overdue going into next session). Bash redirection recall scored 2.5/4 — `>` and `>>` clean, `2>` partial, `<` blank (user reports never trained; needs tutor scope check + possible introduction as new content). SESSION 11 ENTRY POINT: FIRST PRIORITY IS WP003 RETEST (overdue, concepts phishing analysis, needs FRESH phishing email prep BEFORE session — verification-habit on a NEW email with no redo pressure, no scaffold). THEN: budget remaining time for new content OR for the awk-syntax spaced-repetition revisit. AWK ACTION-BLOCK SYNTAX FLAGGED FOR SPACED-REPETITION REVISIT — third L0/L1 exposure today and the action-block syntax (single quotes wrap, curly braces inside, `$N` field reference) still does not stick. Similar shape to redirection operators: pure syntax recall, not conceptual. WP002 PATH FORWARD: next retest 2026-05-19 is the deciding one. Design as bash frequency-count again with a fresh dataset (retest-wp002-r3 — generate before session); the verify-don't-proxy discipline must fire UNPROMPTED on first submission. If it doesn't, remediation challenge triggers — small scaffolded task targeting the inspect-adjacent-evidence habit specifically. NEW CONTENT WHEN RETESTS CLEAR: Bash L2 #1 (file organiser or log monitor — reuse existing labs); Python L2 #1 (port scanner — scales First Knock primitive with subprocess + argparse + concurrency); Concepts L1 #2 (deferred until WP003 retest passes). THM NOTES STATE: 3 entries on 2026/05/11; 'snake oil' and 'ss' acknowledged (no drill); shodan/censys/virustotal/exploit database still UNRESOLVED — surface in next session for placement decision (Concepts L1 #2 candidate?). SIDE TASKS OPEN: (i) bash-L0-trail-in-the-logs amendment note re WP002 falsification — carried since session 6, still open. (ii) External courses budget decision (TryHackMe subscription unused). (iii) Metasploitable2/DVWA install — gates Bash L2 ping sweep AND most Python L3 work. With Python L2 unlocked, highest leverage side task. SOFT WP001 EVIDENCE TWICE THIS SESSION (head -1 vs head -5; IPs vs usernames) — both on implicit-enumeration briefs. Contrast with clean dedicated WP001 retest = enumeration discipline closes the gap. PROCESS NOTE 10 VALIDATED. TUTOR PROCESS REMINDER: when designing briefs, count concrete deliverables explicitly — implicit enumeration still surfaces WP001 substitution.",
+  "last_weekly_summary": "2026-05-15"
 }
