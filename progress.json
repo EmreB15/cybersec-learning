@@ -2,8 +2,8 @@
   "schema_version": "3.0",
   "user": "Emre",
   "started_date": "2026-04-27",
-  "last_session": "2026-05-15",
-  "session_count": 10,
+  "last_session": "2026-05-16",
+  "session_count": 11,
   "tracks": {
     "python": {
       "level": 1,
@@ -229,10 +229,13 @@
         "Diagnostic 2026-04-27 (WA002 origin): phishing indicator inventory partial — surfaced obvious red flags but missed link inspection, account specifics, vague sign-off.",
         "Concepts L1 #1 Phishing Anatomy first pass 2026-05-10: lens 1 declared 'no indicator' without comparing the sender domain (docusign-secure.net) to the real DocuSign domain (docusign.com). Same partial-inventory pattern as the diagnostic — skipped the systematic check on a less-obvious indicator. Redo with corrected framing landed cleanly."
       ],
-      "stage": 0,
-      "retest_due": "2026-05-14",
+      "stage": 1,
+      "retest_due": "2026-05-23",
       "failures": 0,
-      "self_correction_observed": "On the redo, lens 5 demonstrated the corrected behaviour without prompting: user didn't know what .tk meant, hypothesised 'tokens' (wrong fact), and named the hypothesis openly — the right behaviour even when the answer was wrong. The verification-habit lesson appears to have landed on the redo. Real test is whether it persists on a NEW phishing email with no redo pressure (next retest)."
+      "self_correction_observed": "On the redo, lens 5 demonstrated the corrected behaviour without prompting: user didn't know what .tk meant, hypothesised 'tokens' (wrong fact), and named the hypothesis openly — the right behaviour even when the answer was wrong. The verification-habit lesson appears to have landed on the redo. Real test is whether it persists on a NEW phishing email with no redo pressure (next retest).",
+      "retest_history": [
+        {"date": "2026-05-16", "outcome": "passed", "challenge": "Concepts L1 phishing retest — HMRC tax-refund impersonation email, fresh content, no scaffold; 6-lens framework applied cold under no-redo-pressure conditions", "notes": "PASS. Verification habit fired UNPROMPTED on both trap lenses. Lens 1 (sender): user named real HMRC domain (hmrc.gov.uk / gov.uk), compared against suspicious refunds@hmrc-services.org.uk, called the mismatch. Lens 5 (links): chained verification step (hover/inspect URL, check for .gov.uk) with payload hypothesis (sign-in page that steals bank details) — analyst-grade reasoning, not just 'link suspicious'. Lens 6 (sign-off / footer): absence-as-indicator applied unprompted — 'no footer, no copyright, no contact details; you can expect an email from an organisation to have some sort of sophisticated footer.' Durable carry from the 2026-05-10 walk-through where this lens needed an explicit tutor-walked explanation. Two minor lens misses logged but not promoted: (a) lens 3 missed the 'Dear Taxpayer' generic greeting (HMRC has the user's name on file from PAYE — generic greeting on personalised-claim email is a classic tell); (b) lens 4 substituted pressure analysis for analysis of the ask itself ('confirm your details' is vague — what details?; real HMRC refunds go direct to bank without portal confirmation, so the ask itself contradicts how the real process works). Both interpretable as scope ambiguity on lens prompts, not WP001 substitution. Zero hint tiers used. Stage 0 → 1. Next retest 2026-05-23 (Anki 7-day interval)."}
+      ]
     },
     {
       "id": "WP004",
@@ -597,6 +600,24 @@
         "Redirection recall Q4 may have been out-of-scope — user reports `<` was never trained, session 7 Evidence Trail notes only list >, >>, 2>, 2>&1 as the covered set. Tutor-side: do not score this recall miss as a fail; introduce `<` as new content in a future session or amend the recall check to drop Q4.",
         "Three honest gap reports from user this session: 'awk just doesn't sit in my mind', 'im sorry i literally cant, the man page makes 0 sense to me', 'i dont remember learning this one'. All three honest — not making excuses. The honest reporting is exactly the behaviour that lets the spaced-repetition system actually work. Strong process signal."
       ]
+    },
+    {
+      "date": "2026-05-16",
+      "session_number": 11,
+      "duration_minutes_planned": 30,
+      "duration_minutes_actual_approx": 20,
+      "summary": "SHORT FOCUSED SESSION. Single agenda item: WP003 retest (overdue from 2026-05-14, deferred from session 10 due to time pressure). Fresh phishing email prepared per session 10 pickup note: HMRC tax-refund impersonation, refunds@hmrc-services.org.uk sender, 'Dear Taxpayer' generic greeting, urgency + admin-charge loss-frame, vague 'confirm your details' ask, anchor-text-only [Claim Refund Now] link, no footer. WP003 RETEST PASSED CLEAN — 6-lens framework applied cold with no scaffold. VERIFICATION HABIT FIRED UNPROMPTED on both trap lenses: lens 1 (user named real HMRC domain hmrc.gov.uk / gov.uk, compared against the suspicious .org.uk, called the mismatch); lens 5 (chained verification step 'hover the link, check for .gov.uk' with payload hypothesis 'sign-in page that steals bank details' — analyst-grade reasoning). Lens 6 absence-as-indicator applied unprompted (durable carry from 2026-05-10 tutor-walked explanation). Two minor lens misses logged but not promoted: lens 3 missed 'Dear Taxpayer' generic greeting (HMRC has user's name); lens 4 substituted pressure analysis for the ask itself (vagueness of 'confirm your details'; real HMRC refunds go direct to bank without portal confirmation). Both interpretable, not WP001 substitution. Zero hint tiers used. Stage 0 → 1. Next retest 2026-05-23 (Anki 7-day interval). NO NEW CONTENT THIS SESSION — user offered (a) wrap, (b) awk syntax revisit, (c) lens discussion; chose clean wrap on the passed retest. Valid call given short session length and the strong-pass result.",
+      "tracks_touched": ["concepts"],
+      "retests_run": [
+        {"id": "WP003", "outcome": "passed", "stage": "0 → 1", "failures": "0", "next_due": "2026-05-23"}
+      ],
+      "retests_deferred": [],
+      "challenges_completed_this_session": [],
+      "writeups_archived_this_session": [],
+      "spaced_repetition_flags_set": [],
+      "tutor_process_notes": [
+        "Fresh phishing email design for WP003 retest (HMRC tax-refund impersonation) successfully isolated verification habit. Two explicit traps embedded: brand-domain knowledge gap on lens 1 (user can't be assumed to know HMRC's real domain cold), and can't-see-the-URL gap on lens 5 (link rendered as anchor text only). Both prompted the corrected behaviour — name the verification, don't declare 'no indicator'. Pattern note: phishing-analysis retests test verification habit specifically when the email contains at least one lens-indicator the analyst cannot resolve from email content alone. Without that, you're only testing recall of indicator types, not the corrective method."
+      ]
     }
   ],
   "checkpoints_reached": [
@@ -632,7 +653,7 @@
     "writeups_generated": 9,
     "writeups_archived": 9,
     "cross_track_connections": 7,
-    "total_hours": 10.6
+    "total_hours": 10.9
   },
   "diagnostic": {
     "completed": true,
@@ -699,6 +720,6 @@
       "notes": "30-line synthetic auth log. 28 Failed password lines + 2 Accepted password lines. Top failed-source IP is 45.142.122.81 with 12 hits (≥10 to test numeric vs lex sort). Filter trap: 185.220.101.50 appears in BOTH Failed (5×) and Accepted (1×) — same-IP brute-force-then-successful-login IOC pattern; correct Failed-only count is 5, naive no-filter count would be 6. Five distinct invalid usernames across Failed lines (admin, root, ubuntu, www-data, postgres). Reusable for next WP002 retest 2026-05-19 IF pattern-matching is not a concern by then; otherwise generate r3 set."
     }
   },
-  "pickup_note": "SESSION 10 CLOSED 2026-05-15. Retest-dense session, ~70 min (slight overrun). Three retests scored, one deferred, one recall check executed. WP001 PASSED stage 1→2 (next 2026-05-29; one more clean = mastered). WP002 FAILED failures 1→2 stage 0 (next 2026-05-19; ONE MORE FAILURE TRIGGERS REMEDIATION CHALLENGE — HIGHEST STAKES). WP004 PASSED stage 0→1 (next 2026-05-22). WP003 DEFERRED, still at original retest_due 2026-05-14 (now 1 day overdue going into next session). Bash redirection recall scored 2.5/4 — `>` and `>>` clean, `2>` partial, `<` blank (user reports never trained; needs tutor scope check + possible introduction as new content). SESSION 11 ENTRY POINT: FIRST PRIORITY IS WP003 RETEST (overdue, concepts phishing analysis, needs FRESH phishing email prep BEFORE session — verification-habit on a NEW email with no redo pressure, no scaffold). THEN: budget remaining time for new content OR for the awk-syntax spaced-repetition revisit. AWK ACTION-BLOCK SYNTAX FLAGGED FOR SPACED-REPETITION REVISIT — third L0/L1 exposure today and the action-block syntax (single quotes wrap, curly braces inside, `$N` field reference) still does not stick. Similar shape to redirection operators: pure syntax recall, not conceptual. WP002 PATH FORWARD: next retest 2026-05-19 is the deciding one. Design as bash frequency-count again with a fresh dataset (retest-wp002-r3 — generate before session); the verify-don't-proxy discipline must fire UNPROMPTED on first submission. If it doesn't, remediation challenge triggers — small scaffolded task targeting the inspect-adjacent-evidence habit specifically. NEW CONTENT WHEN RETESTS CLEAR: Bash L2 #1 (file organiser or log monitor — reuse existing labs); Python L2 #1 (port scanner — scales First Knock primitive with subprocess + argparse + concurrency); Concepts L1 #2 (deferred until WP003 retest passes). THM NOTES STATE: 3 entries on 2026/05/11; 'snake oil' and 'ss' acknowledged (no drill); shodan/censys/virustotal/exploit database still UNRESOLVED — surface in next session for placement decision (Concepts L1 #2 candidate?). SIDE TASKS OPEN: (i) bash-L0-trail-in-the-logs amendment note re WP002 falsification — carried since session 6, still open. (ii) External courses budget decision (TryHackMe subscription unused). (iii) Metasploitable2/DVWA install — gates Bash L2 ping sweep AND most Python L3 work. With Python L2 unlocked, highest leverage side task. SOFT WP001 EVIDENCE TWICE THIS SESSION (head -1 vs head -5; IPs vs usernames) — both on implicit-enumeration briefs. Contrast with clean dedicated WP001 retest = enumeration discipline closes the gap. PROCESS NOTE 10 VALIDATED. TUTOR PROCESS REMINDER: when designing briefs, count concrete deliverables explicitly — implicit enumeration still surfaces WP001 substitution.",
+  "pickup_note": "SESSION 11 CLOSED 2026-05-16. Short focused session ~20 min actual / 30 planned (under-ran cleanly, single agenda item). WP003 RETEST PASSED CLEAN — HMRC tax-refund impersonation phishing email, 6-lens framework applied cold. Verification habit fired UNPROMPTED on both trap lenses: lens 1 (named real HMRC domain hmrc.gov.uk, compared against suspicious .org.uk); lens 5 (chained hover-the-link verification with credential/bank-detail payload hypothesis). Lens 6 absence-as-indicator durable from 2026-05-10 walk-through. Two minor lens misses (lens 3 'Dear Taxpayer' generic greeting; lens 4 pressure analysis vs ask-itself analysis) — interpretable, not WP001 promoted. Zero hint tiers used. Stage 0 → 1, next 2026-05-23. NO NEW CONTENT — user chose wrap over awk revisit / lens discussion. RETEST QUEUE GOING INTO SESSION 12 (nothing currently overdue): WP002 due 2026-05-19 (HIGHEST STAKES — failures = 2, one more failure triggers remediation challenge; design as fresh bash frequency-count, generate retest-wp002-r3 dataset before session; verify-don't-proxy discipline must fire UNPROMPTED on first submission); WP004 due 2026-05-22 (stage 1, one more clean = mastered); WP003 due 2026-05-23 (stage 1, one more clean = stage 2); WP001 due 2026-05-29 (stage 2, one more clean = mastered). SESSION 12 ENTRY POINT: WP002 retest is closest (3 days out); session can be flexible until then — new content OR awk-syntax revisit OR side-task closure. AWK ACTION-BLOCK SYNTAX STILL FLAGGED FOR SPACED-REPETITION REVISIT (untouched session 11) — third L0/L1 exposure on session 10 needed full T1→T2→T3 escalation; needs a short revisit alongside next bash work, treat as syntax recall not conceptual. CONCEPTS L1 #2 NOW UNLOCKED — WP003 has cleared. Candidate placement for THM unresolved entry (shodan/censys/virustotal/exploit database, flagged 2026/05/11 'not too sure why they are important'). SIDE TASKS OPEN: (i) bash-L0-trail-in-the-logs amendment re WP002 falsification — carried since session 6, still open. (ii) External courses budget decision (TryHackMe subscription unused). (iii) Metasploitable2/DVWA install — gates Bash L2 ping sweep AND most Python L3 work; highest leverage side task. NEW CONTENT OPTIONS: Bash L2 #1 (file organiser or log monitor — reuse existing labs); Python L2 #1 (port scanner — scales First Knock primitive with subprocess + argparse + concurrency); Concepts L1 #2 (now unlocked). TUTOR PROCESS NOTE: phishing-analysis retests test verification habit specifically when the email contains at least one lens-indicator the analyst cannot resolve from email content alone. Without that, you're only testing recall of indicator types, not the corrective method. Carry forward into Concepts L1 #2 design.",
   "last_weekly_summary": "2026-05-15"
 }
