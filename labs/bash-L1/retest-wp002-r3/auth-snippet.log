@@ -1,0 +1,30 @@
+May 19 03:14:01 fileserver01 sshd[11203]: Failed password for invalid user admin from 80.94.92.244 port 51244 ssh2
+May 19 03:14:02 fileserver01 sshd[11204]: Failed password for invalid user admin from 91.218.114.31 port 49118 ssh2
+May 19 03:14:08 fileserver01 sshd[11211]: Failed password for invalid user admin from 198.51.100.73 port 47823 ssh2
+May 19 03:14:09 fileserver01 sshd[11212]: Failed password for invalid user admin from 203.0.113.62 port 52004 ssh2
+May 19 03:14:15 fileserver01 sshd[11215]: Failed password for invalid user root from 91.218.114.31 port 49119 ssh2
+May 19 03:14:17 fileserver01 sshd[11217]: Failed password for invalid user admin from 203.0.113.62 port 52005 ssh2
+May 19 03:14:23 fileserver01 sshd[11223]: Failed password for invalid user admin from 192.0.2.144 port 33102 ssh2
+May 19 03:14:25 fileserver01 sshd[11225]: Failed password for invalid user root from 198.51.100.73 port 47824 ssh2
+May 19 03:14:31 fileserver01 sshd[11231]: Failed password for invalid user root from 80.94.92.244 port 51245 ssh2
+May 19 03:14:34 fileserver01 sshd[11234]: Failed password for invalid user root from 203.0.113.62 port 52006 ssh2
+May 19 03:14:38 fileserver01 sshd[11238]: Failed password for invalid user admin from 172.105.92.18 port 60201 ssh2
+May 19 03:14:42 fileserver01 sshd[11242]: Failed password for invalid user ubuntu from 198.51.100.73 port 47825 ssh2
+May 19 03:14:45 fileserver01 sshd[11245]: Failed password for invalid user root from 192.0.2.144 port 33103 ssh2
+May 19 03:14:48 fileserver01 sshd[11248]: Failed password for invalid user root from 203.0.113.62 port 52007 ssh2
+May 19 03:14:52 fileserver01 sshd[11252]: Failed password for invalid user oracle from 198.51.100.73 port 47826 ssh2
+May 19 03:14:55 fileserver01 sshd[11255]: Failed password for invalid user root from 172.105.92.18 port 60202 ssh2
+May 19 03:14:58 fileserver01 sshd[11258]: Accepted password for jenkins from 198.51.100.73 port 47827 ssh2
+May 19 03:15:01 fileserver01 sshd[11261]: Failed password for invalid user oracle from 203.0.113.62 port 52008 ssh2
+May 19 03:15:04 fileserver01 sshd[11264]: Failed password for invalid user ubuntu from 192.0.2.144 port 33104 ssh2
+May 19 03:15:08 fileserver01 sshd[11268]: Failed password for invalid user jenkins from 198.51.100.73 port 47828 ssh2
+May 19 03:15:11 fileserver01 sshd[11271]: Failed password for invalid user ubuntu from 203.0.113.62 port 52009 ssh2
+May 19 03:15:14 fileserver01 sshd[11274]: Failed password for invalid user ubuntu from 172.105.92.18 port 60203 ssh2
+May 19 03:15:17 fileserver01 sshd[11277]: Failed password for invalid user oracle from 192.0.2.144 port 33105 ssh2
+May 19 03:15:20 fileserver01 sshd[11280]: Accepted password for jenkins from 198.51.100.73 port 47829 ssh2
+May 19 03:15:23 fileserver01 sshd[11283]: Failed password for invalid user jenkins from 203.0.113.62 port 52010 ssh2
+May 19 03:15:26 fileserver01 sshd[11286]: Failed password for invalid user admin from 198.51.100.73 port 47830 ssh2
+May 19 03:18:42 fileserver01 sshd[11402]: Accepted password for emre from 10.0.5.42 port 38104 ssh2
+May 19 03:19:13 fileserver01 sshd[11433]: Accepted password for emre from 10.0.5.42 port 38112 ssh2
+May 19 03:21:55 fileserver01 sshd[11598]: Accepted password for backupsvc from 10.0.5.43 port 42081 ssh2
+May 19 03:25:01 fileserver01 sshd[11744]: Accepted password for jenkins from 198.51.100.73 port 47914 ssh2
