@@ -1,5 +1,5 @@
 # Cybersecurity Training Dashboard
-*Last updated: 2026-05-18 — after Session 13 (Concepts L1 #3 Three Loose Bricks complete; CLOSES CONCEPTS L1; ALL THREE CORE TRACKS NOW AT L1 COMPLETE; write-up template generated, archive pending user fill)*
+*Last updated: 2026-05-18 — after Session 13 (Concepts L1 #3 Three Loose Bricks complete + archived; CLOSES CONCEPTS L1; ALL THREE CORE TRACKS NOW AT L1 COMPLETE; portfolio now 11 archived write-ups)*
 
 ---
 
@@ -7,7 +7,7 @@
 
 **SESSION 14 NEXT — WP002 retest is TOMORROW (2026-05-19) and remains the single highest-stakes item on the board.** Failures = 2; one more failure triggers a remediation challenge. Design as a fresh bash frequency-count with the **retest-wp002-r3** dataset (generate before session). The verify-don't-proxy discipline must fire **unprompted** on first submission.
 
-**Session 13 closed 2026-05-18** — second 30-min session of the same calendar day. Concepts L1 #3 'Three Loose Bricks' complete, attack-surface analysis on small-org flat-/24 network. Write-up template at [writeups/concepts-L1-three-loose-bricks-2026-05-18.md](writeups/concepts-L1-three-loose-bricks-2026-05-18.md) — **awaiting user fill**, then autonomous wrap-publish flow fires (cleanup → archive → stage → commit → push, single motion).
+**Session 13 closed 2026-05-18** — second 30-min session of the same calendar day. Concepts L1 #3 'Three Loose Bricks' complete + archived. Attack-surface analysis on small-org flat-/24 network. Write-up at [writeups/concepts-L1-three-loose-bricks-2026-05-18.md](writeups/concepts-L1-three-loose-bricks-2026-05-18.md). Wrap-publish flow ran end-to-end (cleanup pass → archive → stage → commit → push).
 
 🏆 **CHECKPOINT HIT: ALL THREE CORE TRACKS AT L1 COMPLETE.** Bash 2026-05-10, Python 2026-05-11, Concepts 2026-05-18. 13 sessions over 21 calendar days. From zero-domain-knowledge diagnostic 2026-04-27 to all-tracks-L1 in three weeks.
 
@@ -206,8 +206,8 @@ L2 shape showing reliably at L1. Informs Concepts L2 entry calibration — scaff
 
 ## Portfolio Stats
 
-- Write-ups generated: **11** *(↑ from 10 — Three Loose Bricks template)*
-- Write-ups archived: **10** *(unchanged — Three Loose Bricks awaiting user fill)*
+- Write-ups generated: **11** *(↑ from 10 — Three Loose Bricks)*
+- Write-ups archived: **11** *(↑ from 10 — Three Loose Bricks filled, cleanup-passed, archived)*
 - Total challenges completed: **11** *(↑ from 10)*
 - Total challenges attempted-unfinished: 2 *(unchanged)*
 - Total sessions: **13** *(↑ from 12)*
