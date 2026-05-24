@@ -2,8 +2,8 @@
   "schema_version": "3.0",
   "user": "Emre",
   "started_date": "2026-04-27",
-  "last_session": "2026-05-21",
-  "session_count": 15,
+  "last_session": "2026-05-24",
+  "session_count": 16,
   "tracks": {
     "python": {
       "level": 1,
@@ -288,16 +288,22 @@
         "Diagnostic 2026-04-27 (WA002 origin): phishing indicator inventory partial — surfaced obvious red flags but missed link inspection, account specifics, vague sign-off.",
         "Concepts L1 #1 Phishing Anatomy first pass 2026-05-10: lens 1 declared 'no indicator' without comparing the sender domain (docusign-secure.net) to the real DocuSign domain (docusign.com). Same partial-inventory pattern as the diagnostic — skipped the systematic check on a less-obvious indicator. Redo with corrected framing landed cleanly."
       ],
-      "stage": 1,
-      "retest_due": "2026-05-23",
+      "stage": 2,
+      "retest_due": "2026-06-07",
       "failures": 0,
-      "self_correction_observed": "On the redo, lens 5 demonstrated the corrected behaviour without prompting: user didn't know what .tk meant, hypothesised 'tokens' (wrong fact), and named the hypothesis openly — the right behaviour even when the answer was wrong. The verification-habit lesson appears to have landed on the redo. Real test is whether it persists on a NEW phishing email with no redo pressure (next retest).",
+      "self_correction_observed": "On the redo, lens 5 demonstrated the corrected behaviour without prompting: user didn't know what .tk meant, hypothesised 'tokens' (wrong fact), and named the hypothesis openly — the right behaviour even when the answer was wrong. The verification-habit lesson appears to have landed on the redo. CONFIRMED ACROSS THREE RETESTS NOW: 2026-05-16 HMRC, 2026-05-24 GitHub — both unprompted on load-bearing lenses (1, 5, 6).",
       "retest_history": [
         {
           "date": "2026-05-16",
           "outcome": "passed",
           "challenge": "Concepts L1 phishing retest — HMRC tax-refund impersonation email, fresh content, no scaffold; 6-lens framework applied cold under no-redo-pressure conditions",
           "notes": "PASS. Verification habit fired UNPROMPTED on both trap lenses. Lens 1 (sender): user named real HMRC domain (hmrc.gov.uk / gov.uk), compared against suspicious refunds@hmrc-services.org.uk, called the mismatch. Lens 5 (links): chained verification step (hover/inspect URL, check for .gov.uk) with payload hypothesis (sign-in page that steals bank details) — analyst-grade reasoning, not just 'link suspicious'. Lens 6 (sign-off / footer): absence-as-indicator applied unprompted — 'no footer, no copyright, no contact details; you can expect an email from an organisation to have some sort of sophisticated footer.' Durable carry from the 2026-05-10 walk-through where this lens needed an explicit tutor-walked explanation. Two minor lens misses logged but not promoted: (a) lens 3 missed the 'Dear Taxpayer' generic greeting (HMRC has the user's name on file from PAYE — generic greeting on personalised-claim email is a classic tell); (b) lens 4 substituted pressure analysis for analysis of the ask itself ('confirm your details' is vague — what details?; real HMRC refunds go direct to bank without portal confirmation, so the ask itself contradicts how the real process works). Both interpretable as scope ambiguity on lens prompts, not WP001 substitution. Zero hint tiers used. Stage 0 → 1. Next retest 2026-05-23 (Anki 7-day interval)."
+        },
+        {
+          "date": "2026-05-24",
+          "outcome": "passed",
+          "challenge": "Concepts L1 phishing retest #3 — GitHub security alert impersonation (github-secure.org sender, [Action Required] subject tag, 48-hour deadline, link rendered as anchor text only, no footer); 6-lens framework cold under no-redo-pressure conditions",
+          "notes": "PASS. Stage 1 → 2. Six lenses, all substantive, no 'no indicator' defaults. WP003 corrective behaviour fired on load-bearing lenses: Lens 1 (sender) — verification implicit; user compared github-secure.org against known github.com, named the mismatch. The verify step is internalised at this point — not written as 'verify: X' because the X was already known. Habit, not method. Lens 5 (links) — explicit verification named ('hover over it and check the domain name, if it is not GitHub.com it can not be trusted'); same corrective shape as 2026-05-16 HMRC retest, third consecutive instance. Lens 6 (footer absence) — applied unprompted again, third consecutive instance, DURABLE CARRY CONFIRMED from the original 2026-05-10 tutor-walked explanation. Lens 3 included pivot observation — disarming/false-reassurance pattern named ('the attempt was blocked' to make reader feel secure before 48-hour threat at the end). Reading the email's emotional arc, not just surface content. Lens 3 personalisation-as-targeting observation noted ('Hello Emre' suspicious because attacker has user's name = OSINT/targeting signal) with slight framing miss (user framed it as 'they'd usually include my surname'; closer to reality: GitHub greets by username @user, not real name; real-name greeting is suspicious because GitHub doesn't typically use it). Summary sentence correctly identified credential phishing via fake auth page. FOUR 🟢 MINOR observations: (a) 'reverse technique' terminology unclear/misapplied — better names: 'disarming language' or 'false reassurance pattern'; (b) Lens 3 username-vs-real-name framing as above; (c) Lens 2 brackets-as-mass-send observation made but verify step ('does GitHub use [Action Required] in real subjects?') not named — the only lens where verify-discipline didn't fire explicitly; (d) Lens 4 operational alternative (navigate to github.com/settings/security directly) not named. All teaching, none extend into WP003's documented scope (method gap, not vocabulary or coverage breadth). Zero hint tiers used. Stage 2 → 14-day Anki interval → next retest 2026-06-07; one more clean retest at stage 2 → MASTERED."
         }
       ]
     },
@@ -309,15 +315,23 @@
       "evidence": [
         "Python L1 #1 Log Line Reader first version (2026-05-10): used `for line in f.readlines():` instead of `for line in f:`. Worked correctly on the 30-line synthetic log (output identical to the lazy version) but the pattern would fail on a large file. Self-corrected on revision after review explained the operational implication."
       ],
-      "stage": 1,
-      "retest_due": "2026-05-22",
+      "stage": "mastered",
+      "retest_due": null,
       "failures": 0,
+      "mastered_date": "2026-05-24",
+      "status": "mastered_2026-05-24",
       "retest_history": [
         {
           "date": "2026-05-15",
           "outcome": "passed",
           "challenge": "Distinct Invalid Users (Python L1 retest) — count distinct invalid usernames in Failed lines of auth-snippet log; production-target multi-GB framing; no explicit 'don't use readlines' telegraph",
           "notes": "WP004 DISCIPLINE TEST PASSED CLEANLY: `for line in f:` reached for unprompted on first submission. Lazy iteration held under fatigue, Windows-path friction, and visible frustration — strongest positive signal of the session. First submission counted distinct source IPs (4) instead of distinct usernames (5) — WP001 family wrong-question miss, variable name 'failed_ips' and index [12] revealed the gap. Revised cleanly after review (changed [12]→[10], renamed failed_ips→failed_users); output 5 (admin, root, ubuntu, www-data, postgres) verified against the lab data. Style note (not flagged): used list + 'not in' for distinct collection rather than set + .add — works on 30 lines but O(N²); demonstrated set/.add pattern post-completion. Stage 0 → 1. Next retest 2026-05-22. TWO MID-CHALLENGE FRICTION POINTS LOGGED: (a) Windows backslash path escape gotcha — wrote D:\\cybersecurity_learning\\labs\\bash-L1\\... as a regular string literal, hit OSError because \\b became backspace (0x08), \\a became bell (0x07); needed T2 with the three standard fixes (raw string literal, double-backslash, forward slashes); user picked raw string and unblocked. (b) Python relative-path / CWD confusion — needed T1 reframe on what open() resolves relative paths against (script location vs terminal CWD). Both are environment-friction gaps, not WP004 territory; flagged in hint_log."
+        },
+        {
+          "date": "2026-05-24",
+          "outcome": "passed-mastered",
+          "challenge": "First and Last Failed (Python L1 retest, second pass) — print earliest and latest Failed-login timestamps from labs/python-L1/wp004-retest-r2/auth-snippet.log; production multi-GB framing; no telegraph; format spelled out per process note 16",
+          "notes": "WP004 DISCIPLINE TEST PASSED CLEAN — UNPROMPTED on first submission. User wrote `for line in f:` directly; did not reach for `f.readlines()`. Direct contrast to original 2026-05-10 first version which defaulted to `for line in f.readlines():`. Lazy-iteration lesson landed as HABIT, not as recall — fired without any telegraph in the brief and on a different question shape (first/last timestamp pattern, not distinct-count pattern from 2026-05-15). Raw-string path notation `r'labs\\...'` carried unprompted from the 2026-05-15 retest where the backslash-escape gotcha was first hit — specific lesson, specifically retained. `\" \".join(line.split(\" \")[:3])` composition idiomatic; user asked the right concept-recall questions on the way (.join syntax, list slicing) rather than guessing. Output verified by running script: matches tutor-key (First Failed: May 24 03:15:22 / Last Failed: May 24 22:20:18). 🟡 MODERATE FINDING (in scope per brief 'your code needs to work on both [snippet and production]', NOT a WP004 gate): accumulator pattern grows with input size — user used `for line in f:` for the file read but appended every Failed line into a list `dates`, then only ever read dates[0] and dates[-1]. On the 30-line snippet that's 26 entries; on multi-GB production log that's millions. WP004 lesson landed on the file read step but didn't generalise to 'anywhere data accumulates'. Two scalar variables (first, last) would carry the same info in constant memory. Per process note 17 — this is NOT a WP004 fail (WP004's strict scope is the readlines-vs-for-line-in-f habit, which fired clean). Banked as teaching observation; if accumulator pattern recurs on a future production-scale Python task without nudge, then promote separately or extend WP004. 🟢 MINOR: brief-precision drift on output format (lowercase 'first failed' vs brief's 'First Failed'; one-space gap vs brief's two-space vertical alignment) — WP001 family, not formal WP001 evidence since WP001 retest is 2026-05-29. HONESTY DISCIPLINE — user named load-bearing knowledge gap unprompted after challenge: 'if you didnt tell me that these log files are already chronological i would have struggled, that was the gap in my knowledge'. Same WP003/WP005 verification-habit corrective behaviour applied to user's own contribution boundary — fourth+ consecutive session of honest gap-naming. Underlying gap (syslog / log-file structural conventions: append-order = time order, line format, severity facility codes) flagged as L2 Concepts territory for future challenge design. Revision DECLINED by user ('next task please'); accumulator + format observations logged as teaching, not gate. Stage 1 → MASTERED. WP004 closed — second WP mastered in the programme."
         }
       ]
     },
@@ -330,11 +344,18 @@
         "Concepts L1 #2 First Light Triage Evidence C first pass 2026-05-18: brief explicitly flagged 'the on-call did not say whether your deployed version is affected' as the version-check signal. User went directly from 'CVE mentioned alongside framework name' to 'halt any app, remove the framework' with no version-check step named. Pre-challenge intro had named NVD as sister-tool for exactly this question — sister-tool flag was load-bearing and got skipped. Also disproportional response — emergency shutdown stated as only option, missed the patch → vendor mitigation → compensating control ladder.",
         "Concepts L1 #2 First Light Triage Evidence C revision 2026-05-18: verification CONCEPT landed ('we can find out if we are actually vulnerable') but tool was still wrong — user kept exploit-db for the version-check instead of switching to NVD. Concept-acquisition under prompt confirmed; tool-detail correction explained but unverified by application. Retest will check whether NVD-first habit fires unprompted on a fresh CVE-triage scenario."
       ],
-      "stage": 0,
-      "retest_due": "2026-05-22",
+      "stage": 1,
+      "retest_due": "2026-05-31",
       "failures": 0,
       "cross_reference": "Same family as WP002 (bash frequency-count — skip the verification step before claiming the answer) and WP003 (phishing analysis — substitute confidence for ignorance). Three concrete instances in three domains now — strong evidence the load-bearing weakness is the verification-habit gap itself, not any domain-specific knowledge gap. Cross-family pattern noted in dashboard.",
-      "retest_history": []
+      "retest_history": [
+        {
+          "date": "2026-05-24",
+          "outcome": "passed",
+          "challenge": "Edge Proxy CVE Triage (Concepts L1 WP005 retest, first pass) — fictional CVE-2026-1847 nginx request-smuggling scenario; colleague Slack ask: 'should I take the proxy offline?'; deployed nginx version not specified; user produces end-to-end reasoning walk-through. Brief did NOT telegraph NVD-first habit; cited sources NVD/MITRE CVE/OWASP/NIST SP 800-40r4 listed for evaluation transparency only, no lookup permitted.",
+          "notes": "PASS. Stage 0 → 1. WP005 PRIMARY CRITERION CLEARED CLEANLY — NVD-for-version-check named UNPROMPTED: 'We should then check the NIST NVD to see if our version of nginx is vulnerable, this is key because if we are vulnerable we need to take the proxy offline'. Direct contrast to 2026-05-18 first pass (jumped from CVE-name-alongside-framework to 'halt any app, remove the framework' with no version-check named) and to 2026-05-18 revision (verification concept landed but tool was exploit-db instead of NVD). Today: NVD named correctly, BEFORE any response action, on a fresh scenario, with no telegraph. Two-step verification gate sequenced correctly: MITRE CVE registry first (confirm the blog claim is real), then NVD (confirm we're actually in the affected version range). Branching reasoning structure ('if safe ... if not safe ... if attacked ...') — multiple action paths conditioned on verification outcome; correct shape: verification controls response, not the other way around. Cited sources used precisely: MITRE CVE registry, NVD, NIST SP 800-40r4 §3 — three of four brief-cited sources named correctly at the right step in reasoning. Forward-looking branch on safe path ('see if there is a way for attackers to get in using similar techniques') = class-of-vulnerability thinking, L2-shape reasoning at L1. 🟡 MODERATE FINDING (in WP005's documented evidence scope but treated as TEACHING, not gate, per process note 17): response-laddering disposition is SHUTDOWN-PRIMARY. On the 'if vulnerable' branch, action goes: take proxy offline → check breach → patch → bring back online. Proportional ladder (NIST SP 800-40r4 §3) would go: patch in place → vendor mitigation (config change like disable HTTP/1.1 keepalive) → compensating control (WAF rule, network segmentation) → take offline as LAST RESORT. Rungs 1-3 not named; decision goes straight from 'we're vulnerable' to 'take it offline'. WP005's top-line documented issue is the version-check step (which cleared definitively today) — the laddering is in the WP's evidence but not in its top-line definition. Same precedent as WP004's accumulator-finding-as-teaching call. If laddering disposition recurs on a future vuln-triage scenario (Concepts L2 territory) without nudge, extend WP005 identity or open sibling WP. USER NAMED UNDERLYING MENTAL MODEL UNPROMPTED — 'i always think the quicker we take the server down the less chance of being attacked'. This is the load-bearing intuition driving the shutdown-primary disposition; it's a coherent threat model (minimize exposure time = minimize risk), not a random mistake. User proactively requested a directed Concepts L2 task to dislodge it. BANKED for Concepts L2 directed challenge design: scenario with explicit cost asymmetry (active customer session draining mid-checkout, hot-failover available, plausible WAF rule) so the 'take it down' reflex feels wrong from the inside. Honesty discipline — second instance in same session of naming-the-gap-instead-of-bluffing (first was syslog-chronological gap on WP004). 🟢 MINOR: 'short time this vulnerability has existed' assumption — conflates disclosure date with existence date; vulnerabilities can exist for years in code before public disclosure (the 0-day window). L2 incident-response territory; flagged as teaching. 🟢 MINOR: 'change to an unaffected patch of nginx' — 'patch' used as noun for 'version'; sharper: 'upgrade to a patched version' or 'apply the patch'. 🟢 MINOR: 'future patch' phrasing ambiguous — user meant 'similar request-smuggling vulnerabilities could appear in future nginx releases' (correct intuition); patches usually FIX things, not introduce them (regressions exist but are not the steady-state case). WA003 — NOT TESTED by this scenario (different IR family; WA003 is about credential-compromise interpretation specifically — hypothetical-framing known events, slow brute-force cadence reading, IP-block-primary action ladder, priority inversion loud-failed > quiet-succeeded). None of those shapes fire on a vuln-triage walk-through. WA003 status unchanged; no promotion trigger fired. Zero hint tiers used. One scope-clarification at challenge start (sources reference vs. lookup permitted) — verification-before-coding reflex, correct. Stage 1 → 7-day Anki interval → next retest 2026-05-31."
+        }
+      ]
     }
   ],
   "mastered_points": [
@@ -344,6 +365,13 @@
       "mastered_date": "2026-05-21",
       "mastered_via": "remediation challenge (WP002 Remediation — Don't Trust the Pipeline)",
       "one_line": "Frequency-count pipelines + verify-don't-proxy generalisation. Closed across original 2026-04-28 fingerprint (no count-column sort, three retests + remediation clean) AND generalised 2026-05-10 fingerprint (trust output without inspecting adjacent evidence; procedural discipline fired unprompted on remediation). Full record retained in weak_points entry for traceability."
+    },
+    {
+      "id": "WP004",
+      "track": "python",
+      "mastered_date": "2026-05-24",
+      "mastered_via": "second clean retest (Anki schedule, stage 1 → mastered)",
+      "one_line": "Python file iteration habit: `for line in f:` over `f.readlines()`. Closed across two retests — 2026-05-15 (Distinct Invalid Users, count-distinct pattern) and 2026-05-24 (First and Last Failed, first/last timestamp pattern). Lazy-iteration reflex fired unprompted on both, on different question shapes, with no telegraph in either brief. Lesson landed as habit, not recall. Full record retained in weak_points entry for traceability. Note: accumulator-pattern generalisation (bounded memory beyond file-read step) was a 🟡 teaching observation on the 2026-05-24 retest — not a WP004 fail, but flagged for future watching."
     }
   ],
   "watch_areas": [
@@ -355,7 +383,15 @@
       "evidence": [
         "Concepts-L2 reasoning surfaced inside what was scoped as a bash WP002 remediation — flagged via user pushback ('seriously this should be a concepts lab at this point'). Tutor scope-creep error (process note 17) means this observation should not have been logged as a WP002 fail anyway; logged here as the appropriate home for the observation."
       ],
-      "promotion_threshold": "1 more occurrence on a Concepts L2-shape incident-response scenario = promote to WP"
+      "promotion_threshold": "1 more occurrence on a Concepts L2-shape incident-response scenario = promote to WP",
+      "retest_observations": [
+        {
+          "date": "2026-05-24",
+          "via": "WP005 retest (Edge Proxy CVE Triage)",
+          "outcome": "not tested — different IR family",
+          "notes": "WA003 is specifically about credential-compromise interpretation (hypothetical-framing known events, slow brute-force cadence read as innocuous, IP-block-primary action ladder, priority inversion). The WP005 retest scenario was vulnerability-triage (CVE-2026-1847 nginx request-smuggling) — no credential-compromise dynamics, no brute-force cadence, no successful-vs-failed login interpretation. None of the four WA003 sub-shapes had surface to fire on. Promotion trigger DID NOT fire. Status unchanged. Separate observation surfaced on WP005 retest — shutdown-primary disposition on vuln-triage response laddering — is CLOSELY RELATED (action-ladder ordering) but distinct from WA003's credential-success-IP-block-primary shape, and is documented as a WP005 teaching observation rather than a WA003 instance. If a future Concepts scenario that DOES contain credential-compromise dynamics (e.g., a SOC alert with mixed Failed + Accepted lines from one IP) reproduces the WA003 patterns, then promote."
+        }
+      ]
     }
   ],
   "hint_log": [
@@ -925,6 +961,55 @@
       "duration_min": 45,
       "duration_min_actual_approx": 40,
       "notes": "WP002 REMEDIATION CHALLENGE — PASSED. Procedural verify-don't-proxy discipline closed across both fingerprints (original 2026-04-28 no-count-sort AND generalised 2026-05-10 trust-output-without-verification). User named verification check BEFORE running it on every IP, ran the command, then concluded — strict (a)/(b)/(c) order held unprompted on all three IPs. Exact behavioural reversal of session 14 r3 fail. Zero hint tiers used. Strong substantive call on 198.51.100.50 (named the password-spray pattern from cross-line evidence, surfacing real SOC terminology unprompted at L1). TUTOR SCOPE-CREEP ERROR OWNED IN-SESSION: review extended the marking bar mid-evaluation from the scoped procedural verify-don't-proxy facet (which passed clean) into Concepts L2 incident-response interpretation (hypothetical-framing of Accepted line, slow-cadence-read-as-innocuous, action-ladder ordering, summary priority inversion on the 203.0.113.99 dual-role IP). User pushed back: 'seriously this should be a concepts lab at this point'. Tutor agreed — same fingerprint as session 14 r3 format-shift but in EVALUATION rather than brief design. Process note 17 promoted; durable feedback memory saved (feedback_evaluation_scope). Substantive interpretation observations rehomed: NOT a WP002 fail, NOT a new WP, but a soft watch-area (WA003) to retest naturally via the already-scheduled WP005 retest 2026-05-22 (CVE/vuln triage — same family of incident-response interpretation). User clarified intent on 'even if they get it correct' phrasing (meant: 'block IP regardless of attempt-4 outcome'); point (i) of critique withdrawn. User declined revision, opted retest-not-revise. PUSHBACK ON TUTOR EVALUATION — fourth consecutive session, generalising outward (sessions 12 / 13 / 14 / 15). WP002 → MASTERED. First weak point closed in the programme. WP001/WP003/WP004/WP005 still active per spaced-repetition schedule. Active weak point count: 5 → 4. No write-up generated (retest/remediation session). New lab created: labs/bash-L1/wp002-remediation/ (12-line synthetic SSH auth log; verified before delivery). Side tasks unchanged."
+    },
+    {
+      "session": 16,
+      "date": "2026-05-24",
+      "duration_min_planned": "all the time needed (user explicitly: no time cap)",
+      "duration_min_actual_approx": 120,
+      "summary": "TRIPLE RETEST SESSION — all three overdue retests cleared cleanly. WP004 (Python file iteration) → MASTERED. WP005 (Concepts vuln triage / NVD-first) → stage 0 → 1. WP003 (Concepts phishing) → stage 1 → 2. Two weak points mastered total in the programme (WP002 + WP004). Session opened with uncommitted session 15 state (dashboard, progress.json, wp002-remediation lab data) which user confirmed should be committed now rather than bundled with today's wrap; committed + pushed cleanly via WSL (34febd4). WP004 RETEST — fresh question shape (first/last Failed timestamp, not distinct-count) on fresh lab data (labs/python-L1/wp004-retest-r2/auth-snippet.log, 30 lines, 26 Failed / 4 Accepted, single day May 24, tutor-key verified pre-delivery: First Failed May 24 03:15:22 / Last Failed May 24 22:20:18). `for line in f:` reached for UNPROMPTED on first submission — direct contrast to original 2026-05-10 first version which defaulted to `for line in f.readlines():`. Lazy-iteration lesson landed as HABIT, not recall — second clean retest on different question shape = mastered. Raw-string path notation `r'labs\\...'` carried unprompted from 2026-05-15 retest. 🟡 MODERATE finding (in brief scope but NOT a WP004 gate per process note 17): accumulator pattern grows with input size — user used `for line in f:` for the file read but appended every Failed line into a list, then only read [0] and [-1]; two scalars would be constant memory; lesson landed on read step, not on accumulator. Banked as teaching, not gate. 🟢 MINOR brief-precision drift on output format (lowercase 'first failed' vs 'First Failed'; one-space vs two-space gap) — WP001 family, not formal evidence since WP001 retest is 2026-05-29. Revision DECLINED by user ('next task please'). HONESTY DISCIPLINE — user named load-bearing knowledge gap unprompted after challenge: 'if you didnt tell me that these log files are already chronological i would have struggled, that was the gap in my knowledge'. Underlying gap (syslog / log-file structural conventions: append-order = time order) flagged as L2 Concepts territory for future challenge design. WP005 RETEST — Edge Proxy CVE Triage scenario (fictional CVE-2026-1847 nginx request-smuggling, deployed version unspecified, colleague asks 'should I take the proxy offline?'). Sources cited for evaluation transparency only, no lookups permitted. NVD-FOR-VERSION-CHECK NAMED UNPROMPTED — 'We should then check the NIST NVD to see if our version of nginx is vulnerable' — primary WP005 criterion cleared cleanly on a fresh scenario. Two-step verification gate sequenced correctly (MITRE CVE registry → NVD). Branching reasoning structure ('if safe ... if not safe ... if attacked ...'). Three of four cited sources used precisely. Forward-looking 'similar techniques' branch = class-of-vulnerability thinking at L2 shape. 🟡 MODERATE — shutdown-primary response laddering disposition; rungs 1-3 of NIST SP 800-40r4 §3 ladder (patch in place → vendor mitigation → compensating control → take offline) not named; action goes straight from 'vulnerable' to 'take it offline'. WP005's top-line documented issue is the version-check (which cleared); laddering is in evidence but not top-line definition; treated as teaching observation per process note 17, banked for Concepts L2 directed challenge design. USER NAMED UNDERLYING MENTAL MODEL UNPROMPTED — 'i always think the quicker we take the server down the less chance of being attacked' — second instance of honest gap-naming in same session. User proactively requested directed challenge to dislodge it; banked. WA003 — NOT TESTED (different IR family; no credential-compromise dynamics). Status unchanged. WP003 RETEST — GitHub security alert impersonation (github-secure.org sender, [Action Required] subject tag, 48-hour deadline, anchor-text-only link, no footer). Verification habit fired UNPROMPTED on all three load-bearing lenses (1 sender domain comparison, 5 hover-and-check, 6 footer absence). LENS 6 ABSENCE-AS-INDICATOR — third consecutive instance, DURABLE CARRY confirmed from original 2026-05-10 tutor-walked explanation. Lens 3 included disarming-pattern recognition (false reassurance pattern) and personalisation-as-targeting (slight framing miss on real-name vs username — GitHub greets by @username, not real name). Four 🟢 minor observations (vocabulary nit on 'reverse technique'; lens 3 framing flip; lens 2 verify-step not explicit; lens 4 operational alternative not named) — all teaching, none extend into WP003's documented scope. Zero hint tiers across all three retests. Pushback-on-tutor-evaluation pattern continued — user pushed back on session-15 framing about response laddering wanting it as its own Concepts task, which is the same WP003-corrective-discipline-applied-to-self pattern surfacing constructively. Active weak point count: 4 → 2 (WP001 + WP005 remain active; WP003 still active but at stage 2 — one retest from mastered). Two scheduled retests remaining short-term: WP001 2026-05-29, WP005 2026-05-31, WP003 2026-06-07. L2 ENTRY GATE: cleared on Concepts and Python. User declined L2 entry today, chose clean three-retest wrap. SESSION SHAPE: ~2 hours, no formal time cap, productive throughout, no friction.",
+      "tracks_touched": [
+        "python",
+        "concepts"
+      ],
+      "retests_run": [
+        {
+          "id": "WP004",
+          "outcome": "passed-mastered",
+          "stage": "1 → mastered",
+          "failures": "0",
+          "next_due": null
+        },
+        {
+          "id": "WP005",
+          "outcome": "passed",
+          "stage": "0 → 1",
+          "failures": "0",
+          "next_due": "2026-05-31"
+        },
+        {
+          "id": "WP003",
+          "outcome": "passed",
+          "stage": "1 → 2",
+          "failures": "0",
+          "next_due": "2026-06-07"
+        }
+      ],
+      "retests_deferred": [],
+      "challenges_completed_this_session": [],
+      "writeups_archived_this_session": [],
+      "writeups_generated_this_session": [],
+      "weak_points_logged_this_session": [],
+      "weak_points_mastered_this_session": [
+        "WP004 (python — file iteration habit)"
+      ],
+      "checkpoints_reached_this_session": [],
+      "spaced_repetition_flags_set": [],
+      "tutor_process_notes": [
+        "Honesty discipline now demonstrated across many consecutive sessions and generalising into the user's own contribution boundaries. Today: syslog-chronological gap on WP004 + 'quicker takedown = safer' mental model on WP005. Both unprompted, both load-bearing, both flagged as fixable through future work. Pattern note: when user names their own intuition behind a finding (not just the finding), the dislodge-vector becomes a specific cost-asymmetry scenario, not abstract instruction. Apply to Concepts L2 directed challenge design (see banked challenge below).",
+        "Banked Concepts L2 directed challenge — origin: WP005 retest, user-stated mental model 'i always think the quicker we take the server down the less chance of being attacked'. Design shape: scenario with explicit cost asymmetry — active customer session draining mid-checkout, hot-failover available, plausible WAF rule. Goal: make the 'take it down' reflex feel wrong from the inside via visible cost trade-offs, rather than from a tutor saying so. Pair with the proportional response ladder (NIST SP 800-40r4 §3) as the L2-grade content.",
+        "WP004 mastered call on second clean retest follows same precedent as WP002 mastered call on remediation: strict scope-match between the WP's top-line documented issue and the test that fired. Adjacent teaching observations (accumulator generalisation for WP004; response-laddering for WP005) handled as teaching, not as gates, per process note 17. Pattern is stable."
+      ]
     }
   ],
   "checkpoints_reached": [
@@ -970,8 +1055,8 @@
     "writeups_generated": 11,
     "writeups_archived": 11,
     "cross_track_connections": 7,
-    "total_hours": 13.5,
-    "weak_points_mastered": 1
+    "total_hours": 15.5,
+    "weak_points_mastered": 2
   },
   "diagnostic": {
     "completed": true,
@@ -1061,8 +1146,18 @@
       ],
       "state_verified_date": "2026-05-21",
       "notes": "12-line synthetic auth log. 10 Failed + 2 Accepted. Three brute-force source IPs by failed count: 198.51.100.50=4 (brute-force only, multiple usernames root/admin/oracle/postgres = password-spray shape), 203.0.113.99=3 (dual-role: 3 Failed for jenkins + 1 Accepted for jenkins at 14:30:45 = credential compromise), 91.218.114.10=2 (brute-force only, low volume). One noise Failed (45.142.122.81=1), one legit Accepted (192.168.1.50 admin). Verified pre-delivery: pipeline `grep 'Failed' auth-snippet.log | awk '{print $13}' | sort | uniq -c | sort -nr | head -3` returns exactly 198.51.100.50(4) / 203.0.113.99(3) / 91.218.114.10(2). Per-IP greps return expected role profiles. All Failed lines use 'invalid user X' phrasing throughout to keep $13 = IP consistent (pipeline does NOT mis-attribute jenkins Failed counts to port numbers). Used 2026-05-21 — passed (WP002 mastered)."
+    },
+    "python-L1/wp004-retest-r2/": {
+      "built_date": "2026-05-24",
+      "purpose": "WP004 retest r2 data — fresh synthetic SSH auth log for the 2026-05-24 second-pass retest. Tests lazy-iteration discipline (`for line in f:` over `f.readlines()`) on a different question shape (first/last Failed timestamp, not distinct-count) than the 2026-05-15 r1 retest, to prevent pattern-matching.",
+      "files": 1,
+      "file_paths": [
+        "auth-snippet.log"
+      ],
+      "state_verified_date": "2026-05-24",
+      "notes": "30-line synthetic SSH auth log on web-prod-01, all entries May 24 single-day, spanning hours 03/07/11/14/18/22 to test multi-hour grouping if desired (today's brief did not require it). 26 Failed + 4 Accepted lines. Failed brute-force IPs: 45.95.169.84=4 (03:xx, admin+oracle, password-spray shape), 193.32.162.157=2 (07:xx, postgres), 89.248.165.74=1 (11:xx, test), 218.92.0.142=8 (14:xx, root, sustained burst), 171.25.193.78=4 (18:xx, multiple usernames git/jenkins/nginx/ubuntu, password-spray shape), 152.32.146.215=7 (22:xx, admin, sustained burst with one Accepted-emre at 22:17 interleaved). Accepted lines: 10.0.0.15 deploy ×2, 10.0.0.20 emre ×2. Tutor-key verified pre-delivery: First Failed = 'May 24 03:15:22', Last Failed = 'May 24 22:20:18'. Used 2026-05-24 — passed (WP004 mastered)."
     }
   },
-  "pickup_note": "SESSION 16 PRIORITY 1 — WP004 and WP005 retests both due 2026-05-22 (tomorrow). WP004 (python file iteration, stage 1 → mastered if pass): brief should not telegraph the lazy-iteration discipline; second clean pass = mastered. WP005 (concepts vuln triage / NVD-first, stage 0 → 1 if pass): brief should be a fresh CVE-triage scenario testing whether the user names NVD for version-check UNPROMPTED, names version-check step BEFORE deciding response, and chooses proportional response (patch → vendor mitigation → compensating control → emergency shutdown ladder, not jumping straight to shutdown). WP005 retest is ALSO the natural retest home for WA003 (incident-response interpretation watch-area opened session 15) — cadence reading, action-laddering, and treating-known-events-as-hypothetical should be watched in scoring but NOT used as scoring criteria unless they're independently in WP005's described scope. PRIORITY 2 — WP003 (concepts phishing) retest due 2026-05-23 (day after); can run same day as WP004/WP005 if budget allows. PRIORITY 3 — new content. Bash L2 #1 / Python L2 #1 / Concepts L2 #1 all unlocked. Pivot/L2-shape reasoning has shown reliably at L1 for three Concepts challenges + the WP002 remediation; Concepts L2 entry pace probably does NOT need scaffolding. awk syntax revisit still untouched five sessions running — pairs naturally with Bash L2 (scripting basics). PRIORITY 4 — lab gating: vulnerable target VM (Metasploitable2/DVWA) still not installed, blocks the broadest L2/L3 paths in Python and Bash; localhost (127.0.0.1) remains the legal scanning surface until then. PROCESS NOTE 17 (saved as durable feedback memory feedback_evaluation_scope): evaluation scope must equal brief scope. If teaching territory surfaces outside the stated bar, surface as teaching not as fail-points. Origin session 15.",
-  "last_weekly_summary": "2026-05-15"
+  "pickup_note": "SESSION 17 PRIORITY 1 — WP001 retest due 2026-05-29 (stage 2 → mastered if pass; cross-track instruction-precision; the 2026-05-15 multi-sub-task brief shape worked cleanly — same shape recommended). WP001 is the LAST active weak point gating clean entry to L2 content with all WPs at stage 2+. If WP001 clears, the only remaining active retests are WP005 (stage 1, next 2026-05-31) and WP003 (stage 2, next 2026-06-07) — both spaced out and not blocking L2 entry. PRIORITY 2 — L2 ENTRY UNLOCKED on all three core tracks. User declined L2 entry on session 16 in favour of clean three-retest wrap; entry now fully available. Three candidate first L2 challenges: (a) CONCEPTS L2 #1 — vulnerability classes / methodologies / defence frameworks; pivot/L2-shape reasoning has shown reliably at L1 across four consecutive Concepts events (FLT, TLB original, TLB revision, WP005 retest); entry pace probably does NOT need scaffolding. (b) BASH L2 #1 — scripting basics (variables, loops, conditionals, exit codes) with awk-syntax revisit baked in; awk action-block syntax untouched 6 sessions running (carried since session 10). (c) PYTHON L2 #1 — port scanner (localhost-only until vulnerable VM lands); builds on First Knock primitive (single-port TCP probe) iterated across a range with concurrency. PRIORITY 3 — CONCEPTS L2 DIRECTED CHALLENGE BANKED from session 16 WP005 retest: user named the load-bearing mental model unprompted — 'i always think the quicker we take the server down the less chance of being attacked' — as the intuition driving shutdown-primary disposition on proportional response laddering. Design shape: scenario with explicit cost asymmetry (active customer session draining mid-checkout, hot-failover available, plausible WAF rule) so the 'take it down' reflex feels wrong from the inside via visible cost trade-offs, not from a tutor saying so. Pair with NIST SP 800-40r4 §3 ladder as the L2-grade content. PRIORITY 4 — Concepts L2 also has the SYSLOG / LOG-FILE STRUCTURAL CONVENTIONS gap to address (origin: WP004 retest 2026-05-24; user named 'if you didnt tell me that these log files are already chronological i would have struggled, that was the gap in my knowledge'). Append-order = time order, line format components, severity facility codes. Natural fit alongside any L2 log-handling task (Python L2 log anomaly detector, Bash L2 log monitor, Concepts L2 incident-response interpretation). PRIORITY 5 — LAB GATING: vulnerable target VM (Metasploitable2/DVWA) still NOT installed; blocks broadest L2/L3 paths in Python and Bash. Localhost (127.0.0.1) remains the legal scanning surface until then. PROCESS NOTE 17 (saved as durable feedback memory feedback_evaluation_scope) still in effect — evaluation scope must equal brief scope; teaching observations outside the WP's strict identity get demoted, not gated.",
+  "last_weekly_summary": "2026-05-24"
 }
