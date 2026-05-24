@@ -2,8 +2,8 @@
   "schema_version": "3.0",
   "user": "Emre",
   "started_date": "2026-04-27",
-  "last_session": "2026-05-19",
-  "session_count": 14,
+  "last_session": "2026-05-21",
+  "session_count": 15,
   "tracks": {
     "python": {
       "level": 1,
@@ -243,9 +243,10 @@
         "Bash L0 Trail in the Logs Task 4 round 2 — sort -r used; produces correct answer on column-padded uniq-c output, but user flagged elegance concern unprompted ('hard coded in a sense'). Self-correction toward sort -nr recorded as positive signal.",
         "Bash L1 Evidence Trail Task 4 first three attempts (2026-05-10) — each `find . && /nonexistent_path -type f > full-capture.txt 2>&1` attempt printed `find .` output to terminal (because `&&` split the command and only the right side was redirected). Terminal output was hard evidence the command shape was wrong, but the user kept submitting and reading only `cat full-capture.txt` to check the file. The adjacent terminal evidence (output that should not have been there if redirection was working) was skipped. Same WP002 family — inspecting only the named output, not the full state. Cross-track signal — not opening a new WP, this evidence reinforces WP002's broader description."
       ],
-      "stage": 0,
+      "stage": "mastered",
       "retest_due": null,
       "failures": 3,
+      "mastered_date": "2026-05-21",
       "retest_history": [
         {
           "date": "2026-05-08",
@@ -264,11 +265,17 @@
           "outcome": "failed",
           "challenge": "Failed-Login Frequency Audit (Retest r3) — fresh 30-line auth-snippet at labs/bash-L1/retest-wp002-r3/, new IPs/usernames/counts vs r2",
           "notes": "Mechanical facet CLEARED CLEAN — filter-first (grep Failed before awk), count-sort (sort -nr after uniq -c), no head-truncation regression. Output matched tutor-key exactly: 203.0.113.62(7), 198.51.100.73(6), 192.0.2.144(4), 172.105.92.18(3), 91.218.114.31(2). Verify-don't-proxy facet did NOT fire unprompted — user submitted pipeline+output only, did not surface the dual-role IP (198.51.100.73 also has 3 Accepted/jenkins logins). Tier 1 reframe (\"grep each top-5 IP — are all its lines Failed?\") landed; user identified the dual-role IP and the credential-compromise implication accurately, including the SOC-action framing (block 5 wastes resources, rotate jenkins creds is the real response). FORMAT-SHIFT OWNED IN-SESSION: prior retests baked verification into the brief as explicit commands (wc -l, pre-head sorted list); r3 brief asked for analytical noticing instead. User pushed back on the goalpost shift; tutor agreed the format change was not telegraphed. User then chose strict-bar accounting: failures 2 → 3, accept remediation challenge consequence over softer split-WP / partial-pass calls tutor had proposed. Strict-bar call taken. Failures incremented to 3 → triggers WP002 remediation challenge next session. Mechanical facet status preserved in record for remediation-design scope."
+        },
+        {
+          "date": "2026-05-21",
+          "outcome": "passed-remediation",
+          "challenge": "WP002 Remediation Challenge — Don't Trust the Pipeline (labs/bash-L1/wp002-remediation/auth-snippet.log, 12-line synthetic SSH auth log). Brief scoped narrowly to procedural verify-don't-proxy facet ONLY; mechanical pipeline given (don't redesign); telegraph of analytical-noticing format explicit in brief per process note 16. Three IPs in pipeline output (198.51.100.50=4 brute-force-only, 203.0.113.99=3 dual-role with jenkins Accepted at 14:30:45, 91.218.114.10=2 brute-force-only); strict (a) name verification → (b) run command → (c) conclude order required per IP.",
+          "notes": "PROCEDURAL DISCIPLINE TEST PASSED CLEAN — unprompted, no nudges. User wrote 'I am going to use grep here to see what is happening' BEFORE running grep, on every IP. Order held: name check → run check → conclude. Exact behavioural reversal of the 2026-05-19 r3 fail (where pipeline+output was submitted alone without verification). WP002 generalised description (trust visible output without inspecting adjacent evidence that contradicts the assumption) — closed. Strong substantive call on 198.51.100.50: user named the password-spray pattern from reading the cross-line evidence (4 different usernames from one source = same-password-different-accounts). That's actual SOC terminology, surfacing unprompted at L1 — cross-line pattern reasoning, not just count reasoning. TUTOR SCOPE-CREEP ERROR OWNED IN-SESSION: review flagged four substantive interpretation issues on the 203.0.113.99 analysis (hypothetical-framing the Accepted line, slow-cadence-read-as-innocuous, action-ladder ordering with IP-block primary, summary priority inversion). User pushed back: 'seriously this should be a concepts lab at this point'. User was right — those four points are Concepts L2 incident-response interpretation, NOT the WP002 procedural verify-don't-proxy bar the remediation was scoped to. Tutor extended the marking bar mid-evaluation; same fingerprint as 2026-05-19's r3 format-shift but in evaluation rather than brief design. Owned in-session. Process note 17 promoted. User also clarified intent on 'even if they get it correct' phrasing (meant: 'block IP regardless of attempt-4 outcome', not 'conditional on success'); point (i) of critique withdrawn under that read. User declined revision, opted to retest the interpretation work via the already-scheduled WP005 retest 2026-05-22 (CVE/vuln triage — exact same family of incident-response interpretation skill). Cadence-reading + action-laddering observations logged as a soft watch-area (incident-response interpretation); promoted to WP only if recurs at WP005 retest. PUSHBACK ON TUTOR EVALUATION — fourth consecutive session: session 12 (FLT Evidence A 'no MD5' conclusion), session 13 (TLB file-server CIA-primary), session 14 (WP002 r3 format-shift), session 15 (WP002 remediation scope-creep). Discipline generalising outward in the right direction; treat continued pushback as signal not deflection. Hint tiers used: ZERO. Mechanical pipeline + per-IP grep verifications + conclusions all self-served end-to-end. WP002 → MASTERED. Procedural facet closed across original 2026-04-28 fingerprint (no count-column sort) AND generalised 2026-05-10 fingerprint (trust output without inspecting adjacent evidence). Stage 'mastered'. Failures stop accumulating. No further retests."
         }
       ],
       "self_correction_observed": "User flagged elegance concern unprompted on round 2 ('hard coded in a sense'). The reflective instinct that prevents WP002 in future is already showing — track whether retest confirms it stays self-corrected.",
       "correction_2026-05-08": "Earlier evidence claimed `sort -r` would misrank counts ≥10 by lexicographic comparison. Verified empirically against original Trail in the Logs auth.log AND a fresh retest dataset with counts spanning 3..11. Claim is wrong on raw `uniq -c | sort -r` output: column padding from uniq -c right-aligns the count field, so lexicographic order matches numeric order on this pipeline shape. Trap only fires if leading whitespace is stripped (e.g., post-awk processing). Original weak-point logging overstated the round 2 failure mode. Description and evidence above rewritten to reflect what is empirically true: round 1 was a real bug (no count-column sort), round 2 was semantically iffy but functionally correct.",
-      "status": "awaiting_remediation_challenge"
+      "status": "mastered_via_remediation_2026-05-21"
     },
     {
       "id": "WP003",
@@ -330,8 +337,27 @@
       "retest_history": []
     }
   ],
-  "mastered_points": [],
-  "watch_areas": [],
+  "mastered_points": [
+    {
+      "id": "WP002",
+      "track": "bash",
+      "mastered_date": "2026-05-21",
+      "mastered_via": "remediation challenge (WP002 Remediation — Don't Trust the Pipeline)",
+      "one_line": "Frequency-count pipelines + verify-don't-proxy generalisation. Closed across original 2026-04-28 fingerprint (no count-column sort, three retests + remediation clean) AND generalised 2026-05-10 fingerprint (trust output without inspecting adjacent evidence; procedural discipline fired unprompted on remediation). Full record retained in weak_points entry for traceability."
+    }
+  ],
+  "watch_areas": [
+    {
+      "id": "WA003",
+      "track": "concepts",
+      "first_observed": "2026-05-21",
+      "issue": "Incident-response interpretation on credential-compromise patterns. Three sub-shapes surfaced together on WP002 remediation 203.0.113.99 analysis: (1) hypothetical-framing known events ('even if they get it correct' applied to a confirmed Accepted login); (2) reading slow brute-force cadence (3-15 min gaps) as innocuous ('not a threat actor because not few-seconds-via-script') when slow-and-low is actually the more sophisticated rate-limit-evasion pattern; (3) action-ladder ordering with IP-block as primary response to a confirmed credential success, when primary should be rotate creds + audit session + kill active sessions, with IP block secondary. Also (4) summary priority inversion (loud-failed brute-force prioritised over quiet-succeeded brute-force). Single occurrence — NOT a WP yet. Concepts L2 incident-response territory. PROMOTION TRIGGER: if this fires again on the WP005 retest 2026-05-22 (CVE/vuln triage — same family of response-action interpretation), promote to WP. Otherwise it's one-off teaching, not a durable gap.",
+      "evidence": [
+        "Concepts-L2 reasoning surfaced inside what was scoped as a bash WP002 remediation — flagged via user pushback ('seriously this should be a concepts lab at this point'). Tutor scope-creep error (process note 17) means this observation should not have been logged as a WP002 fail anyway; logged here as the appropriate home for the observation."
+      ],
+      "promotion_threshold": "1 more occurrence on a Concepts L2-shape incident-response scenario = promote to WP"
+    }
+  ],
   "hint_log": [
     {
       "date": "2026-04-28",
@@ -892,6 +918,13 @@
       "date": "2026-05-19",
       "duration_min": 30,
       "notes": "WP002 retest r3 (third attempt). Mechanical facet cleared clean — third consecutive clean execution, original 2026-04-28 fingerprint gone. Verify-don't-proxy facet did not fire unprompted; user surfaced dual-role IP (198.51.100.73 / jenkins compromise) after one Tier 1 reframe. Format-shift between prior retests (explicit verification commands baked into brief) and r3 (analytical noticing of dual-role IP) was real and not telegraphed — tutor owned in-session. User pushed back on goalpost; tutor agreed and offered split / partial-pass / full-pass options. User chose strict-bar accounting: failures 2 → 3, accept remediation challenge consequence. WP002 status now: awaiting_remediation_challenge. Session ran ~50min wall-clock including pre-session VSCode layout fix (claudeCode.preferredLocation panel→sidebar) — over the agreed 30-min lock but task completed cleanly. Pushback-on-tutor-evaluation continuing as positive signal (verify-don't-proxy applied to tutor critique). NEW PROCESS NOTE FORMING: when retesting a cross-track-generalised weak point in a different brief format than prior retests, the new format must be telegraphed in the brief or the unprompted-discipline bar is unfair."
+    },
+    {
+      "session": 15,
+      "date": "2026-05-21",
+      "duration_min": 45,
+      "duration_min_actual_approx": 40,
+      "notes": "WP002 REMEDIATION CHALLENGE — PASSED. Procedural verify-don't-proxy discipline closed across both fingerprints (original 2026-04-28 no-count-sort AND generalised 2026-05-10 trust-output-without-verification). User named verification check BEFORE running it on every IP, ran the command, then concluded — strict (a)/(b)/(c) order held unprompted on all three IPs. Exact behavioural reversal of session 14 r3 fail. Zero hint tiers used. Strong substantive call on 198.51.100.50 (named the password-spray pattern from cross-line evidence, surfacing real SOC terminology unprompted at L1). TUTOR SCOPE-CREEP ERROR OWNED IN-SESSION: review extended the marking bar mid-evaluation from the scoped procedural verify-don't-proxy facet (which passed clean) into Concepts L2 incident-response interpretation (hypothetical-framing of Accepted line, slow-cadence-read-as-innocuous, action-ladder ordering, summary priority inversion on the 203.0.113.99 dual-role IP). User pushed back: 'seriously this should be a concepts lab at this point'. Tutor agreed — same fingerprint as session 14 r3 format-shift but in EVALUATION rather than brief design. Process note 17 promoted; durable feedback memory saved (feedback_evaluation_scope). Substantive interpretation observations rehomed: NOT a WP002 fail, NOT a new WP, but a soft watch-area (WA003) to retest naturally via the already-scheduled WP005 retest 2026-05-22 (CVE/vuln triage — same family of incident-response interpretation). User clarified intent on 'even if they get it correct' phrasing (meant: 'block IP regardless of attempt-4 outcome'); point (i) of critique withdrawn. User declined revision, opted retest-not-revise. PUSHBACK ON TUTOR EVALUATION — fourth consecutive session, generalising outward (sessions 12 / 13 / 14 / 15). WP002 → MASTERED. First weak point closed in the programme. WP001/WP003/WP004/WP005 still active per spaced-repetition schedule. Active weak point count: 5 → 4. No write-up generated (retest/remediation session). New lab created: labs/bash-L1/wp002-remediation/ (12-line synthetic SSH auth log; verified before delivery). Side tasks unchanged."
     }
   ],
   "checkpoints_reached": [
@@ -937,7 +970,8 @@
     "writeups_generated": 11,
     "writeups_archived": 11,
     "cross_track_connections": 7,
-    "total_hours": 12.0
+    "total_hours": 13.5,
+    "weak_points_mastered": 1
   },
   "diagnostic": {
     "completed": true,
@@ -1017,8 +1051,18 @@
       ],
       "state_verified_date": "2026-05-18",
       "notes": "30-line synthetic auth log (24 Failed + 6 Accepted). Single host fileserver01, timestamps May 19 03:14-03:25. Top failed-source IP is 203.0.113.62 with 7 hits. Filter trap: 198.51.100.73 appears in BOTH Failed (6×) and Accepted (3×) — same brute-force-then-successful-login IOC pattern as r2 (jenkins user). Important verified property: pipeline `grep Failed | awk '{print $13}' | sort | uniq -c | sort -nr` produces the correct top IP either with or without the Failed-only filter — because awk $13 on Accepted lines reads the port number not the IP (different field positions when 'invalid user' wording is absent). So the verification-discipline gap surfaces in intermediate-stage inspection, not in a wrong top-line answer. Same trap mechanism as the 2026-05-08 retest fingerprint. Distinct invalid usernames in Failed: 5 (admin, root, ubuntu, oracle, jenkins). Per-IP Failed counts: 203.0.113.62=7, 198.51.100.73=6, 192.0.2.144=4, 172.105.92.18=3, 91.218.114.31=2, 80.94.92.244=2. Accepted lines: 198.51.100.73×3 (jenkins — brute-force success), 10.0.5.42×2 (emre — normal sessions), 10.0.5.43×1 (backupsvc — normal). Tutor-key (verification commands) at .tutor-key.sh — HIDDEN; do NOT show user, do NOT have them run it before retest."
+    },
+    "bash-L1/wp002-remediation/": {
+      "built_date": "2026-05-21",
+      "purpose": "WP002 remediation challenge data — small scaffolded SSH auth log for testing the procedural verify-don't-proxy facet only. Mechanical facet NOT in scope (pipeline given in brief). Designed so the obvious 'block all three at firewall' response is wrong for one IP (203.0.113.99) without a per-IP grep cross-check.",
+      "files": 1,
+      "file_paths": [
+        "auth-snippet.log"
+      ],
+      "state_verified_date": "2026-05-21",
+      "notes": "12-line synthetic auth log. 10 Failed + 2 Accepted. Three brute-force source IPs by failed count: 198.51.100.50=4 (brute-force only, multiple usernames root/admin/oracle/postgres = password-spray shape), 203.0.113.99=3 (dual-role: 3 Failed for jenkins + 1 Accepted for jenkins at 14:30:45 = credential compromise), 91.218.114.10=2 (brute-force only, low volume). One noise Failed (45.142.122.81=1), one legit Accepted (192.168.1.50 admin). Verified pre-delivery: pipeline `grep 'Failed' auth-snippet.log | awk '{print $13}' | sort | uniq -c | sort -nr | head -3` returns exactly 198.51.100.50(4) / 203.0.113.99(3) / 91.218.114.10(2). Per-IP greps return expected role profiles. All Failed lines use 'invalid user X' phrasing throughout to keep $13 = IP consistent (pipeline does NOT mis-attribute jenkins Failed counts to port numbers). Used 2026-05-21 — passed (WP002 mastered)."
     }
   },
-  "pickup_note": "SESSION 15 PRIORITY 1 — design and deliver the WP002 REMEDIATION CHALLENGE. WP002 failures = 3 (escalated 2026-05-19 after r3 retest). Per CLAUDE.md: 'small, scaffolded task targeting just that weak point — pass it = weak point cleared (mastered).' SCOPE NARROW: test verify-don't-proxy discipline specifically. DO NOT re-test mechanical facet (filter-first + count-sort + no head-truncation — cleared clean three consecutive retests, original 2026-04-28 fingerprint gone). FORMAT CONSIDERATION: prior retests (r1, r2) baked verification into brief as explicit commands (wc -l, pre-head sorted list); r3 attempted analytical-noticing format without telegraphing the shift — user pushed back, tutor agreed shift was unfair. Remediation challenge must EITHER (a) bake verification commands into the brief matching r1/r2 format, OR (b) explicitly telegraph an analytical-noticing format if used. User chose strict-bar accounting (failures 2→3 over softer split-WP call) so design must match the seriousness of that choice. Other items beyond remediation: WP004 (python file iteration) and WP005 (concepts vuln triage / NVD-first) both retest-due 2026-05-22; WP003 (concepts phishing) retest-due 2026-05-23. New-content options unchanged: Bash L2 #1 / Python L2 #1 / Concepts L2 #1 (all unlocked). awk syntax revisit still untouched four sessions running — fits naturally with the WP002 remediation if remediation uses bash. Lab status flag: vulnerable target VM (Metasploitable2/DVWA) still not installed.",
+  "pickup_note": "SESSION 16 PRIORITY 1 — WP004 and WP005 retests both due 2026-05-22 (tomorrow). WP004 (python file iteration, stage 1 → mastered if pass): brief should not telegraph the lazy-iteration discipline; second clean pass = mastered. WP005 (concepts vuln triage / NVD-first, stage 0 → 1 if pass): brief should be a fresh CVE-triage scenario testing whether the user names NVD for version-check UNPROMPTED, names version-check step BEFORE deciding response, and chooses proportional response (patch → vendor mitigation → compensating control → emergency shutdown ladder, not jumping straight to shutdown). WP005 retest is ALSO the natural retest home for WA003 (incident-response interpretation watch-area opened session 15) — cadence reading, action-laddering, and treating-known-events-as-hypothetical should be watched in scoring but NOT used as scoring criteria unless they're independently in WP005's described scope. PRIORITY 2 — WP003 (concepts phishing) retest due 2026-05-23 (day after); can run same day as WP004/WP005 if budget allows. PRIORITY 3 — new content. Bash L2 #1 / Python L2 #1 / Concepts L2 #1 all unlocked. Pivot/L2-shape reasoning has shown reliably at L1 for three Concepts challenges + the WP002 remediation; Concepts L2 entry pace probably does NOT need scaffolding. awk syntax revisit still untouched five sessions running — pairs naturally with Bash L2 (scripting basics). PRIORITY 4 — lab gating: vulnerable target VM (Metasploitable2/DVWA) still not installed, blocks the broadest L2/L3 paths in Python and Bash; localhost (127.0.0.1) remains the legal scanning surface until then. PROCESS NOTE 17 (saved as durable feedback memory feedback_evaluation_scope): evaluation scope must equal brief scope. If teaching territory surfaces outside the stated bar, surface as teaching not as fail-points. Origin session 15.",
   "last_weekly_summary": "2026-05-15"
 }
