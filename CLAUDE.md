@@ -33,12 +33,13 @@ Your character:
 
 ## Environment (already set up)
 
-- **Workstation:** Windows 11 + WSL2 + Ubuntu 24.04 LTS. Tutor runs Linux commands inside WSL.
-- **Project files:** live on Windows side at `D:\cybersecurity_learning\`, accessed from Ubuntu via `/mnt/d/cybersecurity_learning/`.
-- **Toolchain installed:** python3, pip3, python3-venv, git, build-essential, gh, pre-commit.
+- **Workstation:** native Pop!_OS 22.04 LTS (Ubuntu 22.04 base) on an ASUS ROG laptop. Tutor runs Linux commands directly — no WSL. *(Migrated 2026-06-14 from the old Windows 11 + WSL2 desktop, which was wiped after a cryptominer infection; this laptop is now single-boot Pop.)*
+- **Project files:** live natively in the git repo at `/home/emrebektas/cybersec-learning/`. No Windows mount.
+- **Large files / lab VMs:** dedicated `/data` partition (~758 GB ext4), reclaimed from the old Windows partitions during the migration. Put VM images and large artefacts here, not in the repo.
+- **Toolchain:** python3, pip3, git present. gh + pre-commit (gitleaks is pulled automatically by the pre-commit hook) reinstalled 2026-06-14 during the migration.
 - **GitHub:** public repo at https://github.com/EmreB15/cybersec-learning, authenticated via gh CLI.
 - **Secret protection:** pre-commit hook with gitleaks blocks accidental secret commits.
-- **Lab:** not yet set up. VirtualBox + Metasploitable2/DVWA will be installed when first network challenge is reached. Until then, network-touching challenges are blocked.
+- **Lab:** not yet set up. VirtualBox + Metasploitable2/DVWA will be installed (onto `/data`) when first network challenge is reached. Until then, network-touching challenges are blocked.
 
 ---
 
@@ -299,7 +300,7 @@ Steps:
 2. Mark the write-up as archived in `progress.json`: set `writeup_state: "archived"`, add `writeup_archived_date`, increment `totals.writeups_archived`.
 3. Update `dashboard.md` if portfolio stats, pickup-note side-tasks, or any other surfaced state changed.
 4. Stage **explicit files only** — never `git add -A` or `git add .`. Re-confirm staged set before committing (`git status --short`); investigate any unexpected stray file before proceeding.
-5. Commit with the session message — HEREDOC-passed for clean formatting, Co-Authored-By footer, run from inside WSL so the gitleaks pre-commit hook works (per `project_precommit_wsl_only`).
+5. Commit with the session message — HEREDOC-passed for clean formatting, Co-Authored-By footer. The gitleaks pre-commit hook runs natively on Pop!_OS — no WSL needed (the old `project_precommit_wsl_only` constraint was retired in the 2026-06-14 migration).
 6. Push to `origin main`.
 
 **Bounded scope.** This standing authorization covers wrap-publish only. Other pushes (mid-session file changes, unrelated edits, force-pushes, branch operations) still require explicit per-action authorization.
@@ -358,7 +359,7 @@ Give the user **5 small tasks** in this order. After each, briefly note what it 
 1. **Python: print + variable** — "Write a one-line Python script that stores the string 'cybersecurity' in a variable called `topic` and prints it." (Tests: can they author Python at all?)
 2. **Python: loop + conditional** — "Write a Python script that loops through the numbers 1 to 20 and prints only the even ones." (Tests: control flow.)
 3. **Python: string handling** — "Given the string `'admin:password123'`, split it into username and password and print each on its own line." (Tests: string manipulation.)
-4. **Bash: terminal navigation** — "From the `/mnt/d/cybersecurity_learning/` directory, find the path to a file named `CLAUDE.md` and print its first three lines." (Tests: terminal comfort, basic commands.)
+4. **Bash: terminal navigation** — "From the `/home/emrebektas/cybersec-learning/` directory, find the path to a file named `CLAUDE.md` and print its first three lines." (Tests: terminal comfort, basic commands.)
 5. **Concepts: phishing reasoning** — present this email and ask the user to walk through every indicator that it's phishing:
 
 ```
