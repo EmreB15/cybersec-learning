@@ -2,8 +2,8 @@
   "schema_version": "3.0",
   "user": "Emre",
   "started_date": "2026-04-27",
-  "last_session": "2026-05-24",
-  "session_count": 16,
+  "last_session": "2026-07-16",
+  "session_count": 17,
   "tracks": {
     "python": {
       "level": 1,
@@ -189,14 +189,26 @@
       "challenges_attempted": [],
       "current_challenge": null,
       "current_challenge_text": null,
-      "last_active": "2026-05-18"
+      "last_active": "2026-05-18",
+      "status": "archived",
+      "active": false,
+      "archived_date": "2026-07-16",
+      "archived_reason": "User decision 2026-07-16: archive the Concepts track to focus on hands-on doing — coding tasks, Bash tasks, terminal work — the stuff that actually builds coding ability. User's framing: 'concepts will eventually be learnt' (the OU R60 degree covers theory/academic assessment), but the hard, scarce skill is coding and Bash, and 'I need to be coding nearly every day if I want to get good at it.' Practical effort now goes into Python + Bash + Linux terminal. Concepts is archived, not deleted — the full track record below is retained for history and can be reinstated if the user chooses."
     },
     "scenarios": {
       "unlocked": false,
-      "unlock_condition": "Python L2 + Bash L2 + Concepts L2 all complete",
+      "unlock_condition": "Python L2 + Bash L2 both complete (Concepts L2 requirement dropped 2026-07-16 when Concepts track was archived)",
       "completed": [],
       "current_scenario": null,
-      "last_active": null
+      "last_active": null,
+      "unlock_condition_history": [
+        {
+          "date": "2026-07-16",
+          "from": "Python L2 + Bash L2 + Concepts L2 all complete",
+          "to": "Python L2 + Bash L2 both complete",
+          "reason": "Concepts track archived; security reasoning now folded into the CONTEXT section of coding/Bash challenges instead of standalone Concepts challenges."
+        }
+      ]
     }
   },
   "weak_points": [
@@ -289,7 +301,7 @@
         "Concepts L1 #1 Phishing Anatomy first pass 2026-05-10: lens 1 declared 'no indicator' without comparing the sender domain (docusign-secure.net) to the real DocuSign domain (docusign.com). Same partial-inventory pattern as the diagnostic — skipped the systematic check on a less-obvious indicator. Redo with corrected framing landed cleanly."
       ],
       "stage": 2,
-      "retest_due": "2026-06-07",
+      "retest_due": null,
       "failures": 0,
       "self_correction_observed": "On the redo, lens 5 demonstrated the corrected behaviour without prompting: user didn't know what .tk meant, hypothesised 'tokens' (wrong fact), and named the hypothesis openly — the right behaviour even when the answer was wrong. The verification-habit lesson appears to have landed on the redo. CONFIRMED ACROSS THREE RETESTS NOW: 2026-05-16 HMRC, 2026-05-24 GitHub — both unprompted on load-bearing lenses (1, 5, 6).",
       "retest_history": [
@@ -305,7 +317,11 @@
           "challenge": "Concepts L1 phishing retest #3 — GitHub security alert impersonation (github-secure.org sender, [Action Required] subject tag, 48-hour deadline, link rendered as anchor text only, no footer); 6-lens framework cold under no-redo-pressure conditions",
           "notes": "PASS. Stage 1 → 2. Six lenses, all substantive, no 'no indicator' defaults. WP003 corrective behaviour fired on load-bearing lenses: Lens 1 (sender) — verification implicit; user compared github-secure.org against known github.com, named the mismatch. The verify step is internalised at this point — not written as 'verify: X' because the X was already known. Habit, not method. Lens 5 (links) — explicit verification named ('hover over it and check the domain name, if it is not GitHub.com it can not be trusted'); same corrective shape as 2026-05-16 HMRC retest, third consecutive instance. Lens 6 (footer absence) — applied unprompted again, third consecutive instance, DURABLE CARRY CONFIRMED from the original 2026-05-10 tutor-walked explanation. Lens 3 included pivot observation — disarming/false-reassurance pattern named ('the attempt was blocked' to make reader feel secure before 48-hour threat at the end). Reading the email's emotional arc, not just surface content. Lens 3 personalisation-as-targeting observation noted ('Hello Emre' suspicious because attacker has user's name = OSINT/targeting signal) with slight framing miss (user framed it as 'they'd usually include my surname'; closer to reality: GitHub greets by username @user, not real name; real-name greeting is suspicious because GitHub doesn't typically use it). Summary sentence correctly identified credential phishing via fake auth page. FOUR 🟢 MINOR observations: (a) 'reverse technique' terminology unclear/misapplied — better names: 'disarming language' or 'false reassurance pattern'; (b) Lens 3 username-vs-real-name framing as above; (c) Lens 2 brackets-as-mass-send observation made but verify step ('does GitHub use [Action Required] in real subjects?') not named — the only lens where verify-discipline didn't fire explicitly; (d) Lens 4 operational alternative (navigate to github.com/settings/security directly) not named. All teaching, none extend into WP003's documented scope (method gap, not vocabulary or coverage breadth). Zero hint tiers used. Stage 2 → 14-day Anki interval → next retest 2026-06-07; one more clean retest at stage 2 → MASTERED."
         }
-      ]
+      ],
+      "status": "paused-concepts-archived",
+      "paused_date": "2026-07-16",
+      "stage_at_pause": 2,
+      "pause_note": "Paused 2026-07-16 — Concepts track archived. NOT failed, NOT mastered: the retest schedule is suspended. The underlying discipline (verify-don't-proxy: verify what you claim instead of substituting confidence for a check) is the SAME family as WP002 (bash) and is carried forward into Python/Bash code review rather than tested via standalone Concepts retests. Can be reactivated if the Concepts track is reinstated."
     },
     {
       "id": "WP004",
@@ -345,7 +361,7 @@
         "Concepts L1 #2 First Light Triage Evidence C revision 2026-05-18: verification CONCEPT landed ('we can find out if we are actually vulnerable') but tool was still wrong — user kept exploit-db for the version-check instead of switching to NVD. Concept-acquisition under prompt confirmed; tool-detail correction explained but unverified by application. Retest will check whether NVD-first habit fires unprompted on a fresh CVE-triage scenario."
       ],
       "stage": 1,
-      "retest_due": "2026-05-31",
+      "retest_due": null,
       "failures": 0,
       "cross_reference": "Same family as WP002 (bash frequency-count — skip the verification step before claiming the answer) and WP003 (phishing analysis — substitute confidence for ignorance). Three concrete instances in three domains now — strong evidence the load-bearing weakness is the verification-habit gap itself, not any domain-specific knowledge gap. Cross-family pattern noted in dashboard.",
       "retest_history": [
@@ -355,7 +371,11 @@
           "challenge": "Edge Proxy CVE Triage (Concepts L1 WP005 retest, first pass) — fictional CVE-2026-1847 nginx request-smuggling scenario; colleague Slack ask: 'should I take the proxy offline?'; deployed nginx version not specified; user produces end-to-end reasoning walk-through. Brief did NOT telegraph NVD-first habit; cited sources NVD/MITRE CVE/OWASP/NIST SP 800-40r4 listed for evaluation transparency only, no lookup permitted.",
           "notes": "PASS. Stage 0 → 1. WP005 PRIMARY CRITERION CLEARED CLEANLY — NVD-for-version-check named UNPROMPTED: 'We should then check the NIST NVD to see if our version of nginx is vulnerable, this is key because if we are vulnerable we need to take the proxy offline'. Direct contrast to 2026-05-18 first pass (jumped from CVE-name-alongside-framework to 'halt any app, remove the framework' with no version-check named) and to 2026-05-18 revision (verification concept landed but tool was exploit-db instead of NVD). Today: NVD named correctly, BEFORE any response action, on a fresh scenario, with no telegraph. Two-step verification gate sequenced correctly: MITRE CVE registry first (confirm the blog claim is real), then NVD (confirm we're actually in the affected version range). Branching reasoning structure ('if safe ... if not safe ... if attacked ...') — multiple action paths conditioned on verification outcome; correct shape: verification controls response, not the other way around. Cited sources used precisely: MITRE CVE registry, NVD, NIST SP 800-40r4 §3 — three of four brief-cited sources named correctly at the right step in reasoning. Forward-looking branch on safe path ('see if there is a way for attackers to get in using similar techniques') = class-of-vulnerability thinking, L2-shape reasoning at L1. 🟡 MODERATE FINDING (in WP005's documented evidence scope but treated as TEACHING, not gate, per process note 17): response-laddering disposition is SHUTDOWN-PRIMARY. On the 'if vulnerable' branch, action goes: take proxy offline → check breach → patch → bring back online. Proportional ladder (NIST SP 800-40r4 §3) would go: patch in place → vendor mitigation (config change like disable HTTP/1.1 keepalive) → compensating control (WAF rule, network segmentation) → take offline as LAST RESORT. Rungs 1-3 not named; decision goes straight from 'we're vulnerable' to 'take it offline'. WP005's top-line documented issue is the version-check step (which cleared definitively today) — the laddering is in the WP's evidence but not in its top-line definition. Same precedent as WP004's accumulator-finding-as-teaching call. If laddering disposition recurs on a future vuln-triage scenario (Concepts L2 territory) without nudge, extend WP005 identity or open sibling WP. USER NAMED UNDERLYING MENTAL MODEL UNPROMPTED — 'i always think the quicker we take the server down the less chance of being attacked'. This is the load-bearing intuition driving the shutdown-primary disposition; it's a coherent threat model (minimize exposure time = minimize risk), not a random mistake. User proactively requested a directed Concepts L2 task to dislodge it. BANKED for Concepts L2 directed challenge design: scenario with explicit cost asymmetry (active customer session draining mid-checkout, hot-failover available, plausible WAF rule) so the 'take it down' reflex feels wrong from the inside. Honesty discipline — second instance in same session of naming-the-gap-instead-of-bluffing (first was syslog-chronological gap on WP004). 🟢 MINOR: 'short time this vulnerability has existed' assumption — conflates disclosure date with existence date; vulnerabilities can exist for years in code before public disclosure (the 0-day window). L2 incident-response territory; flagged as teaching. 🟢 MINOR: 'change to an unaffected patch of nginx' — 'patch' used as noun for 'version'; sharper: 'upgrade to a patched version' or 'apply the patch'. 🟢 MINOR: 'future patch' phrasing ambiguous — user meant 'similar request-smuggling vulnerabilities could appear in future nginx releases' (correct intuition); patches usually FIX things, not introduce them (regressions exist but are not the steady-state case). WA003 — NOT TESTED by this scenario (different IR family; WA003 is about credential-compromise interpretation specifically — hypothetical-framing known events, slow brute-force cadence reading, IP-block-primary action ladder, priority inversion loud-failed > quiet-succeeded). None of those shapes fire on a vuln-triage walk-through. WA003 status unchanged; no promotion trigger fired. Zero hint tiers used. One scope-clarification at challenge start (sources reference vs. lookup permitted) — verification-before-coding reflex, correct. Stage 1 → 7-day Anki interval → next retest 2026-05-31."
         }
-      ]
+      ],
+      "status": "paused-concepts-archived",
+      "paused_date": "2026-07-16",
+      "stage_at_pause": 1,
+      "pause_note": "Paused 2026-07-16 — Concepts track archived. NOT failed, NOT mastered: the retest schedule is suspended. The underlying discipline (verify-don't-proxy: verify what you claim instead of substituting confidence for a check) is the SAME family as WP002 (bash) and is carried forward into Python/Bash code review rather than tested via standalone Concepts retests. Can be reactivated if the Concepts track is reinstated."
     }
   ],
   "mastered_points": [
@@ -1158,6 +1178,21 @@
       "notes": "30-line synthetic SSH auth log on web-prod-01, all entries May 24 single-day, spanning hours 03/07/11/14/18/22 to test multi-hour grouping if desired (today's brief did not require it). 26 Failed + 4 Accepted lines. Failed brute-force IPs: 45.95.169.84=4 (03:xx, admin+oracle, password-spray shape), 193.32.162.157=2 (07:xx, postgres), 89.248.165.74=1 (11:xx, test), 218.92.0.142=8 (14:xx, root, sustained burst), 171.25.193.78=4 (18:xx, multiple usernames git/jenkins/nginx/ubuntu, password-spray shape), 152.32.146.215=7 (22:xx, admin, sustained burst with one Accepted-emre at 22:17 interleaved). Accepted lines: 10.0.0.15 deploy ×2, 10.0.0.20 emre ×2. Tutor-key verified pre-delivery: First Failed = 'May 24 03:15:22', Last Failed = 'May 24 22:20:18'. Used 2026-05-24 — passed (WP004 mastered)."
     }
   },
-  "pickup_note": "SESSION 17 PRIORITY 1 — WP001 retest due 2026-05-29 (stage 2 → mastered if pass; cross-track instruction-precision; the 2026-05-15 multi-sub-task brief shape worked cleanly — same shape recommended). WP001 is the LAST active weak point gating clean entry to L2 content with all WPs at stage 2+. If WP001 clears, the only remaining active retests are WP005 (stage 1, next 2026-05-31) and WP003 (stage 2, next 2026-06-07) — both spaced out and not blocking L2 entry. PRIORITY 2 — L2 ENTRY UNLOCKED on all three core tracks. User declined L2 entry on session 16 in favour of clean three-retest wrap; entry now fully available. Three candidate first L2 challenges: (a) CONCEPTS L2 #1 — vulnerability classes / methodologies / defence frameworks; pivot/L2-shape reasoning has shown reliably at L1 across four consecutive Concepts events (FLT, TLB original, TLB revision, WP005 retest); entry pace probably does NOT need scaffolding. (b) BASH L2 #1 — scripting basics (variables, loops, conditionals, exit codes) with awk-syntax revisit baked in; awk action-block syntax untouched 6 sessions running (carried since session 10). (c) PYTHON L2 #1 — port scanner (localhost-only until vulnerable VM lands); builds on First Knock primitive (single-port TCP probe) iterated across a range with concurrency. PRIORITY 3 — CONCEPTS L2 DIRECTED CHALLENGE BANKED from session 16 WP005 retest: user named the load-bearing mental model unprompted — 'i always think the quicker we take the server down the less chance of being attacked' — as the intuition driving shutdown-primary disposition on proportional response laddering. Design shape: scenario with explicit cost asymmetry (active customer session draining mid-checkout, hot-failover available, plausible WAF rule) so the 'take it down' reflex feels wrong from the inside via visible cost trade-offs, not from a tutor saying so. Pair with NIST SP 800-40r4 §3 ladder as the L2-grade content. PRIORITY 4 — Concepts L2 also has the SYSLOG / LOG-FILE STRUCTURAL CONVENTIONS gap to address (origin: WP004 retest 2026-05-24; user named 'if you didnt tell me that these log files are already chronological i would have struggled, that was the gap in my knowledge'). Append-order = time order, line format components, severity facility codes. Natural fit alongside any L2 log-handling task (Python L2 log anomaly detector, Bash L2 log monitor, Concepts L2 incident-response interpretation). PRIORITY 5 — LAB GATING: vulnerable target VM (Metasploitable2/DVWA) still NOT installed; blocks broadest L2/L3 paths in Python and Bash. Localhost (127.0.0.1) remains the legal scanning surface until then. PROCESS NOTE 17 (saved as durable feedback memory feedback_evaluation_scope) still in effect — evaluation scope must equal brief scope; teaching observations outside the WP's strict identity get demoted, not gated.",
-  "last_weekly_summary": "2026-05-24"
+  "pickup_note": "SESSION 17 (2026-07-16) — PROGRAM PIVOT: Concepts track ARCHIVED at user's request to focus on hands-on coding + Bash + Linux terminal ('need to be coding nearly every day'). System updated across progress.json, CLAUDE.md (Program Amendments override block), and dashboard.md. WP003/WP005 paused (verify-don't-proxy discipline now carried into code review). Scenario unlock relaxed to Python L2 + Bash L2. NEXT ACTION: agree the coding/Bash cadence and the first L2 challenge. WP001 retest (cross-track instruction-precision, stage 2 -> mastered if pass, overdue from 2026-05-29) is still live and should be knocked out via a Bash/Python multi-sub-task brief before or alongside first L2 content. Candidate first L2: Python L2 port scanner (localhost-only until vulnerable VM lands) OR Bash L2 scripting basics (bake in the long-carried awk action-block syntax revisit). Gap since last working session was 53 days — treat first session back as re-warm.",
+  "last_weekly_summary": "2026-05-24",
+  "program_decisions": [
+    {
+      "date": "2026-07-16",
+      "type": "program-structure",
+      "decision": "Archive the Concepts track; focus practical effort on Python + Bash + Linux terminal.",
+      "user_rationale": "Concepts will be absorbed over time (OU R60 degree covers theory). The hard, scarce skill is coding and Bash. User needs to be coding nearly every day to get good at it, so hands-on doing takes priority over standalone concept exercises.",
+      "effects": [
+        "tracks.concepts -> status: archived (data retained, reinstatable).",
+        "Scenario unlock relaxed to Python L2 + Bash L2 (Concepts L2 no longer required).",
+        "WP003 + WP005 (both concepts) -> paused; verify-don't-proxy discipline carried into code review.",
+        "Security reasoning now delivered inside the CONTEXT section of coding/Bash challenges.",
+        "CLAUDE.md amended with an authoritative Program Amendments override block."
+      ]
+    }
+  ]
 }
