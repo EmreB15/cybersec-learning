@@ -60,6 +60,16 @@
 
 ---
 
+## Linux Gym — OverTheWire Bandit (wargame diversions)
+
+Self-directed **Linux CLI fluency** practice running in parallel with the project. Free, legal (OverTheWire issues the credentials), no VM. **The tutor proactively pushes you to it** — *"go do some wargames"* — it's not just an offer.
+
+- **When it fires:** ≥7 days since your last Bandit touch · a short/low-energy session · or a Linux-CLI gap that surfaced in project work. **Floor: ~1 in 5 sessions is Linux-CLI**, so Python project work never starves your terminal skills.
+- **How:** log anything that stumps you in [external/bandit-notes.md](external/bandit-notes.md) (no passwords); the tutor pulls recurring gaps into teaching.
+- **Status:** not started — mechanic live as of 2026-07-16. Start page: https://overthewire.org/wargames/bandit/
+
+---
+
 ## Track Progress
 
 | Track | Level | Progress | Challenges Done | Status |

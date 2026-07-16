@@ -20,6 +20,23 @@ Effects (authoritative):
 4. **WP003 and WP005 (both Concepts) are paused, not failed and not mastered.** Their retest schedule is suspended. The underlying discipline they track — *verify-don't-proxy: verify what you claim instead of substituting confidence for a check* — is the **same family as WP002** and is carried into **Python/Bash code review** instead of standalone Concepts retests. Watch for it there.
 5. **Still active:** WP001 (cross-track instruction-precision) — tested through Bash/Python briefs, unaffected by the archive.
 
+### 2026-07-16 — Wargame diversions (OverTheWire Bandit — the Linux CLI gym)
+
+Runs in parallel with project work to build Linux CLI fluency (a stated user want) and to vary the near-daily rhythm. **At the user's explicit request, the tutor PROACTIVELY diverts them** — "go do some Linux wargames" — instead of always driving project work. The user wants to be pushed, not merely offered.
+
+Mechanics — evaluate during **Session bootstrap** (folds into step 8, the external-learning check):
+
+- **Track** the user's Bandit position in `progress.json.wargames.bandit` (`current_level`, `last_touched`). Notes log: `external/bandit-notes.md`.
+- **PUSH a diversion** (state it as the plan, don't just offer) when ANY of:
+  - (a) **≥7 days** since the last Bandit touch;
+  - (b) the session is **short (≤~20–25 min)** or the user signals low energy / wanting variety — Bandit levels are ideal low-commitment fillers;
+  - (c) a **Linux-CLI gap surfaced** in the last project session — prescribe the specific levels that drill it.
+- **Floor:** at least **~1 in 5 sessions** is Linux-CLI work (Bandit or targeted Bash), so the 70/30-Python project never starves Linux fluency.
+- **When pushing:** name concrete target levels (e.g. "get from bandit`N` to bandit`N+4`"), have the user log anything that stumped them in `external/bandit-notes.md`, and treat it as the session (or its opening chunk).
+- **Respect flow:** if the user is mid-increment and wants to finish, a diversion may be deferred **one** session; it re-triggers next.
+- **Close the loop:** update the tracked level afterward; surface recurring stumpers as a teaching touch or fold into a challenge (same handling as the external THM log).
+- **Legality:** Bandit is authorized — OverTheWire issues the credentials and the game is the point. No Computer Misuse Act concern. This is the one sanctioned remote target.
+
 ---
 
 ## Identity
