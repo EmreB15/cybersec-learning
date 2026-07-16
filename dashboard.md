@@ -12,16 +12,51 @@
 - **WP003 + WP005 (both Concepts) are paused** — not failed, not mastered. The discipline they track (verify-don't-proxy) is the same family as WP002 and now gets watched inside Python/Bash code review.
 - Security reasoning isn't dropped — it moves into the **CONTEXT** section of every coding/Bash challenge.
 
-**NEXT ACTION — agree the plan for coding + Bash:**
-1. **Cadence** — user wants near-daily coding. Decide session shape (short daily reps vs. longer blocks) and how L2 challenges get sized to fit.
-2. **First L2 challenge** — two live candidates:
-   - **Python L2** — port scanner (localhost-only until a vulnerable VM lands; builds on the First Knock TCP-probe primitive) / subdomain enumerator / log anomaly detector / hash identifier.
-   - **Bash L2** — scripting basics (variables, loops, conditionals, exit codes). **Bake in the awk action-block syntax revisit** — untouched 6+ sessions, still not durable.
-3. **WP001 retest still live** (cross-track instruction-precision, stage 2 → mastered if pass, overdue from 2026-05-29) — knock it out via a Bash/Python multi-sub-task brief, before or alongside first L2 content.
+**LEARNING MODEL SHIFT (2026-07-16):** from isolated micro-drills → **building one real, showcaseable tool across its full lifecycle** (design → implement → test → document → deploy). Cadence: near-daily, variable length (asked each session). Mix: ~70% Python / 30% Bash (Bash pieces feed the Python).
+
+**NEXT ACTION — Increment 0 of `loginwatch`:** write the one-page spec together (user authors it — doubles as the overdue WP001 enumerated-brief retest) and lay out the package skeleton. Then one new concept per increment.
 
 **Re-warm note:** 53-day gap since last working session (2026-05-24). First session back is re-warm, not a sprint.
 
-**Lab gating:** Vulnerable target VM (Metasploitable2/DVWA) **still not installed.** Blocks broadest L2/L3 paths in Python and Bash. Localhost (`127.0.0.1`) remains the only legal scanning surface until then.
+**Lab gating:** Vulnerable target VM (Metasploitable2/DVWA) **still not installed** — not needed until the very end of the project arc (stage 5). Everything in `loginwatch` runs on synthetic logs + localhost. No blocker.
+
+---
+
+## Active Project — `loginwatch` (sectools blue-team toolkit)
+
+**The baseline.** First portfolio project *and* the reference template for how every future project is approached, built, tested, and showcased. A CLI auth-log brute-force detector: aggregate failed logins by source IP, flag brute-force sources over a threshold, and surface **dual-role IPs** (Failed *and* Accepted = credential-compromise signal — the standout "thinks like a defender" feature, straight off the WP002 remediation).
+
+- **Interface:** **CLI only, no GUI.** Visual layer for a security tool is a well-formed report (HTML/Markdown, arrives at stage 3). A GUI reads as a student project.
+- **Repo:** separate clean public repo at `/home/emrebektas/sectools` (local repo initialized; **GitHub not yet created — confirm before making public**). Kept apart from this journal so hiring managers never see hint logs.
+- **Lifecycle deliverables:** spec · modular package (parser/analyze/report/cli) · pytest w/ adversarial fixtures · README + MANUAL · `install.sh` · `run-daily.sh` (cron) · `pyproject.toml` + entry point · optional CI badge.
+- **Pedagogy:** user writes every line (tutor hints only); one new concept per increment; **test fixtures = the verify-don't-proxy habit trained in code**; awk revisit folded into Increment 11.
+
+**Increment plan** (each is one short session; ✅ = done):
+
+| # | Increment | New concept | |
+|---|-----------|-------------|---|
+| 0 | Spec + dir skeleton | what a spec is / project structure — *is the WP001 retest* | ⬜ |
+| 1 | `parse_line` → dict/None | function returning a dict + None sentinel | ⬜ |
+| 2 | `parse_file` → records | composing a helper across lines | ⬜ |
+| 3 | Split into `parser.py`, import | **modules & import** (first multi-file) ⚠️wall | ⬜ |
+| 4 | `count_failed_by_ip` | dict accumulation (bridge from `sort\|uniq -c`) | ⬜ |
+| 5 | `flag_suspicious(threshold)` | sorting dict items by value | ⬜ |
+| 6 | Dual-role IP detection | set operations / cross-referencing ⭐ | ⬜ |
+| 7 | `report.py` text table | f-string alignment | ⬜ |
+| 8 | `--format csv` | the `csv` module | ⬜ |
+| 9 | `cli.py` argparse | **argparse** ⚠️wall | ⬜ |
+| 10 | Nonzero exit on findings | `sys.exit()` / exit codes | ⬜ |
+| 11 | `run-daily.sh` | Bash vars + `$?` + `if` (+ **awk** revisit) ⚠️wall | ⬜ |
+| 12 | `install.sh` | Bash functions + heredoc + `set -euo pipefail` | ⬜ |
+| 13 | pytest + fixtures | automated testing (= verify-don't-proxy in code) | ⬜ |
+| 14 | `pyproject.toml` + entry point | packaging ⚠️wall (MVP fallback: `python -m`) | ⬜ |
+| 15 | README + MANUAL | technical documentation | ⬜ |
+
+---
+
+## North Star (direction, not blueprint)
+
+**blue-team → red-team → cloud security → AI security.** Cloud + AI security are the ~12–18 month destination ("where I want and need to be"); AI security is the highest-differentiation target and the user has an edge (builds with AI daily). **The through-line:** the transferable asset is the tool-building discipline, not the domain — each phase re-points the same muscle at a harder domain. Phases 2–4 are **deliberately not architected yet** (design depends on skills acquired en route; AI security moves too fast to plan a year out). Focus is **only** `loginwatch` for now.
 
 ---
 

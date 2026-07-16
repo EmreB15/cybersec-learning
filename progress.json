@@ -1178,7 +1178,7 @@
       "notes": "30-line synthetic SSH auth log on web-prod-01, all entries May 24 single-day, spanning hours 03/07/11/14/18/22 to test multi-hour grouping if desired (today's brief did not require it). 26 Failed + 4 Accepted lines. Failed brute-force IPs: 45.95.169.84=4 (03:xx, admin+oracle, password-spray shape), 193.32.162.157=2 (07:xx, postgres), 89.248.165.74=1 (11:xx, test), 218.92.0.142=8 (14:xx, root, sustained burst), 171.25.193.78=4 (18:xx, multiple usernames git/jenkins/nginx/ubuntu, password-spray shape), 152.32.146.215=7 (22:xx, admin, sustained burst with one Accepted-emre at 22:17 interleaved). Accepted lines: 10.0.0.15 deploy ×2, 10.0.0.20 emre ×2. Tutor-key verified pre-delivery: First Failed = 'May 24 03:15:22', Last Failed = 'May 24 22:20:18'. Used 2026-05-24 — passed (WP004 mastered)."
     }
   },
-  "pickup_note": "SESSION 17 (2026-07-16) — PROGRAM PIVOT: Concepts track ARCHIVED at user's request to focus on hands-on coding + Bash + Linux terminal ('need to be coding nearly every day'). System updated across progress.json, CLAUDE.md (Program Amendments override block), and dashboard.md. WP003/WP005 paused (verify-don't-proxy discipline now carried into code review). Scenario unlock relaxed to Python L2 + Bash L2. NEXT ACTION: agree the coding/Bash cadence and the first L2 challenge. WP001 retest (cross-track instruction-precision, stage 2 -> mastered if pass, overdue from 2026-05-29) is still live and should be knocked out via a Bash/Python multi-sub-task brief before or alongside first L2 content. Candidate first L2: Python L2 port scanner (localhost-only until vulnerable VM lands) OR Bash L2 scripting basics (bake in the long-carried awk action-block syntax revisit). Gap since last working session was 53 days — treat first session back as re-warm.",
+  "pickup_note": "SESSION 17 (2026-07-16) — PROGRAM PIVOT recorded and PROJECT ROADMAP set. Concepts track archived; focus is hands-on coding + Bash. Learning model shifted from isolated micro-drills to BUILDING a real, showcaseable tool across its full lifecycle. ACTIVE PROJECT: loginwatch (auth-log brute-force detector), the first of the sectools blue-team toolkit and the BASELINE template for all future projects. Full 15-increment plan recorded under active_project. North star recorded (blue -> red -> cloud -> AI) as direction only; per user, focus ONLY on loginwatch now. Interface decision: CLI only, no GUI. Repo: separate clean public repo planned at /home/emrebektas/sectools (local repo initialized; GitHub not yet created — confirm before making public). NEXT ACTION = INCREMENT 0: write the one-page loginwatch spec WITH the user (their authorship; doubles as the overdue WP001 enumerated-brief retest) and lay out the package skeleton. One new concept per increment from there. Authorship rule holds — user writes every line, tutor hints via tiers only. Was a 53-day gap; treat re-entry as re-warm.",
   "last_weekly_summary": "2026-05-24",
   "program_decisions": [
     {
@@ -1194,5 +1194,133 @@
         "CLAUDE.md amended with an authoritative Program Amendments override block."
       ]
     }
-  ]
+  ],
+  "active_project": {
+    "name": "loginwatch",
+    "suite": "sectools",
+    "one_line": "CLI auth-log brute-force detector: aggregates failed logins by source IP, flags brute-force sources over a threshold, and surfaces dual-role IPs (Failed AND Accepted = credential-compromise signal). All synthetic/localhost data.",
+    "role": "FIRST portfolio project AND the BASELINE reference — how every future project is approached, designed, implemented, tested, and showcased. Get this right; it is the template.",
+    "status": "planned — not started (Increment 0 is the next action)",
+    "started_date": null,
+    "track": "python (primary) + bash (30%: install/runner scripts)",
+    "repo": {
+      "decision": "Separate clean public repo — NOT inside the cybersec-learning journal (hiring managers should not read hint logs / weak-point tracking).",
+      "local_path": "/home/emrebektas/sectools",
+      "github": "NOT yet created — confirm before making a public GitHub repo."
+    },
+    "interface_decision": "CLI ONLY. No GUI. The visual layer for a security tool is a well-formed report (HTML/Markdown, arrives in stage 3 hostreport) — the practitioner-correct form. A GUI adds non-security plumbing and reads as a student project. A web dashboard is an optional far-future frontend flourish, never the primary interface.",
+    "lifecycle_deliverables": [
+      "one-page spec (design)",
+      "modular package: parser / analyze / report / cli (implementation)",
+      "pytest suite with adversarial fixtures (testing)",
+      "README + MANUAL (documentation)",
+      "install.sh — venv + editable install + PATH symlink (Bash 30%)",
+      "run-daily.sh — cron-ready, checks $?, timestamped output (Bash 30%)",
+      "pyproject.toml + console entry point (deployable)",
+      "optional stretch: GitHub Actions CI badge"
+    ],
+    "increments": [
+      {
+        "n": 0,
+        "increment": "One-page spec + create the dir skeleton",
+        "new_concept": "what a spec is / project structure"
+      },
+      {
+        "n": 1,
+        "increment": "parse_line(line) -> dict or None",
+        "new_concept": "function returning a dict + None sentinel"
+      },
+      {
+        "n": 2,
+        "increment": "parse_file(path) -> list of records",
+        "new_concept": "composing a helper across lines"
+      },
+      {
+        "n": 3,
+        "increment": "Split parser into parser.py, import it",
+        "new_concept": "modules & import (first multi-file program) — KNOWN WALL"
+      },
+      {
+        "n": 4,
+        "increment": "count_failed_by_ip(records)",
+        "new_concept": "dict accumulation (.get(k,0)+1 / defaultdict) — bridge from sort|uniq -c"
+      },
+      {
+        "n": 5,
+        "increment": "flag_suspicious(counts, threshold)",
+        "new_concept": "sorting dict items by value (sorted(key=))"
+      },
+      {
+        "n": 6,
+        "increment": "Dual-role detection (Failed ∩ Accepted IPs)",
+        "new_concept": "set operations / cross-referencing — the standout defender feature"
+      },
+      {
+        "n": 7,
+        "increment": "report.py text table",
+        "new_concept": "f-string alignment (ljust / format spec)"
+      },
+      {
+        "n": 8,
+        "increment": "--format csv output",
+        "new_concept": "the csv module (pipe-friendly output)"
+      },
+      {
+        "n": 9,
+        "increment": "cli.py with argparse",
+        "new_concept": "argparse (flagship L2 concept) — KNOWN WALL"
+      },
+      {
+        "n": 10,
+        "increment": "Nonzero exit when suspicious IPs found",
+        "new_concept": "sys.exit() / meaningful exit codes"
+      },
+      {
+        "n": 11,
+        "increment": "run-daily.sh wrapper",
+        "new_concept": "Bash: variables + $? + if (+ awk to post-process CSV — folds in overdue awk revisit) — KNOWN WALL"
+      },
+      {
+        "n": 12,
+        "increment": "install.sh",
+        "new_concept": "Bash: functions + heredoc + set -euo pipefail"
+      },
+      {
+        "n": 13,
+        "increment": "pytest with fixtures",
+        "new_concept": "automated testing — fixtures ARE the verify-don't-proxy habit in code"
+      },
+      {
+        "n": 14,
+        "increment": "pyproject.toml + console entry point",
+        "new_concept": "packaging / entry points — KNOWN WALL (MVP fallback: install.sh + python -m loginwatch)"
+      },
+      {
+        "n": 15,
+        "increment": "README + MANUAL",
+        "new_concept": "technical documentation structure"
+      }
+    ],
+    "pedagogy": {
+      "authorship": "User writes EVERY line. Tutor hints via tiers only, never code. Non-negotiable — this is where bigger scope risks tutor-carry; the tests catch over-assistance.",
+      "one_new_concept_per_increment": true,
+      "wp001_absorbed": "Increment 0 spec IS the enumerated-brief WP001 retest (overdue from 2026-05-29). Hold every subsequent increment against the spec.",
+      "verify_dont_proxy": "Test fixtures with pre-verified expected output ARE the verify-don't-proxy discipline (paused WP002/WP005 family) trained inside real code. Green tests = the honest cross-check the user currently skips unprompted.",
+      "awk_revisit": "Folded into Increment 11 (run-daily.sh CSV post-processing). Overdue 6+ sessions.",
+      "common_extraction": "Do NOT build sectools.common up front (premature abstraction = demoralizing wall). loginwatch is standalone; the shared layer gets extracted reactively at a later project."
+    }
+  },
+  "north_star": {
+    "recorded": "2026-07-16",
+    "trajectory": [
+      "blue-team (active — sectools/loginwatch)",
+      "red-team",
+      "cloud security",
+      "AI security"
+    ],
+    "user_goal": "Cloud security and AI security are the destination ('where I want and need to be'), ~12-18 month horizon. AI security is the highest-differentiation target; user has an edge (builds with AI daily, understands these systems from the inside).",
+    "through_line": "The transferable asset is the tool-building engineering discipline (design -> build -> test -> document -> deploy), NOT the domain. Each phase re-points the same muscle at a harder domain. loginwatch is the template for all four.",
+    "planning_rule": "Do NOT architect phases 2-4 in detail now — design depends on skills/knowledge acquired en route, and AI security moves too fast to plan a year out. Recorded as DIRECTION only. Each phase accumulates prerequisites: red-team needs the lab VM; cloud needs a free-tier account + cloud fundamentals; AI security builds on existing AI-app familiarity.",
+    "order_note": "Blue is fixed as first. Red/cloud order can flip if cloud pulls harder when reached. Per user 2026-07-16: focus ONLY on loginwatch for now; do not plan the rest yet."
+  }
 }
