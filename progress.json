@@ -2,8 +2,8 @@
   "schema_version": "3.0",
   "user": "Emre",
   "started_date": "2026-04-27",
-  "last_session": "2026-07-16",
-  "session_count": 17,
+  "last_session": "2026-07-17",
+  "session_count": 18,
   "tracks": {
     "python": {
       "level": 1,
@@ -227,9 +227,15 @@
         "Bash L0 First Footprints Task 4 round 1 — used -n 5 instead of -n 10"
       ],
       "stage": 2,
-      "retest_due": "2026-05-29",
+      "retest_due": "2026-07-31",
       "failures": 0,
       "retest_history": [
+        {
+          "date": "2026-07-17",
+          "outcome": "held-stage-2 (pass-with-revision; NOT clean-unprompted, so no advance to mastery; NOT a failure, so no reset)",
+          "challenge": "loginwatch Increment 0 — SPEC.md enumerated-brief retest (7 required sections, in order, each ## headed). First WP001 retest since the 2026-07-16 Concepts-archive pivot; embedded in project work by design.",
+          "notes": "Enumeration core HELD unprompted — all 7 sections present, correct order, first submission. That is the discipline WP001 most directly tracks and it fired on its own. BUT two specified requirements slipped INSIDE the graded brief and needed the review to surface: (1) threshold written '>5' where brief specified 'at or above' (>=) — parameter/semantic substitution, the WP001 fingerprint, and a security-relevant off-by-one (IP with exactly 5 fails escapes flagging); (2) ## headings dropped wholesale (explicit enumerated constraint). Both closed cleanly on a single revision with no further nudges, plus input-mechanism sharpened. Because the misses needed prompting, this is not the clean-unprompted pass mastery requires; because the enumeration held and the misses were precision-within-section, it is not a stage-0 reset either. Call: HOLD stage 2, failures unchanged (0), next retest 2026-07-31. User offered strict-bar alternative (count as failure) at session end but session ended before they chose; default applied. Note for next retest design: keep the enumerated-brief format; watch specifically whether specified PARAMETER VALUES and FORMAT CONSTRAINTS (not just section presence) hold unprompted — that is the remaining gap."
+        },
         {
           "date": "2026-05-08",
           "outcome": "passed",
@@ -1030,6 +1036,27 @@
         "Banked Concepts L2 directed challenge — origin: WP005 retest, user-stated mental model 'i always think the quicker we take the server down the less chance of being attacked'. Design shape: scenario with explicit cost asymmetry — active customer session draining mid-checkout, hot-failover available, plausible WAF rule. Goal: make the 'take it down' reflex feel wrong from the inside via visible cost trade-offs, rather than from a tutor saying so. Pair with the proportional response ladder (NIST SP 800-40r4 §3) as the L2-grade content.",
         "WP004 mastered call on second clean retest follows same precedent as WP002 mastered call on remediation: strict scope-match between the WP's top-line documented issue and the test that fired. Adjacent teaching observations (accumulator generalisation for WP004; response-laddering for WP005) handled as teaching, not as gates, per process note 17. Pattern is stable."
       ]
+    },
+    {
+      "date": "2026-07-17",
+      "duration_minutes_planned": 120,
+      "summary": "Session 18 — FIRST PROJECT SESSION on loginwatch. Increment 0 DONE, Increment 1 briefed but not started (user ended tired, something came up mid-session). INCREMENT 0: user authored SPEC.md (7 enumerated sections) in /home/emrebektas/sectools — doubles as the overdue WP001 retest. First pass: all 7 sections present + correct order (enumeration core held unprompted) but two precision misses — threshold '>5' where brief specified 'at or above' (>=, a security-relevant off-by-one on a detection threshold), and ## headings dropped wholesale (explicit constraint). Both closed cleanly on ONE revision + input-mechanism sharpened. WP001 → HELD stage 2 (pass-with-revision, not clean-unprompted so no mastery; enumeration held + precision-within-section so no reset). Next WP001 retest 2026-07-31. Strong point: out-of-scope section named a detection class a failed-login counter structurally can't see (temporal anomalies). Skeleton kept lean (loginwatch.py + data/, modules deferred to Inc 3 — good YAGNI). Tutor wrote synthetic test log to data/auth-sample.log (brute-force + dual-role + legit + noise, TEST-NET IPs). INCREMENT 1 'One Line In, One Record Out' presented (parse_line → dict/None, None-sentinel concept) — NOT started, zero hints consumed. Bandit diversion NOT run (2h session, project launch prioritised); still not started. TODO: spellcheck SPEC.md before sectools goes public; propose committing sectools working state (SPEC + skeleton + sample log). No write-up this session (project increment, not a graded challenge) — default commit flow, user runs it.",
+      "tracks_touched": [
+        "python"
+      ],
+      "retests_run": [
+        {
+          "id": "WP001",
+          "outcome": "held (pass-with-revision, not clean-unprompted)",
+          "stage": "2 → 2 (held)",
+          "failures": "0",
+          "next_due": "2026-07-31"
+        }
+      ],
+      "challenges_completed_this_session": [],
+      "writeups_generated_this_session": [],
+      "weak_points_logged_this_session": [],
+      "weak_points_mastered_this_session": []
     }
   ],
   "checkpoints_reached": [
@@ -1178,7 +1205,7 @@
       "notes": "30-line synthetic SSH auth log on web-prod-01, all entries May 24 single-day, spanning hours 03/07/11/14/18/22 to test multi-hour grouping if desired (today's brief did not require it). 26 Failed + 4 Accepted lines. Failed brute-force IPs: 45.95.169.84=4 (03:xx, admin+oracle, password-spray shape), 193.32.162.157=2 (07:xx, postgres), 89.248.165.74=1 (11:xx, test), 218.92.0.142=8 (14:xx, root, sustained burst), 171.25.193.78=4 (18:xx, multiple usernames git/jenkins/nginx/ubuntu, password-spray shape), 152.32.146.215=7 (22:xx, admin, sustained burst with one Accepted-emre at 22:17 interleaved). Accepted lines: 10.0.0.15 deploy ×2, 10.0.0.20 emre ×2. Tutor-key verified pre-delivery: First Failed = 'May 24 03:15:22', Last Failed = 'May 24 22:20:18'. Used 2026-05-24 — passed (WP004 mastered)."
     }
   },
-  "pickup_note": "SESSION 17 (2026-07-16) — PROGRAM PIVOT recorded and PROJECT ROADMAP set. Concepts track archived; focus is hands-on coding + Bash. Learning model shifted from isolated micro-drills to BUILDING a real, showcaseable tool across its full lifecycle. ACTIVE PROJECT: loginwatch (auth-log brute-force detector), the first of the sectools blue-team toolkit and the BASELINE template for all future projects. Full 15-increment plan recorded under active_project. North star recorded (blue -> red -> cloud -> AI) as direction only; per user, focus ONLY on loginwatch now. Interface decision: CLI only, no GUI. Repo: separate clean public repo planned at /home/emrebektas/sectools (local repo initialized; GitHub not yet created — confirm before making public). NEXT ACTION = INCREMENT 0: write the one-page loginwatch spec WITH the user (their authorship; doubles as the overdue WP001 enumerated-brief retest) and lay out the package skeleton. One new concept per increment from there. Authorship rule holds — user writes every line, tutor hints via tiers only. Was a 53-day gap; treat re-entry as re-warm. WARGAME DIVERSION MECHANIC NOW LIVE (CLAUDE.md): tutor proactively pushes OverTheWire Bandit for Linux CLI fluency — evaluate at bootstrap. Given the 53-day gap (>=7d trigger), a short Bandit re-warm is a legitimate way to open the next session before/instead of Increment 0 if the user is low-energy or short on time; otherwise Increment 0 remains the primary next action. Bandit notes log: external/bandit-notes.md.",
+  "pickup_note": "SESSION 18 (2026-07-17) — Increment 0 DONE, Increment 1 briefed but NOT started (user ended session tired, off-track mid-session). RESUME AT: Increment 1 'One Line In, One Record Out' — user writes parse_line(line) in /home/emrebektas/sectools/loginwatch.py returning a dict {outcome, ip} for Failed/Accepted lines and None for noise. New concept = None sentinel. Constraints: stdlib only, ONE function, no file-open/loop (that is Inc 2), add temp print() test calls on one Failed / one Accepted / one noise line to verify. Anchoring hint already given: IP always follows the word 'from'. No hints consumed yet — re-present the brief (it is in increments[1].notes) and let the user code. Test data ready at data/auth-sample.log. Increment 0 recap: SPEC.md authored by user (7 sections). WP001 retest = HELD at stage 2 (pass-with-revision, not clean-unprompted; next retest 2026-07-31) — enumeration held unprompted but threshold '>5' vs required '>=' and missing ## headings needed the review to close. User was offered strict-bar accounting (count as failure) but session ended before they chose — revisit if they want. TODO before sectools goes public: spellcheck SPEC.md (multiple typos, left as-is for user voice) and confirm before creating the GitHub repo. UNCOMMITTED: sectools has SPEC.md + loginwatch.py (empty) + data/auth-sample.log + staged .gitignore — propose the user commit these to the sectools local repo (separate from this journal repo). BANDIT: still not started; diversion mechanic live — next SHORT/low-energy session is a good moment to push a Bandit re-warm instead of project work (floor ~1 in 5 sessions Linux-CLI).",
   "last_weekly_summary": "2026-05-24",
   "program_decisions": [
     {
@@ -1223,12 +1250,18 @@
       {
         "n": 0,
         "increment": "One-page spec + create the dir skeleton",
-        "new_concept": "what a spec is / project structure"
+        "new_concept": "what a spec is / project structure",
+        "status": "done",
+        "done_date": "2026-07-17",
+        "notes": "SPEC.md authored by user (7 sections, all present + correct order on first pass — WP001 enumeration core held unprompted). Two precision misses closed on one revision: (1) threshold stated '>5' where brief specified 'at or above' (>=) — WP001 boundary-substitution fingerprint, security-relevant off-by-one on a detection threshold; (2) no ## headings (explicit constraint dropped wholesale). Both fixed cleanly on revision, plus input-mechanism sharpened to 'command-line argument'. Strong point: out-of-scope section named 3 real non-goals incl. 'won't detect unusual login times' (correctly identifies a detection class a failed-login COUNTER structurally can't see). Typos throughout SPEC.md (attemtping/strggle/inoccent/eyball/grater/disginuish/successs) — flagged, NOT fixed (user voice), must spellcheck before repo goes public. Skeleton kept deliberately lean (loginwatch.py single file + data/) — modules NOT pre-built, they arrive at Increment 3 per plan (good YAGNI instinct). Synthetic test log written by tutor to data/auth-sample.log (24 lines: brute-force 203.0.113.45 x8 Failed; dual-role 198.51.100.22 x6 Failed + 1 Accepted; legit 192.0.2.10; below-threshold 192.0.2.55 x3 Failed; plus noise lines for None sentinel). All IPs in TEST-NET documentation ranges."
       },
       {
         "n": 1,
         "increment": "parse_line(line) -> dict or None",
-        "new_concept": "function returning a dict + None sentinel"
+        "new_concept": "function returning a dict + None sentinel",
+        "status": "in_progress",
+        "started_date": "2026-07-17",
+        "notes": "PRESENTED but not started — session ended (user tired, off-track mid-session). Challenge 'One Line In, One Record Out' briefed: parse_line(line) returns dict {outcome, ip} for Failed/Accepted lines, None for noise. Constraints: stdlib only, one function, no file open/loop (that's Inc 2), temp test prints at bottom to verify (verify-don't-proxy in code). Anchoring hint given: IP always follows the word 'from' (anchor on it, don't count positions). No hints consumed. RESUME HERE."
       },
       {
         "n": 2,

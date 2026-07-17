@@ -1,24 +1,23 @@
 # Cybersecurity Training Dashboard
-*Last updated: 2026-07-16 — Session 17. **PROGRAM PIVOT: Concepts track archived** to focus on hands-on coding + Bash + Linux terminal.*
+*Last updated: 2026-07-17 — Session 18. **`loginwatch` build underway** — Increment 0 done, Increment 1 in progress.*
 
 ---
 
 ## Pickup Here
 
-**PROGRAM CHANGE (2026-07-16) — Concepts track ARCHIVED.**
-- **Why (user's call):** *"concepts will eventually be learnt"* (the OU R60 degree covers theory); the hard, scarce skill is **coding and Bash**, and *"I need to be coding nearly every day if I want to get good at it."* From here, practical effort goes into **doing** — coding tasks, Bash tasks, terminal work.
-- Concepts is **archived, not deleted** — record retained, reinstatable if you change your mind.
-- **Scenario missions now unlock on Python L2 + Bash L2 only** (Concepts L2 requirement dropped).
-- **WP003 + WP005 (both Concepts) are paused** — not failed, not mastered. The discipline they track (verify-don't-proxy) is the same family as WP002 and now gets watched inside Python/Bash code review.
-- Security reasoning isn't dropped — it moves into the **CONTEXT** section of every coding/Bash challenge.
+**RESUME AT — Increment 1: "One Line In, One Record Out"** (briefed last session, not yet started — you ended tired, something came up).
+- Write `parse_line(line)` in `/home/emrebektas/sectools/loginwatch.py`: returns a **dict** `{outcome, ip}` for `Failed`/`Accepted` lines, **`None`** for noise. New concept = **the None sentinel**.
+- Constraints: stdlib only · **one** function · no file-open/loop (that's Increment 2) · add temp `print()` tests on one Failed / one Accepted / one noise line and run it (verify-don't-proxy, in code).
+- Anchor hint already given: **the IP always follows the word `from`** — anchor on it, don't count word positions.
+- Test data ready at `data/auth-sample.log`. Full brief is in `progress.json` → `active_project.increments[1].notes`.
 
-**LEARNING MODEL SHIFT (2026-07-16):** from isolated micro-drills → **building one real, showcaseable tool across its full lifecycle** (design → implement → test → document → deploy). Cadence: near-daily, variable length (asked each session). Mix: ~70% Python / 30% Bash (Bash pieces feed the Python).
+**Increment 0 — DONE.** You authored `SPEC.md` (7 sections). It doubled as the WP001 retest → **held at stage 2** (enumeration held first-pass; the ≥-boundary and `##` headings needed one revision, so not mastery, but no reset). Next WP001 retest **2026-07-31**.
 
-**NEXT ACTION — Increment 0 of `loginwatch`:** write the one-page spec together (user authors it — doubles as the overdue WP001 enumerated-brief retest) and lay out the package skeleton. Then one new concept per increment.
+**Two open TODOs before `sectools` goes public:**
+1. **Spellcheck `SPEC.md`** (several typos, left as-is for your voice — fix before the repo is published).
+2. **Commit the `sectools` working state** — `SPEC.md` + `loginwatch.py` + `data/auth-sample.log` + staged `.gitignore` are uncommitted in the *separate* `sectools` repo. GitHub repo not created yet — confirm before making public.
 
-**Re-warm note:** 53-day gap since last working session (2026-05-24). First session back is re-warm, not a sprint.
-
-**Lab gating:** Vulnerable target VM (Metasploitable2/DVWA) **still not installed** — not needed until the very end of the project arc (stage 5). Everything in `loginwatch` runs on synthetic logs + localhost. No blocker.
+**Lab gating:** Vulnerable target VM (Metasploitable2/DVWA) **still not installed** — not needed until the end of the project arc. Everything in `loginwatch` runs on synthetic logs + localhost. No blocker.
 
 ---
 
@@ -35,8 +34,8 @@
 
 | # | Increment | New concept | |
 |---|-----------|-------------|---|
-| 0 | Spec + dir skeleton | what a spec is / project structure — *is the WP001 retest* | ⬜ |
-| 1 | `parse_line` → dict/None | function returning a dict + None sentinel | ⬜ |
+| 0 | Spec + dir skeleton | what a spec is / project structure — *was the WP001 retest* | ✅ |
+| 1 | `parse_line` → dict/None | function returning a dict + None sentinel | 🔨 in progress |
 | 2 | `parse_file` → records | composing a helper across lines | ⬜ |
 | 3 | Split into `parser.py`, import | **modules & import** (first multi-file) ⚠️wall | ⬜ |
 | 4 | `count_failed_by_ip` | dict accumulation (bridge from `sort\|uniq -c`) | ⬜ |
@@ -85,7 +84,7 @@ Self-directed **Linux CLI fluency** practice running in parallel with the projec
 
 | ID | Track | Issue | Stage | Failures | Retest Due |
 |----|-------|-------|-------|----------|------------|
-| WP001 | cross-track | Instruction-precision: identifies right tool but misses sub-tasks or substitutes parameters. Clean when the brief enumerates deliverables explicitly; slips when implicit. | 2 | 0 | **Overdue (was 2026-05-29)** — run via Bash/Python multi-sub-task brief |
+| WP001 | cross-track | Instruction-precision: identifies right tool but misses sub-tasks or substitutes parameters. Enumeration of sections now holds first-pass; remaining gap is **parameter values + format constraints** slipping unprompted (SPEC.md: `>5` vs `≥`, missing `##` headings). | 2 | 0 | **2026-07-31** (held stage 2 via SPEC.md retest 2026-07-17) |
 
 **Carried-forward discipline (no longer a standalone retest):** *verify-don't-proxy* — verify what you claim instead of substituting confidence for a check. Was tracked by WP002 (bash, mastered), WP003 + WP005 (concepts, now paused). **Watch for it inside Python/Bash code review.**
 
@@ -153,7 +152,7 @@ Self-directed **Linux CLI fluency** practice running in parallel with the projec
 
 ## Up Next
 
-**Next session:** agree coding/Bash cadence + first L2 challenge; run the live WP001 retest via a Bash/Python multi-sub-task brief.
+**Next session:** resume Increment 1 (`parse_line` → dict/None). Short/low-energy session? Push a Bandit re-warm instead — still not started.
 **Python (L2):** port scanner / subdomain enumerator / log anomaly detector / hash identifier.
 **Bash (L2):** scripting basics — variables, loops, conditionals, exit codes; awk-syntax revisit baked in.
 **Scenarios:** locked until Python L2 + Bash L2 both complete.
@@ -172,8 +171,8 @@ Self-directed **Linux CLI fluency** practice running in parallel with the projec
 - Write-ups archived: **11**
 - Total challenges completed: **11**
 - Total challenges attempted-unfinished: 2
-- Total sessions: **17**
-- Total hours: **~15.5**
+- Total sessions: **18**
+- Total hours: **~16.3**
 - Weak points mastered: **2** (WP002, WP004)
 - Active tracks: **Python, Bash** *(Concepts archived 2026-07-16)*
 
