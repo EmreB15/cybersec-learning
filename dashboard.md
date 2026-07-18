@@ -1,21 +1,24 @@
 # Cybersecurity Training Dashboard
-*Last updated: 2026-07-17 — Session 18. **`loginwatch` build underway** — Increment 0 done, Increment 1 in progress.*
+*Last updated: 2026-07-18 — Session 19. **`loginwatch` build underway** — Increments 0–2 done, 3 next.*
 
 ---
 
 ## Pickup Here
 
-**RESUME AT — Increment 1: "One Line In, One Record Out"** (briefed last session, not yet started — you ended tired, something came up).
-- Write `parse_line(line)` in `/home/emrebektas/sectools/loginwatch.py`: returns a **dict** `{outcome, ip}` for `Failed`/`Accepted` lines, **`None`** for noise. New concept = **the None sentinel**.
-- Constraints: stdlib only · **one** function · no file-open/loop (that's Increment 2) · add temp `print()` tests on one Failed / one Accepted / one noise line and run it (verify-don't-proxy, in code).
-- Anchor hint already given: **the IP always follows the word `from`** — anchor on it, don't count word positions.
-- Test data ready at `data/auth-sample.log`. Full brief is in `progress.json` → `active_project.increments[1].notes`.
+**RESUME AT — Increment 3: "Split parser into `parser.py`, import it"** — the **first ⚠️ wall** (modules & import; first multi-file program).
+- Move `parse_line` + `parse_file` out of `loginwatch.py` into a new `parser.py`; import them back into `loginwatch.py`.
+- Introduce `if __name__ == "__main__":` so the temp test prints don't fire on import.
+- New concept = **modules & import**. Deferred here on purpose — you'd already done two increments; a wall deserves a fresh head.
 
-**Increment 0 — DONE.** You authored `SPEC.md` (7 sections). It doubled as the WP001 retest → **held at stage 2** (enumeration held first-pass; the ≥-boundary and `##` headings needed one revision, so not mastery, but no reset). Next WP001 retest **2026-07-31**.
+**Done this session (19):** Increment 1 `parse_line` (dict/`None` sentinel) and Increment 2 `parse_file` (list of 19 records, count reconciled). Both committed. Two bugs on Inc 1 (an always-True `if`, and dict shape — the shape one was **my** ambiguous brief, owned) and one on Inc 2 (`with` vs manual open) — all closed on revision, zero hints.
+
+**Watch:** the `with` context-manager idiom slipped once (Inc 2) — confirm it fires unprompted the next file-open, or it becomes a logged WP.
 
 **Two open TODOs before `sectools` goes public:**
-1. **Spellcheck `SPEC.md`** (several typos, left as-is for your voice — fix before the repo is published).
-2. **Commit the `sectools` working state** — `SPEC.md` + `loginwatch.py` + `data/auth-sample.log` + staged `.gitignore` are uncommitted in the *separate* `sectools` repo. GitHub repo not created yet — confirm before making public.
+1. **Spellcheck `SPEC.md`** (several typos, left as-is for your voice).
+2. `sectools` GitHub repo **not created yet** — confirm before making public.
+
+**Bandit:** still not started — wargame diversion now **deferred two sessions**. Push it next short/low-energy session.
 
 **Lab gating:** Vulnerable target VM (Metasploitable2/DVWA) **still not installed** — not needed until the end of the project arc. Everything in `loginwatch` runs on synthetic logs + localhost. No blocker.
 
@@ -35,9 +38,9 @@
 | # | Increment | New concept | |
 |---|-----------|-------------|---|
 | 0 | Spec + dir skeleton | what a spec is / project structure — *was the WP001 retest* | ✅ |
-| 1 | `parse_line` → dict/None | function returning a dict + None sentinel | 🔨 in progress |
-| 2 | `parse_file` → records | composing a helper across lines | ⬜ |
-| 3 | Split into `parser.py`, import | **modules & import** (first multi-file) ⚠️wall | ⬜ |
+| 1 | `parse_line` → dict/None | function returning a dict + None sentinel | ✅ |
+| 2 | `parse_file` → records | composing a helper across lines | ✅ |
+| 3 | Split into `parser.py`, import | **modules & import** (first multi-file) ⚠️wall | 🔜 next |
 | 4 | `count_failed_by_ip` | dict accumulation (bridge from `sort\|uniq -c`) | ⬜ |
 | 5 | `flag_suspicious(threshold)` | sorting dict items by value | ⬜ |
 | 6 | Dual-role IP detection | set operations / cross-referencing ⭐ | ⬜ |
@@ -133,7 +136,7 @@ Self-directed **Linux CLI fluency** practice running in parallel with the projec
 - [x] First weak point mastered — WP002 *(2026-05-21)*
 - [x] Second weak point mastered — WP004 *(2026-05-24)*
 - [x] Portfolio has 10+ archived write-ups *(2026-05-18 — 11 total)*
-- [ ] **First L2 challenge started (Python or Bash)** ← next milestone
+- [x] **First L2 challenge started (Python or Bash)** *(2026-07-18 — loginwatch Increments 1–2, Python L2)*
 - [ ] Lab environment fully set up — vulnerable target VM (Metasploitable2/DVWA) installed
 - [ ] Scenarios unlocked — Python L2 + Bash L2 both complete
 - [ ] All active tracks reach Level 3
@@ -152,7 +155,7 @@ Self-directed **Linux CLI fluency** practice running in parallel with the projec
 
 ## Up Next
 
-**Next session:** resume Increment 1 (`parse_line` → dict/None). Short/low-energy session? Push a Bandit re-warm instead — still not started.
+**Next session:** Increment 3 — split into `parser.py` + `import` (first ⚠️ wall). Short/low-energy session? Push a Bandit re-warm instead — still not started.
 **Python (L2):** port scanner / subdomain enumerator / log anomaly detector / hash identifier.
 **Bash (L2):** scripting basics — variables, loops, conditionals, exit codes; awk-syntax revisit baked in.
 **Scenarios:** locked until Python L2 + Bash L2 both complete.
@@ -171,8 +174,8 @@ Self-directed **Linux CLI fluency** practice running in parallel with the projec
 - Write-ups archived: **11**
 - Total challenges completed: **11**
 - Total challenges attempted-unfinished: 2
-- Total sessions: **18**
-- Total hours: **~16.3**
+- Total sessions: **19**
+- Total hours: **~17.5**
 - Weak points mastered: **2** (WP002, WP004)
 - Active tracks: **Python, Bash** *(Concepts archived 2026-07-16)*
 
