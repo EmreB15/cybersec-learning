@@ -2,8 +2,22 @@
   "schema_version": "3.0",
   "user": "Emre",
   "started_date": "2026-04-27",
-  "last_session": "2026-07-18",
-  "session_count": 19,
+  "last_session": "2026-07-23",
+  "session_count": 20,
+  "head_of_year_review": {
+    "role": "Program-level trajectory review, distinct from the teacher's per-session work. Metaphor set by user 2026-07-23: teacher = Opus tutor (in-session — hint tiers, code review, weak points); head of year = Fable (steps back across weeks to judge the arc). See CLAUDE.md 2026-07-23 amendment.",
+    "conducted_by": "fable-agent",
+    "conducted_by_rule": "MANDATORY — Agent tool with model=fable. The head of year is ALWAYS a Fable agent, never the teacher model. User's explicit instruction: 'make sure this is a fable agent.'",
+    "cadence_days": 14,
+    "established_date": "2026-07-23",
+    "last_review": null,
+    "next_review_due": "2026-08-06",
+    "ordering_rule": "When next_review_due <= today, the head of year speaks to the user FIRST at Session bootstrap (bootstrap step 10) — before the teacher greets or plans. User's explicit instruction 2026-07-23: 'have my head of year talk to me before you talk to me.'",
+    "review_shape": ["what got done this fortnight", "on-track read (green/amber/red)", "drift/concerns", "refine-or-stay-the-course call", "1-3 focus priorities for next fortnight (handed to the teacher)"],
+    "trail_mode": "Lightweight: logged in this object's `log` array + surfaced in-session. Optional reviews/YYYY-MM-DD.md file only if the user later wants a durable readable trail (not created by default, per user 'might not need to be a resource').",
+    "missed_window_rule": "If multiple fortnights elapse without a session, run ONE review at next login covering the whole gap; do not stack back-reviews.",
+    "log": []
+  },
   "tracks": {
     "python": {
       "level": 1,
@@ -228,6 +242,7 @@
       ],
       "stage": 2,
       "retest_due": "2026-07-31",
+      "evidence_2026-07-23": "POSITIVE SIGNAL toward this retest. loginwatch Increment 5 (flag_suspicious) — user wrote `value >= threshold` (boundary-correct) on the FIRST try, unprompted. This is the exact remaining WP001 gap the SPEC.md retest (2026-07-17) flagged: the '>5' vs required '>=' parameter/boundary slip. Here the correct comparison operator held with no nudge, on a security-relevant detection threshold (an IP with exactly `threshold` fails must be flagged; boundary-tested at threshold=6). Also self-served a lambda sort key. Single in-challenge instance, not a formal retest — but it directly evidences the parameter-precision facet closing. Weigh at the 2026-07-31 retest.",
       "failures": 0,
       "retest_history": [
         {
@@ -651,6 +666,15 @@
       ],
       "concept": "single-port TCP availability check",
       "context": "Python: `socket.create_connection((host, port), timeout)` inside try/except OSError — returns True/False from a wrapper function. Bash equivalents: `nc -zv host port` (netcat zero-IO probe; exit 0 = open) or `timeout 1 bash -c \"</dev/tcp/host/port\"` (bash's built-in pseudo-device for TCP probes; exit 0 = open). Python wins when you build composable tooling (output capture, loops, structured results, parallel scanning); Bash wins as a one-shot pipe-ready probe inside a shell pipeline. Both share the same legality gate — TCP connection probes against hosts you don't own or have written permission to test are unauthorised access under UK Computer Misuse Act 1990 §1. Sets up Python L2 (port scanner = this primitive iterated across a range with concurrency)."
+    },
+    {
+      "date": "2026-07-23",
+      "tracks": [
+        "python",
+        "bash"
+      ],
+      "concept": "frequency counting: Python dict accumulation vs Bash sort | uniq -c",
+      "context": "loginwatch Increment 4 (count_failed_by_ip). The Bash idiom the user mastered for WP002: `grep Failed | awk '{print $ip}' | sort | uniq -c` counts occurrences per key. Python equivalent is dict accumulation: walk records, `d[ip] = d.get(ip, 0) + 1` for each Failed one. Same operation, different machinery + reuse profile — the Bash pipeline is ephemeral and pipe-friendly; the Python dict is a building block you extend (flag over threshold, cross-reference dual-role IPs, feed a report). `.get(k, default)` (returns value or default, never mutates — the assignment writes) is the Python analogue of `uniq -c`'s implicit tally. Direct WP002-family callback: the user drilled this frequency-count to mastery in Bash; building it in Python is the same defender operation re-expressed, and the Failed-only filter discipline (count only what the brief says) carried across UNPROMPTED."
     }
   ],
   "session_log": [
@@ -1070,6 +1094,19 @@
       "writeups_generated_this_session": [],
       "weak_points_logged_this_session": [],
       "weak_points_mastered_this_session": []
+    },
+    {
+      "date": "2026-07-23",
+      "duration_minutes_planned": 120,
+      "summary": "Session 20 (2026-07-23) — THREE INCREMENTS DONE (loginwatch 3, 4, 5) + a major strategy/coaching block + the Head-of-Year protocol established. BUILD (all self-served, zero hint tiers): Inc 3 (module split — first WALL, modules & import) cleared clean; taught concept-first (module / import-runs-top-to-bottom / `__name__` guard); user chose `import parser` module-qualified unprompted; post-solve question exposed a conflated model (parser.py silence vs the guard) — corrected + proved live via `import loginwatch`. Inc 4 (count_failed_by_ip, dict accumulation): Failed-only filter inside the loop -> 198.51.100.22 correctly 6 not 7 (WP002 filter discipline UNPROMPTED, in Python); taught `.get(k,0)+1`, user applied it, precision correction issued (`.get()` is READ-ONLY, does not create keys). Inc 5 (flag_suspicious): lambda sort key unprompted; WP001 POSITIVE SIGNAL — `value >= threshold` boundary-correct on first try (the exact SPEC.md '>5' gap the 2026-07-31 retest targets), boundary-tested. sectools commits aa6f73b + 1f84551. Detection spine complete: parse->count->flag (6/15). IDIOMS BANKED: dict `.get`, lambda sort key, `__name__` guard. COACHING: user requested a Fable review of the process + a CTF plan; Fable delivered (blue-rung gap, no-AI-before-flag bright line, cold-redo retests, ship sectools, pay Bandit debt). User pushed back on over-steering to blue -> resolved 'one spine deep, cheap tastings of red/devsecops/AI'; CryptoHack demoted to enjoyment/maths lane (interest is legit fuel); TryHackMe confirmed ACTIVE (Cyber Security 101, 34%, 1 room/day + retention note — corrects stale 'idle' note). User priority stack recorded: degree -> practical cyber (the lever) -> theory cyber -> maths (multiplier) -> trading (roadblock, reloading via maths). Two visual artifacts made (strategy board + roadmap) then de-prioritized in favour of process. HEAD-OF-YEAR PROTOCOL: Fable conducts a fortnightly trajectory review that speaks FIRST at bootstrap when due (CLAUDE.md 2026-07-23 amendment + bootstrap step 10 + head_of_year_review object); first due 2026-08-06. No write-up (project increments). Session ended: user heading to CyLab Security Academy for beginner CTFs/guides.",
+      "tracks_touched": [
+        "python"
+      ],
+      "retests_run": [],
+      "challenges_completed_this_session": [],
+      "writeups_generated_this_session": [],
+      "weak_points_logged_this_session": [],
+      "weak_points_mastered_this_session": []
     }
   ],
   "checkpoints_reached": [
@@ -1114,8 +1151,8 @@
     "challenges_attempted_unfinished": 2,
     "writeups_generated": 11,
     "writeups_archived": 11,
-    "cross_track_connections": 7,
-    "total_hours": 15.5,
+    "cross_track_connections": 8,
+    "total_hours": 17.5,
     "weak_points_mastered": 2
   },
   "diagnostic": {
@@ -1218,7 +1255,7 @@
       "notes": "30-line synthetic SSH auth log on web-prod-01, all entries May 24 single-day, spanning hours 03/07/11/14/18/22 to test multi-hour grouping if desired (today's brief did not require it). 26 Failed + 4 Accepted lines. Failed brute-force IPs: 45.95.169.84=4 (03:xx, admin+oracle, password-spray shape), 193.32.162.157=2 (07:xx, postgres), 89.248.165.74=1 (11:xx, test), 218.92.0.142=8 (14:xx, root, sustained burst), 171.25.193.78=4 (18:xx, multiple usernames git/jenkins/nginx/ubuntu, password-spray shape), 152.32.146.215=7 (22:xx, admin, sustained burst with one Accepted-emre at 22:17 interleaved). Accepted lines: 10.0.0.15 deploy ×2, 10.0.0.20 emre ×2. Tutor-key verified pre-delivery: First Failed = 'May 24 03:15:22', Last Failed = 'May 24 22:20:18'. Used 2026-05-24 — passed (WP004 mastered)."
     }
   },
-  "pickup_note": "SESSION 19 (2026-07-18) — Increments 1 AND 2 DONE (parse_line + parse_file), committed. RESUME AT: Increment 3 'Split parser into parser.py, import it' — the FIRST ⚠️WALL (modules & import, first multi-file program). Move parse_line + parse_file out of loginwatch.py into a new parser.py; import them back into loginwatch.py; introduce `if __name__ == '__main__':` guard so the temp test prints don't fire on import. New concept = modules & import. Deserves a fresh head — deliberately deferred from session 19 (user had done 2 increments already, good stopping point). Current loginwatch.py (in /home/emrebektas/sectools) has parse_line, parse_file, and temp test prints (len + list) at the bottom against data/auth-sample.log (returns 19 records). parse_line dict shape = {\"outcome\", \"ip\"} lowercase keys, dual-anchor (words[5] head / words[-4] tail). WATCH: `with` context-manager idiom slipped once at Inc 2 (used manual open/close, fixed on revision) — confirm it fires unprompted next file-open or log a WP. WP001 retest still scheduled 2026-07-31 (held stage 2). TODO before sectools public: spellcheck SPEC.md. BANDIT: still not started — diversion deferred TWO sessions now (launch + this build session); PUSH it next short/low-energy session (floor ~1 in 5 Linux-CLI). OLD SESSION-18 NOTE FOLLOWS: SESSION 18 (2026-07-17) — Increment 0 DONE, Increment 1 briefed but NOT started (user ended session tired, off-track mid-session). RESUME AT: Increment 1 'One Line In, One Record Out' — user writes parse_line(line) in /home/emrebektas/sectools/loginwatch.py returning a dict {outcome, ip} for Failed/Accepted lines and None for noise. New concept = None sentinel. Constraints: stdlib only, ONE function, no file-open/loop (that is Inc 2), add temp print() test calls on one Failed / one Accepted / one noise line to verify. Anchoring hint already given: IP always follows the word 'from'. No hints consumed yet — re-present the brief (it is in increments[1].notes) and let the user code. Test data ready at data/auth-sample.log. Increment 0 recap: SPEC.md authored by user (7 sections). WP001 retest = HELD at stage 2 (pass-with-revision, not clean-unprompted; next retest 2026-07-31) — enumeration held unprompted but threshold '>5' vs required '>=' and missing ## headings needed the review to close. User was offered strict-bar accounting (count as failure) but session ended before they chose — revisit if they want. TODO before sectools goes public: spellcheck SPEC.md (multiple typos, left as-is for user voice) and confirm before creating the GitHub repo. UNCOMMITTED: sectools has SPEC.md + loginwatch.py (empty) + data/auth-sample.log + staged .gitignore — propose the user commit these to the sectools local repo (separate from this journal repo). BANDIT: still not started; diversion mechanic live — next SHORT/low-energy session is a good moment to push a Bandit re-warm instead of project work (floor ~1 in 5 sessions Linux-CLI).",
+  "pickup_note": "SESSION 20 (2026-07-23) — THREE INCREMENTS DONE (loginwatch 3, 4, 5). RESUME AT: Increment 6 'Dual-role IP detection (Failed ∩ Accepted)' — the STANDOUT defender feature. New concept = set operations / cross-referencing. Build a function finding IPs in BOTH the Failed set AND the Accepted set (Failed-then-Accepted = credential-compromise signal). In data/auth-sample.log the planted dual-role IP is 198.51.100.22 (6 Failed + 1 Accepted) — the expected single result. loginwatch.py (in /home/emrebektas/sectools) now has count_failed_by_ip + flag_suspicious; parser.py has parse_line + parse_file; demo runs under if __name__ == '__main__'. sectools commits: aa6f73b (Inc3), 1f84551 (Inc4+5). Detection spine complete: parse -> count -> flag; dual-role is the next layer. IDIOMS BANKED this session: dict .get(k,0)+1, lambda sort key, the __name__ guard. WP001: `>=` boundary held UNPROMPTED at Inc 5 (positive signal toward the 2026-07-31 retest — logged in WP001 evidence_2026-07-23). WATCH: `with` context-manager idiom not re-tested this session (no new file-open); still watch next file-open. HEAD-OF-YEAR REVIEW now live: Fable conducts a fortnightly trajectory review that speaks FIRST at bootstrap when due — FIRST ONE DUE 2026-08-06 (before the teacher greets). See progress.json.head_of_year_review + CLAUDE.md 2026-07-23 amendment / bootstrap step 10. STRATEGY (session 20 coaching): 'one spine deep, cheap tastings of red/devsecops/AI'; CTF ladder = pay Bandit debt -> picoGym/CyLab -> blue platform (TryHackMe SOC already-owned + CyberDefenders) -> HTB retired-easy later -> CryptoHack (enjoyment/maths lane) / PortSwigger later; AI rule = no AI before the flag, full AI after + cold-redo retests; write-ups = failure trail + defender's note. TryHackMe ACTIVE: Cyber Security 101 at 34%, 1 room/day + 2-min retention note. TWO OPEN DEBTS (clear before new platforms): (1) BANDIT still not started — next SHORT/low-energy session is Bandit, no third deferral; (2) SHIP sectools public — spellcheck SPEC.md + OPSEC pass, confirm GitHub repo creation. User ended session heading to CyLab Security Academy for beginner CTFs/guides. ⚠ VERIFY (Fable-sourced): picoCTF->CyLab rename (~May 2026); TryHackMe cert name (SAL1?).",
   "last_weekly_summary": "2026-05-24",
   "program_decisions": [
     {
@@ -1233,6 +1270,21 @@
         "Security reasoning now delivered inside the CONTEXT section of coding/Bash challenges.",
         "CLAUDE.md amended with an authoritative Program Amendments override block."
       ]
+    },
+    {
+      "date": "2026-07-23",
+      "type": "program-structure + strategy",
+      "decision": "(A) Establish the fortnightly Head-of-Year Review, conducted by a Fable agent, that speaks to the user FIRST at bootstrap when due. (B) Adopt the 'one spine deep, cheap tastings of the rest' model for the cyber lanes, with a blue-team rung added to the external-practice ladder.",
+      "user_rationale": "Teacher (Opus, in-session) is structurally too close to judge the multi-week arc; a head-of-year role (Fable) tracks trajectory — directly serving the user's forget-across-time problem at the programme level. On lanes: user pushed back on over-steering to blue ('unless i explore i can never know what i truly want'); resolution is depth-first on blue (nearest employable + shared fundamentals + loginwatch is blue) with deliberate cheap tastings of red / devsecops / AI-security. Practical cyber is the user's #1 leverage ('the only thing that can truly push me into the space'); the degree is the theory evidence; maths is a cross-cutting multiplier (feeds trading + AI + crypto) and the active lever while trading is at a roadblock.",
+      "effects": [
+        "head_of_year_review object added; CLAUDE.md 2026-07-23 amendment + bootstrap step 10 gate. First review due 2026-08-06 (Fable, mandatory).",
+        "CTF/practice ladder agreed: pay Bandit debt -> picoGym/CyLab (General Skills + Forensics) -> blue platform (TryHackMe SOC path already owned + CyberDefenders for publishable DFIR write-ups) -> HTB retired-easy (later, Bash L3-ish) -> CryptoHack (enjoyment/maths treat, NOT the spine, no public write-ups per ToS) / PortSwigger (later, red).",
+        "AI rule for CTFs: no AI before the flag, full AI after; ~30-45 min struggle floor + stuck-report; describe challenges in own words, never paste; cold-redo retest 2-4 weeks after a clean solve (bolts spaced repetition onto CTFs).",
+        "Write-up standard: failure trail + a defender's note (how would this show in logs / what detects it); curate to ~6 excellent; ToS-aware (HTB retired only, CryptoHack on-platform, Bandit don't publish).",
+        "TryHackMe is ACTIVELY in use (Cyber Security 101, 34%) — corrects the stale 'idle since May' note. Cadence: 1 room/day + a 2-min retention note (retention over throughput, given the forget problem).",
+        "Two visual artifacts produced (strategy board + roadmap) but de-prioritized by the user in favour of the recurring Fable review — NOT maintained resources.",
+        "Verify (Fable-sourced, unconfirmed vs Jan-2026 cutoff): picoCTF -> 'CyLab Security Academy' rename (~May 2026); TryHackMe cert name (SAL1?)."
+      ]
     }
   ],
   "active_project": {
@@ -1240,8 +1292,8 @@
     "suite": "sectools",
     "one_line": "CLI auth-log brute-force detector: aggregates failed logins by source IP, flags brute-force sources over a threshold, and surfaces dual-role IPs (Failed AND Accepted = credential-compromise signal). All synthetic/localhost data.",
     "role": "FIRST portfolio project AND the BASELINE reference — how every future project is approached, designed, implemented, tested, and showcased. Get this right; it is the template.",
-    "status": "planned — not started (Increment 0 is the next action)",
-    "started_date": null,
+    "status": "IN PROGRESS — Increments 0-5 done (6/15). Detection spine complete: parse -> count -> flag. NEXT: Increment 6 (dual-role IP detection, the standout defender feature). sectools local repo = 3 commits (f88f24e Inc0, plus aa6f73b Inc3, 1f84551 Inc4+5); GitHub repo still NOT created (confirm before public; SPEC.md spellcheck pending — one of the two open debts).",
+    "started_date": "2026-07-17",
     "track": "python (primary) + bash (30%: install/runner scripts)",
     "repo": {
       "decision": "Separate clean public repo — NOT inside the cybersec-learning journal (hiring managers should not read hint logs / weak-point tracking).",
@@ -1287,17 +1339,26 @@
       {
         "n": 3,
         "increment": "Split parser into parser.py, import it",
-        "new_concept": "modules & import (first multi-file program) — KNOWN WALL"
+        "new_concept": "modules & import (first multi-file program) — KNOWN WALL",
+        "status": "done",
+        "done_date": "2026-07-23",
+        "notes": "DONE session 20. Split parse_line + parse_file into parser.py (pure, side-effect-free library); loginwatch.py now `import parser` and runs its demo under `if __name__ == '__main__':`. FIRST multi-file program — WALL cleared CLEAN, zero hint tiers. Taught concept-first (why before what): module = importable .py; import runs the file top-to-bottom once (top-level side effects fire on import — the footgun); `__name__` == '__main__' when run directly vs the module name when imported; the guard is the boundary between importable-library and runnable-script. STRONG: chose `import parser` + `parser.parse_file(...)` (module-qualified) over `from parser import ...` UNPROMPTED — makes the borrowed-from-another-module origin visible at the call site. Verified 3 checks: `python3 loginwatch.py` -> 19 records + list (byte-identical to Inc 2); `python3 parser.py` -> silent; `python3 -c 'import parser'` -> silent. POST-SOLVE the user's question revealed a conflated model (thought parser.py's silence was the guard's doing) — corrected to two independent facts: (1) parser.py is silent because it is all defs no calls, no guard involved; (2) the guard only gates loginwatch.py's demo on import. Proved fact 2 LIVE with `python3 -c 'import loginwatch'` -> no demo output. Committed sectools aa6f73b. (Pop!_OS Python 3.10: stdlib `parser` removed in 3.10, so local parser.py imports with no collision.)"
       },
       {
         "n": 4,
         "increment": "count_failed_by_ip(records)",
-        "new_concept": "dict accumulation (.get(k,0)+1 / defaultdict) — bridge from sort|uniq -c"
+        "new_concept": "dict accumulation (.get(k,0)+1 / defaultdict) — bridge from sort|uniq -c",
+        "status": "done",
+        "done_date": "2026-07-23",
+        "notes": "DONE session 20. count_failed_by_ip(records) -> {ip: failed_count}, Failed-only. Zero hints, self-served. First submission used the explicit membership-check pattern (`if ip in d: d[ip]+=1 else: d[ip]=1`) — correct, incl. the first-seen edge case (can't += a missing key -> seed 1 in else). STRONG: the Failed-only filter sits INSIDE the loop before accumulation, so 198.51.100.22 (6 Failed + 1 Accepted) is correctly tallied 6 not 7 — WP002 filter discipline firing UNPROMPTED, in Python this time. Output {'203.0.113.45':8,'192.0.2.55':3,'198.51.100.22':6}; reconciles 8+3+6=17 Failed + 2 Accepted = 19. TAUGHT `.get(k,0)+1` as an optional refinement; user applied it themselves, then asked to confirm understanding — PRECISION CORRECTION issued: user said '.get() sets a key if missing else adds one'; `.get()` is READ-ONLY (returns value or default, NEVER mutates / creates the key — the `[key]=` assignment does the writing). Distinction matters (safe read vs mutate). Foreshadowed Inc 6: the data already shows 198.51.100.22 Failed-then-Accepted. Committed sectools 1f84551 (with Inc 5)."
       },
       {
         "n": 5,
         "increment": "flag_suspicious(counts, threshold)",
-        "new_concept": "sorting dict items by value (sorted(key=))"
+        "new_concept": "sorting dict items by value (sorted(key=))",
+        "status": "done",
+        "done_date": "2026-07-23",
+        "notes": "DONE session 20. flag_suspicious(counts, threshold) -> (ip,count) list of IPs at/above threshold, ranked worst-first. Zero hints, self-served. STRONG (two): (1) reached for a lambda sort key UNPROMPTED — `suspicious.sort(key=lambda x: x[1], reverse=True)` — idiomatic sort-by-chosen-field, and used `.sort()` correctly as a statement then `return` (avoided the `return list.sort()` -> None trap); (2) WP001 POSITIVE SIGNAL — wrote `value >= threshold` (boundary-correct) on the FIRST try, unprompted. This is the EXACT gap the 2026-07-31 WP001 retest targets (the SPEC.md '>5' vs required '>=' slip). Boundary-tested: threshold=6 KEEPS the count-exactly-6 IP (proves >= not >); verified across thresholds 5/3/8/6. TAUGHT sibling idiom: `.sort()` mutates in place + returns None vs `sorted()` returns a new list. Security framing: worst-first = triage order; threshold is a policy knob (too low = alert fatigue, too high = miss slow brute-force) — tunable at Inc 9 argparse. Dead commented code cleaned (tutor did the janitorial comment-deletion only; ALL logic is the user's). Committed sectools 1f84551."
       },
       {
         "n": 6,

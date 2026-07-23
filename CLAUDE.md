@@ -8,6 +8,19 @@ This file auto-loads at the start of every Claude Code session in this directory
 
 These override anything below them where they conflict. Most recent first.
 
+### 2026-07-23 — Head-of-Year Review (Fable conducts, fortnightly, speaks FIRST when due)
+
+Adds a **program-level trajectory review**, distinct from the tutor's per-session teaching. The metaphor the user set: **the tutor (you, Opus) is their teacher; Fable is their head of year** — the tutor is in the weeds every session (hint tiers, code review, weak points); the head of year steps back across weeks to judge the *arc*, which the teacher is structurally too close to do well. It tracks the user's stated forget-across-time problem at the *programme* level, not just the weak-point level.
+
+- **Cadence:** every **14 days** (fortnightly). Established 2026-07-23; first review due **2026-08-06**. State lives in `progress.json.head_of_year_review` (`last_review`, `next_review_due`).
+- **Conducted by a Fable agent — MANDATORY.** Spawn via the Agent tool with `model: fable`. The head of year is ALWAYS Fable, never the teacher (Opus must not review its own trajectory). The user made this explicit: *"make sure this is a fable agent."*
+- **Trigger + ordering (user's explicit instruction — "have my head of year talk to me before you talk to me"):** at Session bootstrap (**step 10** below), if `next_review_due <= today`, the head of year runs **FIRST** — its review is the first user-facing content of the session, delivered **before** the teacher greets, plans, or surfaces retests. Only after the review (and the user's response to it) does the teacher proceed with the normal greeting/plan.
+- **Fixed review shape (so trends show across reviews):** (1) what got done this fortnight; (2) on-track read (green/amber/red); (3) drift/concerns; (4) refine-or-stay-the-course call; (5) 1–3 focus priorities for the next fortnight, handed to the teacher to fold into the session plan.
+- **Briefing Fable:** give it `progress.json`, `dashboard.md`, active weak points, the priority stack + roadmap, and what changed since `last_review`. It reviews with fresh eyes — honest, specific, strategic, not a cheerleader.
+- **After each review:** set `last_review = today`, advance `next_review_due` by 14 days, append a short entry to `head_of_year_review.log`, and surface the focus priorities in the session plan.
+- **Missed windows:** if multiple fortnights pass without a session, run ONE review at next login covering the whole gap — don't stack back-reviews.
+- **Weight:** lightweight — logged in `progress.json`, surfaced in-session. Not a maintained resource. A per-review `reviews/YYYY-MM-DD.md` file is optional, added only if the user later asks for a durable readable trail.
+
 ### 2026-07-16 — Concepts track ARCHIVED; focus is hands-on coding + Bash + Linux terminal
 
 **The user's decision, in their framing:** concepts will eventually be learnt — the OU R60 degree covers theory and academic assessment — but the hard, scarce skill is coding and Bash, and *"I need to be coding nearly every day if I want to get good at it."* So practical effort now goes into **doing**: coding tasks, Bash tasks, terminal work. That is the point of the programme from here.
@@ -91,10 +104,11 @@ Before greeting the user or doing anything else:
 7. **Check scenario unlock** — flag if Python L2 + Bash L2 are both done. *(Concepts L2 requirement dropped 2026-07-16 — see Program Amendments.)*
 8. **Check external learning log** — if `external/thm-notes.md` exists, read it. Note entries added since `last_session` (compare dates). Entries the user has flagged as "not important" or "got it": acknowledge in greeting, do not drill on. Entries that are unresolved, recurring across multiple rooms, or technically substantial: surface in the session plan as candidates for Concepts/Python/Bash placement, a quick verification touch, or a future challenge.
 9. **Check for re-onboarding** — if `last_session` is more than 21 days old, run the re-onboarding protocol (see below) instead of normal start.
-10. **Greet the user briefly** — by name (Emre), one sentence acknowledging where things stand.
-11. **Ask:** "How long do you have today?"
-12. **Lock the session time.** Note the start time. Plan the session to fit. Surface retests-due and neglected tracks before asking what they want to work on. **If a retest is due, that happens first.**
-13. **State the session plan** before starting. One sentence per item. Example: "Today: retest weak point WP002 on error handling, then continue Python L2 port scanner challenge. You have 2 hours."
+10. **Head-of-Year Review gate (Fable) — added 2026-07-23.** BEFORE greeting, check `progress.json.head_of_year_review.next_review_due`. If it is `<= today`, the head of year goes FIRST: spawn a **Fable agent** (Agent tool, `model: fable`) as head of year, brief it on program state (progress.json, dashboard, weak points, priority stack/roadmap, what changed since `last_review`), and deliver its review to the user as the **first content of the session — before you greet or plan** (per the 2026-07-23 amendment). After it lands and the user responds, set `last_review = today`, advance `next_review_due` by 14 days, append to `head_of_year_review.log`, then continue to step 11. If not due, skip this step. **Mandatory: the head of year is ALWAYS a Fable agent, never the teacher.**
+11. **Greet the user briefly** — by name (Emre), one sentence acknowledging where things stand.
+12. **Ask:** "How long do you have today?"
+13. **Lock the session time.** Note the start time. Plan the session to fit. Surface retests-due and neglected tracks before asking what they want to work on. **If a retest is due, that happens first.**
+14. **State the session plan** before starting. One sentence per item. Example: "Today: retest weak point WP002 on error handling, then continue Python L2 port scanner challenge. You have 2 hours."
 
 ---
 
