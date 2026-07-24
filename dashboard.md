@@ -1,29 +1,31 @@
 # Cybersecurity Training Dashboard
-*Last updated: 2026-07-23 — Session 20. **`loginwatch` Increments 3–5 done (6/15)** — detection spine complete: parse → count → flag. Increment 6 (⭐ dual-role IPs) next.*
+*Last updated: 2026-07-24 — Session 21. **Bandit gym: bandit0 → 6 cleared** (debt #1 paid). `loginwatch` still 6/15 — Increment 6 (⭐ dual-role IPs) next.*
 
 ---
 
 ## Pickup Here
 
-**RESUME AT — Increment 6: "Dual-role IP detection (Failed ∩ Accepted)"** — the ⭐ standout defender feature.
+**RESUME AT — loginwatch Increment 6: "Dual-role IP detection (Failed ∩ Accepted)"** — the ⭐ standout defender feature (unchanged; Bandit was the low-energy diversion this session).
 - Build a function that finds IPs appearing in **both** the Failed set and the Accepted set (failed-then-succeeded = credential-compromise signal).
 - New concept = **set operations / cross-referencing**.
 - Expected single result on `data/auth-sample.log`: **198.51.100.22** (6 Failed + 1 Accepted). Your Increment 4 counter is already sitting on this evidence.
 
-**Done this session (20):** Increments 3 (module split — first ⚠️ wall, modules & import), 4 (`count_failed_by_ip`, dict accumulation), 5 (`flag_suspicious`, threshold + ranked sort). All self-served, zero hints. Committed to sectools (`aa6f73b`, `1f84551`). Idioms banked: `.get(k,0)+1`, lambda sort key, the `__name__` guard.
+**Done this session (21):** Bandit gym — cleared **bandit0 → 6** self-directed (target was 0→4, +2 over). **Debt #1 (Bandit, deferred 3×) paid.** Taught `file` / `file -i` (MIME) / `strings` / `xxd` for human-readable-vs-binary classification, `file * | grep text` to bulk-classify a whole directory, the `./` dash-prefix gotcha, and "most tools take a *list* of filenames."
 
-**WP001 positive signal:** at Increment 5 the `>=` boundary held **unprompted** — the exact `>5`-vs-`≥` gap the **2026-07-31 retest** targets. Logged as evidence toward that retest.
+**OPSEC win:** refused to read the level-password file into tutor context unprompted — right reflex. Tutor elevated the real threat model (the **public repo**, not context) and gitignored `overthewire/` — it was untracked and one `git add -A` from a public password leak.
 
-**Watch:** the `with` context-manager idiom wasn't re-tested this session (no new file-open) — still confirm it fires unprompted next file-open, or it becomes a logged WP.
+**Cold-redo agreed:** wipe `overthewire/notes.txt` and redo bandit0→6 **cold after 2–4 weeks** — a genuine retention check against the forget-across-time problem.
 
-**⭐ New — Head-of-Year Review (Fable):** a fortnightly trajectory review runs **first** at session bootstrap when due. **First one is due 2026-08-06** — on your first session on/after that date, Fable (your head of year) speaks before the teacher greets.
+**Watch:** the `with` context-manager idiom still wasn't re-tested (no new file-open) — confirm it fires unprompted next file-open, or it becomes a logged WP.
+
+**⭐ Head-of-Year Review (Fable):** fortnightly trajectory review runs **first** at bootstrap when due. **First one is due 2026-08-06.**
 
 ---
 
-## Two Open Debts (clear before opening new platforms)
+## Open Debts (clear before opening new platforms)
 
-1. **Bandit — still not started.** Diversion deferred *three* sessions now, touched 0/20. **Next short/low-energy session is Bandit — no fourth deferral.**
-2. **Ship `sectools` public.** Spellcheck SPEC.md + OPSEC scrub, confirm GitHub repo creation, push. A real spec + tests already beat most junior CVs.
+1. ~~**Bandit — not started.**~~ ✅ **PAID 2026-07-24** — bandit0→6 cleared, first Bandit session. Follow-up is the cold-redo retest (wipe + redo after 2–4 weeks), not a debt.
+2. **Ship `sectools` public.** Spellcheck SPEC.md + OPSEC scrub, confirm GitHub repo creation, push. A real spec + tests already beat most junior CVs. **← the one remaining debt.**
 
 ---
 
@@ -127,8 +129,9 @@ Program-level trajectory oversight, distinct from the teacher's per-session work
 
 Self-directed **Linux CLI fluency** practice in parallel with the project. Free, legal, no VM. **The tutor proactively pushes you to it.**
 
-- **Status:** **not started — now overdue (0/20 sessions, deferred three times).** Debt called: **next short/low-energy session is Bandit.**
-- **How:** log stumpers in [external/bandit-notes.md](external/bandit-notes.md) (no passwords). Start: https://overthewire.org/wargames/bandit/
+- **Status:** **started 2026-07-24 — cleared bandit0 → 6** (session 21, first Bandit session). Banked: `file`/`file -i`/`strings`/`xxd`, human-readable classification, glob-over-many-files, the `./` dash-prefix trick.
+- **Cold-redo retest:** wipe `overthewire/notes.txt`, redo bandit0→6 cold **after 2–4 weeks** — retention check against the forget-across-time problem.
+- **How:** log stumpers in [external/bandit-notes.md](external/bandit-notes.md) (no passwords). Continue: https://overthewire.org/wargames/bandit/
 
 ---
 
@@ -175,7 +178,7 @@ Self-directed **Linux CLI fluency** practice in parallel with the project. Free,
 
 ## Up Next
 
-**Next session:** Increment 6 — dual-role IP detection (⭐ set operations). Short/low-energy session? **Push Bandit instead** — debt is called.
+**Next session:** Increment 6 — dual-role IP detection (⭐ set operations). Short/low-energy again? **Continue Bandit** (bandit6 onward) or ship `sectools` public.
 **Python (L2):** continues through loginwatch.
 **Bash (L2):** scripting basics arrive at Increments 11–12; awk revisit baked in.
 **Scenarios:** locked until Python L2 + Bash L2 both complete.
@@ -193,7 +196,8 @@ Self-directed **Linux CLI fluency** practice in parallel with the project. Free,
 - Write-ups generated / archived: **11 / 11**
 - Total challenges completed: **11** · attempted-unfinished: 2
 - `loginwatch` increments: **6 / 15**
-- Total sessions: **20** · Total hours: **~17.5**
+- Bandit levels cleared: **6** (bandit0→6)
+- Total sessions: **21** · Total hours: **~18.5**
 - Weak points mastered: **2** (WP002, WP004)
 - Active tracks: **Python, Bash** *(Concepts archived 2026-07-16)*
 

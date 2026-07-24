@@ -6,6 +6,10 @@
 *.key
 secrets/
 
+# OverTheWire wargame scratch — holds level passwords + spoilers.
+# NEVER commit (OverTheWire's own "don't post passwords/spoilers" rule + OPSEC).
+overthewire/
+
 # Python
 __pycache__/
 *.py[cod]

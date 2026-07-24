@@ -2,8 +2,8 @@
   "schema_version": "3.0",
   "user": "Emre",
   "started_date": "2026-04-27",
-  "last_session": "2026-07-23",
-  "session_count": 20,
+  "last_session": "2026-07-24",
+  "session_count": 21,
   "head_of_year_review": {
     "role": "Program-level trajectory review, distinct from the teacher's per-session work. Metaphor set by user 2026-07-23: teacher = Opus tutor (in-session — hint tiers, code review, weak points); head of year = Fable (steps back across weeks to judge the arc). See CLAUDE.md 2026-07-23 amendment.",
     "conducted_by": "fable-agent",
@@ -1107,6 +1107,19 @@
       "writeups_generated_this_session": [],
       "weak_points_logged_this_session": [],
       "weak_points_mastered_this_session": []
+    },
+    {
+      "date": "2026-07-24",
+      "duration_minutes_planned": 60,
+      "summary": "Session 21 (2026-07-24) — BANDIT GYM (debt #1 PAID). Low-attention session (user at grandad's, ~1h) -> tutor PUSHED Bandit per diversion rule (b) short/low-energy + (a) 0/20 deferred 3x; stated as the plan, not offered. User cleared bandit0->6 self-directed (target was 0->4; +2 over). TAUGHT (consolidation, user asked general-skill Qs AFTER clearing levels, not solving): (1) reading the SSH login banner for operational intel — kept the level/password/file loop, discarded binary-exploitation noise (gef/pwndbg/compiler flags = later); (2) human-readable vs binary classification — `file`, `file -i` (MIME), `strings`, `xxd`/`hexdump`, `cat -v`/`less` safety, printable-byte-range concept, security tie-in (run `file` before opening unknown artifacts, never `cat` blind; `strings` = first-pass static triage); (3) efficiency fix — `file *` / `file -i * | grep 'text/'` classifies a whole dir at once (user was going one-at-a-time), the dash-prefix `./` gotcha, general rule 'most tools that take a filename take a list'. OPSEC WIN: user created overthewire/notes.txt (level passwords) and REFUSED to read it into tutor context unprompted — correct reflex, affirmed. Tutor elevated the threat model: real risk was the PUBLIC repo, not context — overthewire/ was untracked (`git add -A` would have leaked passwords + broken OTW's no-passwords rule). Added `overthewire/` to .gitignore, verified now ignored. COLD-REDO STRATEGY AGREED: user proposed wipe notes.txt + redo all levels cold as a retention check — affirmed as the cold-redo method, refined to WAIT 2-4 WEEKS before redo (genuine recall, not short-term memory). No write-up (wargame gym, no formal challenge). No retests run (WP001 due 2026-07-31). Bandit now current_level 6.",
+      "tracks_touched": [
+        "bash"
+      ],
+      "retests_run": [],
+      "challenges_completed_this_session": [],
+      "writeups_generated_this_session": [],
+      "weak_points_logged_this_session": [],
+      "weak_points_mastered_this_session": []
     }
   ],
   "checkpoints_reached": [
@@ -1255,7 +1268,7 @@
       "notes": "30-line synthetic SSH auth log on web-prod-01, all entries May 24 single-day, spanning hours 03/07/11/14/18/22 to test multi-hour grouping if desired (today's brief did not require it). 26 Failed + 4 Accepted lines. Failed brute-force IPs: 45.95.169.84=4 (03:xx, admin+oracle, password-spray shape), 193.32.162.157=2 (07:xx, postgres), 89.248.165.74=1 (11:xx, test), 218.92.0.142=8 (14:xx, root, sustained burst), 171.25.193.78=4 (18:xx, multiple usernames git/jenkins/nginx/ubuntu, password-spray shape), 152.32.146.215=7 (22:xx, admin, sustained burst with one Accepted-emre at 22:17 interleaved). Accepted lines: 10.0.0.15 deploy ×2, 10.0.0.20 emre ×2. Tutor-key verified pre-delivery: First Failed = 'May 24 03:15:22', Last Failed = 'May 24 22:20:18'. Used 2026-05-24 — passed (WP004 mastered)."
     }
   },
-  "pickup_note": "SESSION 20 (2026-07-23) — THREE INCREMENTS DONE (loginwatch 3, 4, 5). RESUME AT: Increment 6 'Dual-role IP detection (Failed ∩ Accepted)' — the STANDOUT defender feature. New concept = set operations / cross-referencing. Build a function finding IPs in BOTH the Failed set AND the Accepted set (Failed-then-Accepted = credential-compromise signal). In data/auth-sample.log the planted dual-role IP is 198.51.100.22 (6 Failed + 1 Accepted) — the expected single result. loginwatch.py (in /home/emrebektas/sectools) now has count_failed_by_ip + flag_suspicious; parser.py has parse_line + parse_file; demo runs under if __name__ == '__main__'. sectools commits: aa6f73b (Inc3), 1f84551 (Inc4+5). Detection spine complete: parse -> count -> flag; dual-role is the next layer. IDIOMS BANKED this session: dict .get(k,0)+1, lambda sort key, the __name__ guard. WP001: `>=` boundary held UNPROMPTED at Inc 5 (positive signal toward the 2026-07-31 retest — logged in WP001 evidence_2026-07-23). WATCH: `with` context-manager idiom not re-tested this session (no new file-open); still watch next file-open. HEAD-OF-YEAR REVIEW now live: Fable conducts a fortnightly trajectory review that speaks FIRST at bootstrap when due — FIRST ONE DUE 2026-08-06 (before the teacher greets). See progress.json.head_of_year_review + CLAUDE.md 2026-07-23 amendment / bootstrap step 10. STRATEGY (session 20 coaching): 'one spine deep, cheap tastings of red/devsecops/AI'; CTF ladder = pay Bandit debt -> picoGym/CyLab -> blue platform (TryHackMe SOC already-owned + CyberDefenders) -> HTB retired-easy later -> CryptoHack (enjoyment/maths lane) / PortSwigger later; AI rule = no AI before the flag, full AI after + cold-redo retests; write-ups = failure trail + defender's note. TryHackMe ACTIVE: Cyber Security 101 at 34%, 1 room/day + 2-min retention note. TWO OPEN DEBTS (clear before new platforms): (1) BANDIT still not started — next SHORT/low-energy session is Bandit, no third deferral; (2) SHIP sectools public — spellcheck SPEC.md + OPSEC pass, confirm GitHub repo creation. User ended session heading to CyLab Security Academy for beginner CTFs/guides. ⚠ VERIFY (Fable-sourced): picoCTF->CyLab rename (~May 2026); TryHackMe cert name (SAL1?).",
+  "pickup_note": "SESSION 21 (2026-07-24) — BANDIT GYM, debt #1 PAID. Low-attention session (user at grandad's, ~1h); tutor PUSHED Bandit per diversion rule, user cleared bandit0->6 self-directed (+2 over the 0->4 target). Bandit current_level now 6, last_touched 2026-07-24. TAUGHT: banner-reading for operational intel; human-readable vs binary via `file`/`file -i`(MIME)/`strings`/`xxd`/`cat -v`, printable-byte-range concept + defender tie-in (run `file` before opening unknown artifacts; `strings` = first-pass triage); bulk-classify a dir with `file * | grep text` (user was going one-at-a-time), the `./` dash-prefix gotcha, and 'most tools take a list of filenames'. OPSEC WIN: user refused to read overthewire/notes.txt (level passwords) into context unprompted; tutor elevated the real risk (public repo, not context) and gitignored overthewire/ (was untracked -> `git add -A` would have leaked). COLD-REDO STRATEGY AGREED: wipe notes.txt + redo all levels cold, WAIT 2-4 WEEKS first (genuine recall). No write-up (gym session). RESUME AT — loginwatch Increment 6 'Dual-role IP detection (Failed ∩ Accepted)', the STANDOUT defender feature, new concept = set operations / cross-referencing: build a function finding IPs in BOTH the Failed set AND the Accepted set; in data/auth-sample.log the planted dual-role IP is 198.51.100.22 (6 Failed + 1 Accepted) = expected single result. loginwatch.py (in /home/emrebektas/sectools) has count_failed_by_ip + flag_suspicious; parser.py has parse_line + parse_file; sectools commits aa6f73b (Inc3), 1f84551 (Inc4+5). Detection spine complete (6/15): parse->count->flag; dual-role is the next layer. WP001 retest DUE 2026-07-31 (loginwatch-embedded, enumerated brief; watch that parameter VALUES + format constraints hold unprompted). WATCH: `with` context-manager idiom still not re-tested; confirm unprompted next file-open. HEAD-OF-YEAR REVIEW (Fable) first due 2026-08-06 — speaks FIRST at bootstrap. REMAINING DEBT: ship sectools public (spellcheck SPEC.md + OPSEC pass + confirm GitHub repo). Next session: normal focus -> loginwatch Inc 6; short/low-energy -> more Bandit (bandit6 onward) or the sectools ship task.",
   "last_weekly_summary": "2026-05-24",
   "program_decisions": [
     {
@@ -1437,9 +1450,9 @@
     "bandit": {
       "platform": "OverTheWire Bandit — https://overthewire.org/wargames/bandit/",
       "purpose": "Linux CLI fluency gym. Self-directed, runs in parallel with project work; builds the grep/find/awk/permissions/pipes muscle that speeds up everything else.",
-      "status": "not started — introduced 2026-07-16; diversion mechanic live",
-      "current_level": null,
-      "last_touched": null,
+      "status": "in progress — bandit0→6 cleared in session 21 (2026-07-24), first Bandit session; debt #1 paid",
+      "current_level": 6,
+      "last_touched": "2026-07-24",
       "notes_log": "external/bandit-notes.md",
       "legal": "Authorized — OverTheWire issues the credentials; the game is the point. No CMA concern.",
       "diversion_rule": "See CLAUDE.md Program Amendments 'Wargame diversions'. Tutor PROACTIVELY pushes Bandit (states it, doesn't just offer) when: >=7d since last touch, OR short/low-energy session, OR a Linux-CLI gap surfaced last session. Floor ~1 in 5 sessions is Linux-CLI so the 70/30-Python project doesn't starve Linux fluency. User explicitly asked to be pushed to this ('push me away and say go do some linux wargames')."
