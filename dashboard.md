@@ -1,22 +1,21 @@
 # Cybersecurity Training Dashboard
-*Last updated: 2026-07-24 — Session 21. **Bandit gym: bandit0 → 6 cleared** (debt #1 paid). `loginwatch` still 6/15 — Increment 6 (⭐ dual-role IPs) next.*
+*Last updated: 2026-07-26 — Session 22. **`loginwatch` 6/15 → 8/15** — Increments 6 (⭐ dual-role IPs) + 7 (report table) done in one headache-day sitting. Increment 8 (`--format csv`) next.*
 
 ---
 
 ## Pickup Here
 
-**RESUME AT — loginwatch Increment 6: "Dual-role IP detection (Failed ∩ Accepted)"** — the ⭐ standout defender feature (unchanged; Bandit was the low-energy diversion this session).
-- Build a function that finds IPs appearing in **both** the Failed set and the Accepted set (failed-then-succeeded = credential-compromise signal).
-- New concept = **set operations / cross-referencing**.
-- Expected single result on `data/auth-sample.log`: **198.51.100.22** (6 Failed + 1 Accepted). Your Increment 4 counter is already sitting on this evidence.
+**RESUME AT — loginwatch Increment 8: "`--format csv` output"** — new concept = the **`csv` module** (pipe-friendly output).
+- **Design note carried in:** `report.py`'s `create_report` currently **prints**; Increment 8 wants the formatting to **return a string** so a caller/flag can pick the destination (table vs csv). Revisit print-vs-return here.
+- Files in `/home/emrebektas/sectools`: `loginwatch.py` (pipeline + 3 analysis funcs), `parser.py`, `report.py` (`create_report`).
 
-**Done this session (21):** Bandit gym — cleared **bandit0 → 6** self-directed (target was 0→4, +2 over). **Debt #1 (Bandit, deferred 3×) paid.** Taught `file` / `file -i` (MIME) / `strings` / `xxd` for human-readable-vs-binary classification, `file * | grep text` to bulk-classify a whole directory, the `./` dash-prefix gotcha, and "most tools take a *list* of filenames."
+**Done this session (22):** two loginwatch increments in a ~1h coding sitting (headache day, chose coding over theory, then moved to CTF).
+- **Inc 6 — dual-role IP detection (set operations):** `find_accepted_and_failed` → `failed.intersection(accepted)` → `{'198.51.100.22'}`. Self-served. Caught `set()` vs `{}` himself. One 🟡 `else`→`elif` proxy assumption self-corrected — **3rd clean verify-don't-proxy instance in 3 increments.**
+- **Inc 7 — report table (f-string alignment):** aligned `SOURCE IP / FAILED` columns. One Tier 1 reframe on a field-width overflow; he **articulated the mechanism** ("a width is a minimum, not a maximum"). Named width variables reused across header + rows so they can't drift.
 
-**OPSEC win:** refused to read the level-password file into tutor context unprompted — right reflex. Tutor elevated the real threat model (the **public repo**, not context) and gitignored `overthewire/` — it was untracked and one `git add -A` from a public password leak.
+**Uncommitted:** Inc 6 + 7 code (`loginwatch.py` change + new `report.py`) not yet committed to the `sectools` repo — commit message proposed below.
 
-**Cold-redo agreed:** wipe `overthewire/notes.txt` and redo bandit0→6 **cold after 2–4 weeks** — a genuine retention check against the forget-across-time problem.
-
-**Watch:** the `with` context-manager idiom still wasn't re-tested (no new file-open) — confirm it fires unprompted next file-open, or it becomes a logged WP.
+**Watch:** the `with` context-manager idiom *still* wasn't re-tested (report.py opened no file) — confirm it fires unprompted next file-open, or it becomes a logged WP.
 
 **⭐ Head-of-Year Review (Fable):** fortnightly trajectory review runs **first** at bootstrap when due. **First one is due 2026-08-06.**
 
@@ -44,8 +43,8 @@ Program-level trajectory oversight, distinct from the teacher's per-session work
 
 **The baseline.** First portfolio project *and* the reference template for how every future project is built, tested, and showcased. A CLI auth-log brute-force detector: aggregate failed logins by source IP, flag brute-force sources over a threshold, and surface **dual-role IPs** (Failed *and* Accepted = credential-compromise — the "thinks like a defender" feature).
 
-- **Interface:** CLI only. Visual layer = a well-formed report (arrives ~Increment 7). **Status: 6/15 increments, detection spine complete.**
-- **Repo:** clean public repo at `/home/emrebektas/sectools` (local, 3 commits; **GitHub not yet created — confirm before public**).
+- **Interface:** CLI only. Visual layer = a well-formed report (first table layer landed Increment 7). **Status: 8/15 increments, detection spine + first report layer complete.**
+- **Repo:** clean public repo at `/home/emrebektas/sectools` (local, 3 commits + **Inc 6/7 uncommitted**; **GitHub not yet created — confirm before public**).
 
 **Increment plan** (✅ = done):
 
@@ -57,9 +56,9 @@ Program-level trajectory oversight, distinct from the teacher's per-session work
 | 3 | Split into `parser.py`, import | **modules & import** (first multi-file) ⚠️wall | ✅ |
 | 4 | `count_failed_by_ip` | dict accumulation (bridge from `sort\|uniq -c`) | ✅ |
 | 5 | `flag_suspicious(threshold)` | sorting dict items by value | ✅ |
-| 6 | Dual-role IP detection | set operations / cross-referencing ⭐ | 🔜 next |
-| 7 | `report.py` text table | f-string alignment | ⬜ |
-| 8 | `--format csv` | the `csv` module | ⬜ |
+| 6 | Dual-role IP detection | set operations / cross-referencing ⭐ | ✅ |
+| 7 | `report.py` text table | f-string alignment | ✅ |
+| 8 | `--format csv` | the `csv` module | 🔜 next |
 | 9 | `cli.py` argparse | **argparse** ⚠️wall | ⬜ |
 | 10 | Nonzero exit on findings | `sys.exit()` / exit codes | ⬜ |
 | 11 | `run-daily.sh` | Bash vars + `$?` + `if` (+ **awk** revisit) ⚠️wall | ⬜ |
@@ -90,7 +89,7 @@ Program-level trajectory oversight, distinct from the teacher's per-session work
 
 | Track | Level | Progress | Challenges Done | Status |
 |-------|-------|----------|-----------------|--------|
-| Python | **L2 (in progress)** | loginwatch 6/15 | 4 (L1) | L1 complete; **L2 underway via loginwatch.** Primary focus. |
+| Python | **L2 (in progress)** | loginwatch 8/15 | 4 (L1) | L1 complete; **L2 underway via loginwatch.** Primary focus. |
 | Bash | **L2 (pending)** | — | 4 (L1) | L1 complete; L2 arrives at loginwatch Increments 11–12 (Bash scripts) + awk revisit. |
 | Concepts | **ARCHIVED** | ████ 3/3 | 3 | Archived 2026-07-16 — retained for history, reinstatable. |
 | Scenarios | — | Locked | 0 | Unlocks when Python L2 + Bash L2 both complete. |
@@ -178,7 +177,7 @@ Self-directed **Linux CLI fluency** practice in parallel with the project. Free,
 
 ## Up Next
 
-**Next session:** Increment 6 — dual-role IP detection (⭐ set operations). Short/low-energy again? **Continue Bandit** (bandit6 onward) or ship `sectools` public.
+**Next session:** Increment 8 — `--format csv` output (the `csv` module; revisit report's print-vs-return). Short/low-energy again? **Continue Bandit** (bandit6 onward) or ship `sectools` public.
 **Python (L2):** continues through loginwatch.
 **Bash (L2):** scripting basics arrive at Increments 11–12; awk revisit baked in.
 **Scenarios:** locked until Python L2 + Bash L2 both complete.
@@ -195,9 +194,9 @@ Self-directed **Linux CLI fluency** practice in parallel with the project. Free,
 
 - Write-ups generated / archived: **11 / 11**
 - Total challenges completed: **11** · attempted-unfinished: 2
-- `loginwatch` increments: **6 / 15**
+- `loginwatch` increments: **8 / 15**
 - Bandit levels cleared: **6** (bandit0→6)
-- Total sessions: **21** · Total hours: **~18.5**
+- Total sessions: **22** · Total hours: **~19.5**
 - Weak points mastered: **2** (WP002, WP004)
 - Active tracks: **Python, Bash** *(Concepts archived 2026-07-16)*
 
@@ -207,5 +206,5 @@ Self-directed **Linux CLI fluency** practice in parallel with the project. Free,
 
 - Host attacker box — native Pop!_OS laptop.
 - Vulnerable target VM (Metasploitable2 / DVWA) — **still not installed** (not needed until end of project arc).
-- `sectools` (`/home/emrebektas/sectools`) — loginwatch build, 6/15 increments, 3 commits, GitHub repo not yet created.
+- `sectools` (`/home/emrebektas/sectools`) — loginwatch build, 8/15 increments, 3 commits (Inc 6/7 uncommitted), GitHub repo not yet created.
 - Localhost (`127.0.0.1`) — legal Python socket test target.
