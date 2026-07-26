@@ -10,6 +10,12 @@ secrets/
 # NEVER commit (OverTheWire's own "don't post passwords/spoilers" rule + OPSEC).
 overthewire/
 
+# CTF solution scratch (CyLab/picoCTF etc.) — kept LOCAL, not published.
+# Keeps raw solutions off the public repo and keeps the cold-redo honest
+# (the answer script shouldn't be sitting in the working tree at redo time).
+# The redo-tracking log lives at external/cylab-notes.md and IS committed.
+ctf-work/
+
 # Python
 __pycache__/
 *.py[cod]
