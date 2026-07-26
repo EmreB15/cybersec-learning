@@ -1,5 +1,5 @@
 # Cybersecurity Training Dashboard
-*Last updated: 2026-07-26 — Session 22. **`loginwatch` 6/15 → 8/15** — Increments 6 (⭐ dual-role IPs) + 7 (report table) done in one headache-day sitting. Increment 8 (`--format csv`) next.*
+*Last updated: 2026-07-26 — Session 22. **`loginwatch` 6/15 → 8/15** (Increments 6 ⭐ dual-role IPs + 7 report table) **plus first tutored CTF solve** (bytemancy-1, CyLab). Increment 8 (`--format csv`) next.*
 
 ---
 
@@ -9,11 +9,14 @@
 - **Design note carried in:** `report.py`'s `create_report` currently **prints**; Increment 8 wants the formatting to **return a string** so a caller/flag can pick the destination (table vs csv). Revisit print-vs-return here.
 - Files in `/home/emrebektas/sectools`: `loginwatch.py` (pipeline + 3 analysis funcs), `parser.py`, `report.py` (`create_report`).
 
-**Done this session (22):** two loginwatch increments in a ~1h coding sitting (headache day, chose coding over theory, then moved to CTF).
+**Done this session (22):** two loginwatch increments **plus** a tutored CTF solve, in a ~1h+ sitting (headache day, chose coding over theory).
 - **Inc 6 — dual-role IP detection (set operations):** `find_accepted_and_failed` → `failed.intersection(accepted)` → `{'198.51.100.22'}`. Self-served. Caught `set()` vs `{}` himself. One 🟡 `else`→`elif` proxy assumption self-corrected — **3rd clean verify-don't-proxy instance in 3 increments.**
 - **Inc 7 — report table (f-string alignment):** aligned `SOURCE IP / FAILED` columns. One Tier 1 reframe on a field-width overflow; he **articulated the mechanism** ("a width is a minimum, not a maximum"). Named width variables reused across header + rows so they can't drift.
+- **CTF — bytemancy-1 (CyLab General Skills), tutored to a solve:** ASCII 101→'e' (self-served via `chr()`), recalled the **Bash pipe** to feed `python3 gen.py | nc host port`, debugged `nc` host+port and the **stdin trailing-newline = Enter** mechanic (fixed with a bare `print()`). Converted a writeup that "made no sense" into an explanation he can state back. **On the cold-redo list.**
 
-**Uncommitted:** Inc 6 + 7 code (`loginwatch.py` change + new `report.py`) not yet committed to the `sectools` repo — commit message proposed below.
+**Committed & pushed:** sectools Inc 6+7 (`8be978d`, local — no GitHub remote yet). Journal sessions 21+22 pushed to GitHub. New `external/cylab-notes.md` (CTF log + redo list); `ctf-work/` gitignored (solutions stay local).
+
+**CTF approach set:** General Skills in order → engaged first pass (tool-lookups fine, answer-lookups not) → one-line technique log → batched cold-redo. Beginner struggle-floor relaxed: try → platform hints one-at-a-time → tutor tiered nudge.
 
 **Watch:** the `with` context-manager idiom *still* wasn't re-tested (report.py opened no file) — confirm it fires unprompted next file-open, or it becomes a logged WP.
 
@@ -186,7 +189,7 @@ Self-directed **Linux CLI fluency** practice in parallel with the project. Free,
 
 ## Cross-Track Connections
 
-**8 logged.** Latest (2026-07-23): *Python dict accumulation ≡ Bash `sort | uniq -c`* — the WP002 frequency-count, re-expressed in Python at loginwatch Increment 4.
+**9 logged.** Latest (2026-07-26): *Bash pipe → netcat stdin* — recalled `|` from Bash frequency-counts and applied it new: `python3 gen.py | nc host port`, piping a payload into a remote service's input (bytemancy-1 CTF). Prior (2026-07-23): *Python dict accumulation ≡ Bash `sort | uniq -c`* at loginwatch Increment 4.
 
 ---
 
