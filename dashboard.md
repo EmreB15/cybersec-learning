@@ -1,44 +1,43 @@
 # Cybersecurity Training Dashboard
-*Last updated: 2026-07-26 — Session 22. **`loginwatch` 6/15 → 8/15** (Increments 6 ⭐ dual-role IPs + 7 report table) **plus first tutored CTF solve** (bytemancy-1, CyLab). Increment 8 (`--format csv`) next.*
+*Last updated: 2026-07-29 — Session 23. **`loginwatch` 8/15 → 9/15** (Increment 8, `--format csv`). **WP001 retired at the user's instruction — the active weak-point board is now empty.** Increment 9 (`argparse`) next.*
 
 ---
 
 ## Pickup Here
 
-**RESUME AT — loginwatch Increment 8: "`--format csv` output"** — new concept = the **`csv` module** (pipe-friendly output).
-- **Design note carried in:** `report.py`'s `create_report` currently **prints**; Increment 8 wants the formatting to **return a string** so a caller/flag can pick the destination (table vs csv). Revisit print-vs-return here.
-- Files in `/home/emrebektas/sectools`: `loginwatch.py` (pipeline + 3 analysis funcs), `parser.py`, `report.py` (`create_report`).
+**RESUME AT — loginwatch Increment 9: "`cli.py` with `argparse`"** — flagged ⚠**wall**.
+- **Groundwork already laid:** `__main__` holds an `output_format` variable driving an `if/elif/else` dispatcher. `argparse`'s job is to supply that value from a real `--format` flag instead of a hardcoded literal.
+- The **log path** (`data/auth-sample.log`) and the **threshold** (`5`) are also hardcoded — the other two obvious flags.
+- **Keep the `else` branch.** It's what stops an unrecognised `--format` from silently printing nothing.
+- Files in `/home/emrebektas/sectools`: `loginwatch.py`, `parser.py`, `report.py` (`create_report` table + `create_csv_report`).
 
-**Done this session (22):** two loginwatch increments **plus** a tutored CTF solve, in a ~1h+ sitting (headache day, chose coding over theory).
-- **Inc 6 — dual-role IP detection (set operations):** `find_accepted_and_failed` → `failed.intersection(accepted)` → `{'198.51.100.22'}`. Self-served. Caught `set()` vs `{}` himself. One 🟡 `else`→`elif` proxy assumption self-corrected — **3rd clean verify-don't-proxy instance in 3 increments.**
-- **Inc 7 — report table (f-string alignment):** aligned `SOURCE IP / FAILED` columns. One Tier 1 reframe on a field-width overflow; he **articulated the mechanism** ("a width is a minimum, not a maximum"). Named width variables reused across header + rows so they can't drift.
-- **CTF — bytemancy-1 (CyLab General Skills), tutored to a solve:** ASCII 101→'e' (self-served via `chr()`), recalled the **Bash pipe** to feed `python3 gen.py | nc host port`, debugged `nc` host+port and the **stdin trailing-newline = Enter** mechanic (fixed with a bare `print()`). Converted a writeup that "made no sense" into an explanation he can state back. **On the cold-redo list.**
+**Done this session (23):** Increment 8 in the planned hour. Bandit briefed but not started.
+- **`create_csv_report`** via `csv.writer(sys.stdout)`. First submission clean on all six specified constraints — including writing the header `source_ip,failed_count` correctly while `create_report`'s `'SOURCE IP'`/`'FAILED'` sat three lines above it.
+- **Design reasoning arrived before the code:** asked whether `csv` needed a file, then justified stdout himself with Bash `>` and `|` — Bash shaping a Python API decision, the harder direction of transfer.
+- **🟡 fixed — silent empty output.** The dispatcher had no `else`, so an unrecognised format printed *nothing* and exited successfully. For a detection tool that reads as *"scanned the log, found no brute-force sources."* A misconfiguration rendering as a clean bill of health. Also took the `"string"` → `"table"` rename unprompted (survives into the `--format` flag).
+- **CRLF taught from zero.** `csv.writer` defaults to the `excel` dialect — `\r\n` on *every* platform, per RFC 4180. Invisible on screen, visible as `^M$` under `cat -A`. Fixed with `lineterminator="\n"`, verified. Framed as a **decision**: spreadsheet consumer → CRLF; Unix pipe → LF. *The consumer decides, not the OS you're sitting at.*
 
-**Committed & pushed:** sectools Inc 6+7 (`8be978d`, local — no GitHub remote yet). Journal sessions 21+22 pushed to GitHub. New `external/cylab-notes.md` (CTF log + redo list); `ctf-work/` gitignored (solutions stay local).
+**Tutor defects owned (user-flagged, both conceded):** (1) the CRLF quirk was withheld as *"a defect you cannot see"* — gotcha framing applied to pure lookup knowledge. Withholding is fair only for reasoning available from what's on screen. (2) The control-comparison method was explained *before* teaching what `^M` is, leaving nothing to conclude. Verdict was blunt — *"all your explainations here have been poor"* — and the re-taught versions landed. **Explanation quality is the thing to watch next session.**
 
-**CTF approach set:** General Skills in order → engaged first pass (tool-lookups fine, answer-lookups not) → one-line technique log → batched cold-redo. Beginner struggle-floor relaxed: try → platform hints one-at-a-time → tutor tiered nudge.
-
-**Watch:** the `with` context-manager idiom *still* wasn't re-tested (report.py opened no file) — confirm it fires unprompted next file-open, or it becomes a logged WP.
-
-**⭐ Head-of-Year Review (Fable):** fortnightly trajectory review runs **first** at bootstrap when due. **First one is due 2026-08-06.**
-
----
-
-## Open Debts (clear before opening new platforms)
-
-1. ~~**Bandit — not started.**~~ ✅ **PAID 2026-07-24** — bandit0→6 cleared, first Bandit session. Follow-up is the cold-redo retest (wipe + redo after 2–4 weeks), not a debt.
-2. **Ship `sectools` public.** Spellcheck SPEC.md + OPSEC scrub, confirm GitHub repo creation, push. A real spec + tests already beat most junior CVs. **← the one remaining debt.**
+**⭐ Head-of-Year Review (Fable):** due **2026-08-06** — speaks **first** at bootstrap.
 
 ---
 
-## Head-of-Year Review — Fable (fortnightly)
+## Program Change — Weak-Point Tracking Retired
 
-Program-level trajectory oversight, distinct from the teacher's per-session work. **Teacher = the in-session tutor; head of year = Fable, stepping back across weeks.**
+**2026-07-29, at the user's instruction.** WP001 moved to `retired_points` — stage 2, 0 failures, **neither mastered nor failed**.
 
-- **Conducted by:** a **Fable agent** (mandatory). **Cadence:** every 14 days.
-- **When due, it speaks FIRST** at bootstrap — before greeting or planning (user instruction 2026-07-23).
-- **Shape:** what got done · on-track read · drift · refine-or-stay · 1–3 focus priorities for the next fortnight.
-- **Next due:** **2026-08-06.** State in `progress.json.head_of_year_review`; protocol in CLAUDE.md 2026-07-23 amendment + bootstrap step 10.
+> *"it is a weak point that will not just dissapear. ignore it and move on."*
+
+The per-task ceremony had grown larger than the code review it was attached to. What changes: **no retests, no per-submission verdicts, no "this is the fingerprint" commentary.** If imprecision actually breaks code it gets flagged as a normal 🔴/🟡/🟢 issue on its own merits. The review protocol keeps its does-it-work / strong / weak / security-implication spine and drops the weak-point section. **This extends to any future weak point: log it, watch quietly, don't narrate it.**
+
+*For the record, the last observation before retirement: all six specified parameter values and format constraints held unprompted on first submission — the exact facet the 2026-07-17 retest had named as the remaining gap.*
+
+---
+
+## Open Debts
+
+1. **Ship `sectools` public.** Spellcheck SPEC.md + OPSEC scrub, create the GitHub repo, push. A real spec + tests already beat most junior CVs. **← the one remaining debt.**
 
 ---
 
@@ -46,45 +45,41 @@ Program-level trajectory oversight, distinct from the teacher's per-session work
 
 **The baseline.** First portfolio project *and* the reference template for how every future project is built, tested, and showcased. A CLI auth-log brute-force detector: aggregate failed logins by source IP, flag brute-force sources over a threshold, and surface **dual-role IPs** (Failed *and* Accepted = credential-compromise — the "thinks like a defender" feature).
 
-- **Interface:** CLI only. Visual layer = a well-formed report (first table layer landed Increment 7). **Status: 8/15 increments, detection spine + first report layer complete.**
-- **Repo:** clean public repo at `/home/emrebektas/sectools` (local, 3 commits + **Inc 6/7 uncommitted**; **GitHub not yet created — confirm before public**).
-
-**Increment plan** (✅ = done):
+- **Interface:** CLI only. **Status: 9/15 increments — detection spine complete, both output formats complete.**
+- **Repo:** `/home/emrebektas/sectools` — 4 commits through `8be978d`, **Inc 8 uncommitted**. **GitHub not yet created.**
 
 | # | Increment | New concept | |
 |---|-----------|-------------|---|
 | 0 | Spec + dir skeleton | what a spec is / project structure | ✅ |
 | 1 | `parse_line` → dict/None | dict + None sentinel | ✅ |
 | 2 | `parse_file` → records | composing a helper across lines | ✅ |
-| 3 | Split into `parser.py`, import | **modules & import** (first multi-file) ⚠️wall | ✅ |
+| 3 | Split into `parser.py`, import | **modules & import** ⚠wall | ✅ |
 | 4 | `count_failed_by_ip` | dict accumulation (bridge from `sort\|uniq -c`) | ✅ |
 | 5 | `flag_suspicious(threshold)` | sorting dict items by value | ✅ |
 | 6 | Dual-role IP detection | set operations / cross-referencing ⭐ | ✅ |
 | 7 | `report.py` text table | f-string alignment | ✅ |
-| 8 | `--format csv` | the `csv` module | 🔜 next |
-| 9 | `cli.py` argparse | **argparse** ⚠️wall | ⬜ |
+| 8 | `--format csv` | **the `csv` module** + file-like objects + dialect defaults | ✅ |
+| 9 | `cli.py` argparse | **argparse** ⚠wall | 🔜 next |
 | 10 | Nonzero exit on findings | `sys.exit()` / exit codes | ⬜ |
-| 11 | `run-daily.sh` | Bash vars + `$?` + `if` (+ **awk** revisit) ⚠️wall | ⬜ |
+| 11 | `run-daily.sh` | Bash vars + `$?` + `if` (+ **awk** revisit) ⚠wall | ⬜ |
 | 12 | `install.sh` | Bash functions + heredoc + `set -euo pipefail` | ⬜ |
-| 13 | pytest + fixtures | automated testing (= verify-don't-proxy in code) | ⬜ |
-| 14 | `pyproject.toml` + entry point | packaging ⚠️wall (MVP fallback: `python -m`) | ⬜ |
+| 13 | pytest + fixtures | automated testing | ⬜ |
+| 14 | `pyproject.toml` + entry point | packaging ⚠wall (MVP fallback: `python -m`) | ⬜ |
 | 15 | README + MANUAL | technical documentation | ⬜ |
 
 ---
 
-## Direction — spine + tastings (session 20 coaching)
+## Direction — spine + tastings
 
-**One spine deep, cheap tastings of the rest.** Blue-team is rung one (nearest employable + shared fundamentals + loginwatch is blue); deliberate cheap tastings of **red / devsecops / AI-security** so exploration is designed in, not foreclosed. North star unchanged: **blue → red → cloud → AI** (AI security = highest-differentiation destination).
+**One spine deep, cheap tastings of the rest.** Blue-team is rung one (nearest employable + shared fundamentals + loginwatch is blue); deliberate cheap tastings of **red / devsecops / AI-security** so exploration is designed in, not foreclosed. North star: **blue → red → cloud → AI**.
 
-**Priority stack (user's framing):** degree *(theory evidence)* → **practical cyber *(the lever)*** → theory cyber *(absorbed)* → maths *(multiplier — feeds trading/AI/crypto; active lever while trading is blocked)* → trading *(roadblock, reloading via maths)*.
+**Priority stack (user's framing):** degree *(theory evidence)* → **practical cyber *(the lever)*** → theory cyber *(absorbed)* → maths *(multiplier)* → trading *(roadblock, reloading via maths)*.
 
-**Practice ladder:** pay Bandit debt → picoGym/CyLab (General Skills + Forensics) → blue platform (**TryHackMe SOC**, already owned + **CyberDefenders** for publishable DFIR write-ups) → HTB retired-easy (later, Bash L3-ish) → CryptoHack (enjoyment/maths lane, no public write-ups) / PortSwigger (later, red).
+**Practice ladder:** ~~Bandit debt~~ ✅ → picoGym/CyLab (General Skills + Forensics) → blue platform (**TryHackMe SOC** + **CyberDefenders** for publishable DFIR write-ups) → HTB retired-easy (later) → CryptoHack (maths lane) / PortSwigger (later, red).
 
 **CTF operating rules:** no AI before the flag, full AI after · ~30–45 min struggle floor + stuck-report · describe challenges in your own words · **cold-redo retest 2–4 weeks after a clean solve** · write-ups = failure trail + a defender's note.
 
-*Two visual artifacts (strategy board, roadmap) were produced this session, then de-prioritized in favour of the recurring Fable review — not maintained resources.*
-
-⚠️ **Verify (Fable-sourced, unconfirmed vs Jan-2026 cutoff):** picoCTF → "CyLab Security Academy" rename (~May 2026); TryHackMe cert name (SAL1?).
+⚠️ **Verify (unconfirmed vs cutoff):** picoCTF → "CyLab Security Academy" rename (~May 2026); TryHackMe cert name (SAL1?).
 
 ---
 
@@ -92,8 +87,8 @@ Program-level trajectory oversight, distinct from the teacher's per-session work
 
 | Track | Level | Progress | Challenges Done | Status |
 |-------|-------|----------|-----------------|--------|
-| Python | **L2 (in progress)** | loginwatch 8/15 | 4 (L1) | L1 complete; **L2 underway via loginwatch.** Primary focus. |
-| Bash | **L2 (pending)** | — | 4 (L1) | L1 complete; L2 arrives at loginwatch Increments 11–12 (Bash scripts) + awk revisit. |
+| Python | **L2 (in progress)** | loginwatch 9/15 | 4 (L1) | L1 complete; **L2 underway via loginwatch.** Primary focus. |
+| Bash | **L2 (pending)** | — | 4 (L1) | L1 complete. **Longest-neglected track — last formal touch 2026-05-10.** L2 arrives at Increments 11–12; Bandit/CTF carrying Linux load meanwhile. |
 | Concepts | **ARCHIVED** | ████ 3/3 | 3 | Archived 2026-07-16 — retained for history, reinstatable. |
 | Scenarios | — | Locked | 0 | Unlocks when Python L2 + Bash L2 both complete. |
 
@@ -101,39 +96,28 @@ Program-level trajectory oversight, distinct from the teacher's per-session work
 
 ## Active Weak Points
 
-| ID | Track | Issue | Stage | Failures | Retest Due |
-|----|-------|-------|-------|----------|------------|
-| WP001 | cross-track | Instruction-precision: right tool, but parameter values / format constraints can slip unprompted. **Positive signal 2026-07-23:** `>=` boundary held unprompted at loginwatch Inc 5 — the exact gap this retest targets. | 2 | 0 | **2026-07-31** |
+**None.** WP001 retired 2026-07-29 (see *Program Change* above); WP002 and WP004 mastered; WP003 and WP005 paused with the Concepts track.
 
-**Carried-forward discipline (no standalone retest):** *verify-don't-proxy* — watched inside Python/Bash code review. Fired unprompted twice this session (Failed-only filter in Inc 4; boundary in Inc 5).
+| ID | Track | Issue | Final state | Disposition |
+|----|-------|-------|-------------|-------------|
+| WP001 | cross-track | Instruction-precision: right tool, parameter values / format constraints could slip. | Stage 2, 0 failures | **Retired 2026-07-29** — user instruction. Not mastered, not failed. |
+| WP002 | bash | Frequency-count pipelines / trusting output without inspecting intermediates. | — | **Mastered 2026-05-21** via remediation challenge. |
+| WP004 | python | Eager full-file load (`readlines`) instead of lazy iteration. | — | **Mastered 2026-05-24.** |
+| WP003 | concepts | Declares "no indicator" without the verification step. | Stage 2 | Paused 2026-07-16. Reinstates if Concepts returns. |
+| WP005 | concepts | Skips the version-check step before deciding response. | Stage 1 | Paused 2026-07-16. Reinstates if Concepts returns. |
 
----
-
-## Paused Weak Points (Concepts archived)
-
-| ID | Track | Issue | Stage at pause | Note |
-|----|-------|-------|----------------|------|
-| WP003 | concepts | Phishing analysis: declares "no indicator" without the verification step. | 2 | Paused 2026-07-16. Reinstates if Concepts returns. |
-| WP005 | concepts | Vuln triage skips the version-check step before deciding response. | 1 | Paused 2026-07-16. Reinstates if Concepts returns. |
+**Carried-forward discipline (watched quietly inside code review, never narrated):** *verify-don't-proxy*.
 
 ---
 
-## Mastered Weak Points
+## Linux Gym — OverTheWire Bandit
 
-| ID | Track | Mastered Date | Closed Via |
-|----|-------|---------------|------------|
-| WP002 | bash | 2026-05-21 | Remediation challenge ("Don't Trust the Pipeline") — both fingerprints closed |
-| WP004 | python | 2026-05-24 | Second clean retest — lazy-iteration discipline fired unprompted |
+Self-directed **Linux CLI fluency** practice in parallel with the project. Free, legal, no VM.
 
----
-
-## Linux Gym — OverTheWire Bandit (wargame diversions)
-
-Self-directed **Linux CLI fluency** practice in parallel with the project. Free, legal, no VM. **The tutor proactively pushes you to it.**
-
-- **Status:** **started 2026-07-24 — cleared bandit0 → 6** (session 21, first Bandit session). Banked: `file`/`file -i`/`strings`/`xxd`, human-readable classification, glob-over-many-files, the `./` dash-prefix trick.
-- **Cold-redo retest:** wipe `overthewire/notes.txt`, redo bandit0→6 cold **after 2–4 weeks** — retention check against the forget-across-time problem.
-- **How:** log stumpers in [external/bandit-notes.md](external/bandit-notes.md) (no passwords). Continue: https://overthewire.org/wargames/bandit/
+- **Status:** bandit0 → 6 cleared (2026-07-24). Session 23 target **bandit6 → 10** was briefed but not started (user had to leave) — re-offer it. Banked so far: `file`/`file -i`/`strings`/`xxd`, human-readable classification, glob-over-many-files, the `./` dash-prefix trick.
+- **Paid off this session:** `cat -A` and `xxd` turned on his *own Python output* to expose a CRLF bug — first time the Bandit toolkit was used as a debugging instrument rather than a puzzle-solver.
+- **Cold-redo retest:** wipe notes, redo bandit0→6 cold **after 2–4 weeks**.
+- **How:** log stumpers in [external/bandit-notes.md](external/bandit-notes.md) — *still empty; nothing logged from the bandit0→6 run.* No passwords. https://overthewire.org/wargames/bandit/
 
 ---
 
@@ -141,15 +125,19 @@ Self-directed **Linux CLI fluency** practice in parallel with the project. Free,
 
 | Date | Decision | Rationale |
 |------|----------|-----------|
-| **2026-07-23** | **(A) Fortnightly Head-of-Year Review (Fable) that speaks first when due. (B) "One spine deep, cheap tastings" lane model + blue rung on the CTF ladder.** | Teacher is too close to judge the multi-week arc — a head-of-year role (Fable) tracks trajectory, serving the forget-across-time problem at program level. User pushed back on over-steering to blue → depth-first on blue + deliberate tastings of red/devsecops/AI. Practical cyber = #1 leverage; maths = cross-cutting multiplier. |
-| **2026-07-16** | Archive the Concepts track; focus on Python + Bash + Linux terminal. | Concepts absorbed via the OU R60 degree. Coding + Bash is the hard, scarce skill; user needs to code nearly every day. |
+| **2026-07-29** | **Retire WP001 and the per-task weak-point ceremony.** | The tracking had outgrown the code review it was attached to and read as repetitive nagging about a trait already known. Code correctness is the deliverable; precision issues get flagged as ordinary code issues when they actually break something. |
+| **2026-07-29** | **Withholding is only fair for reasoning available on screen.** | Framing a library default (`csv.writer`'s CRLF) as a defect to be discovered is a gotcha, not teaching. Domain knowledge gets taught; reasoning gets prompted. |
+| **2026-07-23** | Fortnightly Head-of-Year Review (Fable) that speaks first when due; "one spine deep, cheap tastings" lane model. | The teacher is too close to judge the multi-week arc. Practical cyber = #1 leverage; maths = cross-cutting multiplier. |
+| **2026-07-16** | Archive the Concepts track; focus on Python + Bash + Linux terminal. | Concepts absorbed via the OU R60 degree. Coding + Bash is the hard, scarce skill. |
 
 ---
 
-## Watch-Areas & Spaced-Repetition Flags
+## Watch-Areas (teaching touches to re-offer — not graded)
 
-- **awk action-block syntax** — still not durable. Folds into loginwatch Increment 11 (run-daily.sh CSV post-processing).
-- **`with` context-manager idiom** — slipped once at Inc 2; not re-tested Inc 3–5. Confirm unprompted next file-open or log a WP.
+- **`with` context-manager idiom** — slipped once at Inc 2, still not re-tested; `report.py` deliberately opens no file. Confirm at the next real file-open.
+- **awk action-block syntax** — not yet durable. Folds into Increment 11.
+- **Byte-level output verification** (`cat -A` / `xxd` on anything another program will read) — taught fresh at Inc 8. Natural next occasion is Increment 11's CSV post-processing.
+- **CSV / formula injection** — `csv` escapes delimiters and quotes; it does *nothing* about a field starting `=`, `+`, `-`, `@` executing in a spreadsheet. Becomes live the moment a username or raw log message reaches a column. ⚠️ Verify at `owasp.org/www-community/attacks/CSV_Injection`.
 
 ---
 
@@ -160,8 +148,8 @@ Self-directed **Linux CLI fluency** practice in parallel with the project. Free,
 - [x] Bash L1 complete *(2026-05-10)* · Python L1 complete *(2026-05-11)*
 - [x] First weak point mastered — WP002 *(2026-05-21)* · Second — WP004 *(2026-05-24)*
 - [x] Portfolio has 10+ archived write-ups *(2026-05-18 — 11 total)*
-- [x] First L2 challenge started *(2026-07-18 — loginwatch, Python L2)*
-- [x] **First multi-file Python program** *(2026-07-23 — loginwatch Increment 3)*
+- [x] First L2 challenge started *(2026-07-18)* · **First multi-file Python program** *(2026-07-23)*
+- [x] **First machine-readable tool output** *(2026-07-29 — `loginwatch` speaks CSV)*
 - [ ] Lab environment fully set up — vulnerable target VM installed
 - [ ] Scenarios unlocked — Python L2 + Bash L2 both complete
 - [ ] All active tracks reach Level 3
@@ -170,17 +158,16 @@ Self-directed **Linux CLI fluency** practice in parallel with the project. Free,
 
 ## Side Tasks Still Open
 
-- **Ship `sectools` public** — spellcheck SPEC.md + OPSEC pass + create GitHub repo *(debt #2)*.
-- **Bandit** — start it, next short session *(debt #1)*.
+- **Ship `sectools` public** — spellcheck SPEC.md + OPSEC pass + create GitHub repo *(the remaining debt)*.
 - **Vulnerable target VM install (Metasploitable2/DVWA)** — not needed until the end of the project arc.
-- Redirection `<` operator: user reports never trained; introduce when a Bash task calls for it.
+- Redirection `<` operator: never trained; introduce when a Bash task calls for it.
 - `bash-L0-trail-in-the-logs` write-up: decide whether to add a WP002-falsification correction note. *(Carried since session 6.)*
 
 ---
 
 ## Up Next
 
-**Next session:** Increment 8 — `--format csv` output (the `csv` module; revisit report's print-vs-return). Short/low-energy again? **Continue Bandit** (bandit6 onward) or ship `sectools` public.
+**Next session:** **Increment 9 — `cli.py` with `argparse`** (⚠wall; the dispatcher is already shaped for it). Short/low-energy instead? Continue **Bandit** or ship `sectools` public.
 **Python (L2):** continues through loginwatch.
 **Bash (L2):** scripting basics arrive at Increments 11–12; awk revisit baked in.
 **Scenarios:** locked until Python L2 + Bash L2 both complete.
@@ -189,7 +176,9 @@ Self-directed **Linux CLI fluency** practice in parallel with the project. Free,
 
 ## Cross-Track Connections
 
-**9 logged.** Latest (2026-07-26): *Bash pipe → netcat stdin* — recalled `|` from Bash frequency-counts and applied it new: `python3 gen.py | nc host port`, piping a payload into a remote service's input (bytemancy-1 CTF). Prior (2026-07-23): *Python dict accumulation ≡ Bash `sort | uniq -c`* at loginwatch Increment 4.
+**11 logged.** Two added 2026-07-29:
+- ***stdout as the composability seam*** — Bash `>` and `|` supplied the justification for a Python API decision (print, not return). Transfer in the harder direction: Bash shaping Python design, not Python reimplementing a Bash command.
+- ***byte-level inspection*** — Bandit's `cat -A`/`xxd` pointed at his own Python program's output to expose `csv.writer`'s `\r\n` default.
 
 ---
 
@@ -197,11 +186,17 @@ Self-directed **Linux CLI fluency** practice in parallel with the project. Free,
 
 - Write-ups generated / archived: **11 / 11**
 - Total challenges completed: **11** · attempted-unfinished: 2
-- `loginwatch` increments: **8 / 15**
-- Bandit levels cleared: **6** (bandit0→6)
-- Total sessions: **22** · Total hours: **~19.5**
-- Weak points mastered: **2** (WP002, WP004)
-- Active tracks: **Python, Bash** *(Concepts archived 2026-07-16)*
+- `loginwatch` increments: **9 / 15**
+- Bandit levels cleared: **6** (bandit0→6, session-23 target 6→10)
+- Total sessions: **23** · Total hours: **~20.5**
+- Weak points mastered: **2** (WP002, WP004) · retired: 1 (WP001)
+- Active tracks: **Python, Bash**
+
+---
+
+## Weekly Rhythm
+
+**~4 hours over 3 sessions** in the 7 days to 2026-07-29 — just under the 5–10h band, not drifting. Adding today: ~5h over 4 sessions.
 
 ---
 
@@ -209,5 +204,5 @@ Self-directed **Linux CLI fluency** practice in parallel with the project. Free,
 
 - Host attacker box — native Pop!_OS laptop.
 - Vulnerable target VM (Metasploitable2 / DVWA) — **still not installed** (not needed until end of project arc).
-- `sectools` (`/home/emrebektas/sectools`) — loginwatch build, 8/15 increments, 3 commits (Inc 6/7 uncommitted), GitHub repo not yet created.
+- `sectools` (`/home/emrebektas/sectools`) — loginwatch build, 9/15 increments, 4 commits (Inc 8 uncommitted), GitHub repo not yet created.
 - Localhost (`127.0.0.1`) — legal Python socket test target.

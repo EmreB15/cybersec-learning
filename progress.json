@@ -2,8 +2,8 @@
   "schema_version": "3.0",
   "user": "Emre",
   "started_date": "2026-04-27",
-  "last_session": "2026-07-26",
-  "session_count": 22,
+  "last_session": "2026-07-29",
+  "session_count": 23,
   "head_of_year_review": {
     "role": "Program-level trajectory review, distinct from the teacher's per-session work. Metaphor set by user 2026-07-23: teacher = Opus tutor (in-session — hint tiers, code review, weak points); head of year = Fable (steps back across weeks to judge the arc). See CLAUDE.md 2026-07-23 amendment.",
     "conducted_by": "fable-agent",
@@ -13,7 +13,13 @@
     "last_review": null,
     "next_review_due": "2026-08-06",
     "ordering_rule": "When next_review_due <= today, the head of year speaks to the user FIRST at Session bootstrap (bootstrap step 10) — before the teacher greets or plans. User's explicit instruction 2026-07-23: 'have my head of year talk to me before you talk to me.'",
-    "review_shape": ["what got done this fortnight", "on-track read (green/amber/red)", "drift/concerns", "refine-or-stay-the-course call", "1-3 focus priorities for next fortnight (handed to the teacher)"],
+    "review_shape": [
+      "what got done this fortnight",
+      "on-track read (green/amber/red)",
+      "drift/concerns",
+      "refine-or-stay-the-course call",
+      "1-3 focus priorities for next fortnight (handed to the teacher)"
+    ],
     "trail_mode": "Lightweight: logged in this object's `log` array + surfaced in-session. Optional reviews/YYYY-MM-DD.md file only if the user later wants a durable readable trail (not created by default, per user 'might not need to be a resource').",
     "missed_window_rule": "If multiple fortnights elapse without a session, run ONE review at next login covering the whole gap; do not stack back-reviews.",
     "log": []
@@ -77,8 +83,8 @@
       "challenges_attempted": [],
       "current_challenge": null,
       "current_challenge_text": null,
-      "last_active": "2026-05-11",
-      "last_active_session": 9
+      "last_active": "2026-07-29",
+      "last_active_session": 23
     },
     "bash": {
       "level": "L1",
@@ -226,46 +232,6 @@
     }
   },
   "weak_points": [
-    {
-      "id": "WP001",
-      "track": "cross-track",
-      "issue": "Instruction-precision / end-to-end follow-through: identifies correct tool but does not always assemble the full solution per the exact brief (skips sub-tasks, uses wrong parameter values)",
-      "first_observed": "2026-04-27",
-      "promoted_from": "WA001",
-      "promoted_date": "2026-04-28",
-      "evidence_2026-05-08": "Re-surfaced briefly during WP002 retest submission (pipeline missed Failed-only filter and intermediate-inspection step, both explicit brief constraints). Not formally counted as a WP001 failure since the dedicated WP001 retest immediately followed and passed cleanly.",
-      "evidence_2026-05-11": "Soft evidence — Python L1 #3 (Password Auditor) brief required calling audit() on all four test passwords; first two submissions called on one. Closed on revision 3 after explicit nudge in review 2. Not a formal failure (WP001 retest is 2026-05-15, this was in-challenge brief execution), but the pattern recurred. Same flavour as Bash L0 First Footprints Task 2/4 — right tool selected, partial brief executed until nudged. Implication for 2026-05-15 retest design: include a multi-sub-task brief that tests whether all parts are executed without prompting.",
-      "evidence": [
-        "Diagnostic task 3 (Python string split) — partial assembly",
-        "Bash L0 First Footprints Task 2 round 1 — skipped listing entirely",
-        "Bash L0 First Footprints Task 4 round 1 — used -n 5 instead of -n 10"
-      ],
-      "stage": 2,
-      "retest_due": "2026-07-31",
-      "evidence_2026-07-23": "POSITIVE SIGNAL toward this retest. loginwatch Increment 5 (flag_suspicious) — user wrote `value >= threshold` (boundary-correct) on the FIRST try, unprompted. This is the exact remaining WP001 gap the SPEC.md retest (2026-07-17) flagged: the '>5' vs required '>=' parameter/boundary slip. Here the correct comparison operator held with no nudge, on a security-relevant detection threshold (an IP with exactly `threshold` fails must be flagged; boundary-tested at threshold=6). Also self-served a lambda sort key. Single in-challenge instance, not a formal retest — but it directly evidences the parameter-precision facet closing. Weigh at the 2026-07-31 retest.",
-      "failures": 0,
-      "retest_history": [
-        {
-          "date": "2026-07-17",
-          "outcome": "held-stage-2 (pass-with-revision; NOT clean-unprompted, so no advance to mastery; NOT a failure, so no reset)",
-          "challenge": "loginwatch Increment 0 — SPEC.md enumerated-brief retest (7 required sections, in order, each ## headed). First WP001 retest since the 2026-07-16 Concepts-archive pivot; embedded in project work by design.",
-          "notes": "Enumeration core HELD unprompted — all 7 sections present, correct order, first submission. That is the discipline WP001 most directly tracks and it fired on its own. BUT two specified requirements slipped INSIDE the graded brief and needed the review to surface: (1) threshold written '>5' where brief specified 'at or above' (>=) — parameter/semantic substitution, the WP001 fingerprint, and a security-relevant off-by-one (IP with exactly 5 fails escapes flagging); (2) ## headings dropped wholesale (explicit enumerated constraint). Both closed cleanly on a single revision with no further nudges, plus input-mechanism sharpened. Because the misses needed prompting, this is not the clean-unprompted pass mastery requires; because the enumeration held and the misses were precision-within-section, it is not a stage-0 reset either. Call: HOLD stage 2, failures unchanged (0), next retest 2026-07-31. User offered strict-bar alternative (count as failure) at session end but session ended before they chose; default applied. Note for next retest design: keep the enumerated-brief format; watch specifically whether specified PARAMETER VALUES and FORMAT CONSTRAINTS (not just section presence) hold unprompted — that is the remaining gap."
-        },
-        {
-          "date": "2026-05-08",
-          "outcome": "passed",
-          "challenge": "Brief Precision (3 sub-tasks: head -5 syslog, tail -3 auth.log, grep -c 'sudo' auth.log)",
-          "notes": "All three sub-tasks correct first try. Used grep -c rather than piping to wc -l (single-tool idiomatic). Quoted 'sudo' defensively. Each sub-task its own command, no chaining. Tier 1 reframe used on task 3 (two valid shapes pointed out without naming the flag); user self-served from there."
-        },
-        {
-          "date": "2026-05-15",
-          "outcome": "passed",
-          "challenge": "Multi-Sub-Task Brief Precision (4 sub-tasks A/B/C/D on auth-snippet log: count Accepted, last 3 Failed, unique Failed-IPs sorted, count of unique Failed-IPs)",
-          "notes": "All 4 sub-tasks delivered clean on first submission, zero nudges. Task B trap explicitly avoided — user wrote `grep 'Failed' | tail -3` rather than `tail -3 auth-snippet.log` (which would have contaminated with the Accepted line at position 29). Output-type discipline held: numbers where 'a single number' specified, IPs without counts where 'just IPs' specified. Brief-design discipline (count concrete deliverables explicitly, per dashboard process note 10) validated by clean result. Stage 1 → 2. Two soft WP001 misses ELSEWHERE in same session (head -1 vs head -5 on WP002 retest; counted IPs vs usernames on WP004 retest) — both on implicit-enumeration briefs. Reading: when briefs explicitly enumerate concrete deliverables, WP001 holds; when implicit, substitution still surfaces. One more clean retest at stage 2 → mastered."
-        }
-      ],
-      "evidence_2026-05-15": "Two soft WP001 hits same session as the WP001 retest passed cleanly. (1) WP002 retest first submission: brief said top 5, user wrote head -1 (number substitution). (2) WP004 retest first submission: brief said count distinct invalid USERNAMES, user counted distinct source IPs (parameter substitution; variable name 'failed_ips' revealed the gap). Both on briefs where the concrete deliverable was implicit. Dedicated WP001 retest brief was explicitly enumerated and passed 4/4 clean. The contrast itself is the signal: enumeration discipline closes the gap."
-    },
     {
       "id": "WP002",
       "track": "bash",
@@ -433,6 +399,13 @@
           "notes": "WA003 is specifically about credential-compromise interpretation (hypothetical-framing known events, slow brute-force cadence read as innocuous, IP-block-primary action ladder, priority inversion). The WP005 retest scenario was vulnerability-triage (CVE-2026-1847 nginx request-smuggling) — no credential-compromise dynamics, no brute-force cadence, no successful-vs-failed login interpretation. None of the four WA003 sub-shapes had surface to fire on. Promotion trigger DID NOT fire. Status unchanged. Separate observation surfaced on WP005 retest — shutdown-primary disposition on vuln-triage response laddering — is CLOSELY RELATED (action-ladder ordering) but distinct from WA003's credential-success-IP-block-primary shape, and is documented as a WP005 teaching observation rather than a WA003 instance. If a future Concepts scenario that DOES contain credential-compromise dynamics (e.g., a SOC alert with mixed Failed + Accepted lines from one IP) reproduces the WA003 patterns, then promote."
         }
       ]
+    },
+    {
+      "id": "WA005",
+      "track": "python/bash",
+      "first_observed": "2026-07-29",
+      "issue": "Byte-level output verification. The CRLF/LF distinction and the `cat -A` / `xxd` habit were taught fresh at Increment 8 (csv.writer's \\r\\n dialect default). Pure domain knowledge, taught rather than tested — NOT a weak point and explicitly not to be graded. Watch only whether the HABIT reappears unprompted the next time he produces output for another program to consume (Increment 11's run-daily.sh CSV post-processing is the natural next occasion). If it does, it is banked; if not, re-teach without ceremony. Do not surface this to the user as a tracked failing — see feedback_weak_point_ceremony.",
+      "promotion_trigger": "None. This is a teaching touch to re-offer, not a gap to grade."
     }
   ],
   "hint_log": [
@@ -692,6 +665,24 @@
       ],
       "concept": "the pipe as inter-program plumbing: chaining text filters vs feeding a program's stdin",
       "context": "CyLab/picoCTF bytemancy-1 CTF (session 22). User recalled the Bash pipe he'd learned for frequency counts (grep | sort | uniq -c) and applied it somewhere genuinely new: `python3 gen.py | nc host port` — piping a Python-generated payload into a remote netcat service's STDIN. Transfer, not recall: same `|` tool, new target (a program's input stream, not the next text filter). Two systems concepts landed alongside it: (1) `nc <host> <port>` needs BOTH a host and a port (he first tried `nc <port>` alone); (2) a program reading a line from stdin waits for a trailing newline as the submit/Enter signal — his `end=''` loop sent zero newlines, so the program reported 'nothing entered' until he added a bare `print()`. Also touched ASCII representation (decimal 101 = 'e', via chr()). Prime cold-redo candidate (needed the writeup) — logged in external/cylab-notes.md."
+    },
+    {
+      "date": "2026-07-29",
+      "tracks": [
+        "bash",
+        "python"
+      ],
+      "concept": "stdout as the composability seam: Bash redirection/pipes as the reason a Python function should print rather than return",
+      "context": "loginwatch Increment 8. Before writing any code the user asked whether csv needed to write to a file, then answered his own design question with Bash knowledge: write to stdout 'so that we can write it to a file or pipe it as an output to another python script'. `>` and `|` (Bash L1 Evidence Trail, reused at the bytemancy CTF) supplied the justification for a Python API decision. Transfer in the harder direction — Bash shaping Python design, not Python reimplementing a Bash command. Tutor sharpened the reasoning (he had wrongly tied machine-readability to print-vs-return rather than to the CSV format itself) but the operational conclusion was his and was right."
+    },
+    {
+      "date": "2026-07-29",
+      "tracks": [
+        "bash",
+        "python"
+      ],
+      "concept": "byte-level inspection of program output: `cat -A` / `xxd` used to audit a Python program's bytes",
+      "context": "loginwatch Increment 8 CRLF discovery. The Bandit toolkit banked in session 21 (file/strings/xxd, bandit0->6) was pointed at his own Python output for the first time: `python3 loginwatch.py | cat -A` revealed ^M$ on CSV rows versus $ on table rows, exposing csv.writer's \\r\\n dialect default. The generalised habit taught: anything written for another PROGRAM to read gets its actual bytes inspected once before being trusted — rendered terminal output hides exactly the bytes that matter (line endings, trailing whitespace, encoding). Linux CLI forensics tooling applied to Python debugging."
     }
   ],
   "session_log": [
@@ -1151,6 +1142,11 @@
       "writeups_generated_this_session": [],
       "weak_points_logged_this_session": [],
       "weak_points_mastered_this_session": []
+    },
+    {
+      "date": "2026-07-29",
+      "duration_minutes_planned": 60,
+      "summary": "Session 23 (2026-07-29) — loginwatch Increment 8 (--format csv) DONE, ~1h as planned; user headed to OverTheWire Bandit afterwards. loginwatch now 9/15. Bootstrap: no head-of-year review due (2026-08-06), nothing new in the THM/Bandit/CyLab logs, Bandit last touched 5 days ago so no diversion push triggered. Weekly summary surfaced (~4h over 3 sessions, just under the 5-10h band). Dashboard staleness corrected: it claimed Inc 6+7 were uncommitted; 8be978d already had them. BUILD: create_csv_report via csv.writer(sys.stdout) + an output_format dispatcher in __main__. First submission clean on all six specified constraints. One 🟡 fixed (no else branch -> silent empty output, which for a detection tool is indistinguishable from 'no findings'; dangerous once argparse feeds it user input at Inc 9). CRLF taught from zero after tutor mishandling (see below), fixed with lineterminator='\\n', verified with cat -A. MAJOR PROGRAM CHANGE — WP001 RETIRED at the user's instruction. He pushed back that weak-point tracking was being examined every single task, that grading how much of a brief he completed was displacing the code review he actually wants, and that the per-task narration was burning tokens on something he already knows about: 'it is a weak point that will not just dissapear. ignore it and move on.' Accepted without argument. WP001 moved to retired_points (stage 2, 0 failures, neither mastered nor failed); no further retests, no per-submission verdicts, no fingerprint commentary. Durable feedback memory saved (feedback_weak_point_ceremony) so it holds across sessions and extends to future weak points: log it, watch quietly, do not narrate it. Active weak-point board is now EMPTY. TWO TUTOR-SIDE DEFECTS OWNED, both user-flagged: (1) gotcha framing — the CRLF quirk was withheld as 'a defect you cannot see' when it is pure lookup knowledge the user had no route to; rule now explicit that withholding is fair only for reasoning available from what is on screen. (2) Explanation ordering — the control-comparison method was explained before teaching what ^M is, leaving nothing to conclude. User's verdict on the session's explanations: 'all your explainations here have been poor.' Both conceded, re-taught from zero, second attempt landed ('okay that is a better explaination') and he restated the CRLF consumer rule correctly himself. TEACHING THAT LANDED: file-like objects vs filenames; csv module escaping (delimiters/quotes/newlines) versus what it does NOT protect against (CSV/formula injection via =,+,-,@ — flagged as a future concern once usernames or log messages reach a column, with an OWASP pointer and a ⚠️ Verify marker); CR/LF history and the OS split; print-vs-return as destination-ownership rather than machine-readability, with the pytest capsys cost deferred to Inc 13. TWO CROSS-TRACK LINKS logged (11 total): Bash `>`/`|` justifying a Python stdout decision; Bandit's cat -A/xxd pointed at his own Python output. NEXT: Increment 9 — cli.py with argparse (flagged ⚠wall). The output_format dispatcher is already shaped to receive it."
     }
   ],
   "checkpoints_reached": [
@@ -1195,8 +1191,8 @@
     "challenges_attempted_unfinished": 2,
     "writeups_generated": 11,
     "writeups_archived": 11,
-    "cross_track_connections": 8,
-    "total_hours": 17.5,
+    "cross_track_connections": 11,
+    "total_hours": 20.5,
     "weak_points_mastered": 2
   },
   "diagnostic": {
@@ -1299,8 +1295,8 @@
       "notes": "30-line synthetic SSH auth log on web-prod-01, all entries May 24 single-day, spanning hours 03/07/11/14/18/22 to test multi-hour grouping if desired (today's brief did not require it). 26 Failed + 4 Accepted lines. Failed brute-force IPs: 45.95.169.84=4 (03:xx, admin+oracle, password-spray shape), 193.32.162.157=2 (07:xx, postgres), 89.248.165.74=1 (11:xx, test), 218.92.0.142=8 (14:xx, root, sustained burst), 171.25.193.78=4 (18:xx, multiple usernames git/jenkins/nginx/ubuntu, password-spray shape), 152.32.146.215=7 (22:xx, admin, sustained burst with one Accepted-emre at 22:17 interleaved). Accepted lines: 10.0.0.15 deploy ×2, 10.0.0.20 emre ×2. Tutor-key verified pre-delivery: First Failed = 'May 24 03:15:22', Last Failed = 'May 24 22:20:18'. Used 2026-05-24 — passed (WP004 mastered)."
     }
   },
-  "pickup_note": "SESSION 22 (2026-07-26) — loginwatch Inc 6 + Inc 7 done in one ~1h coding sitting (user had a headache, chose coding over theory; ended on CTF work). loginwatch now 8/15. Inc 6 find_accepted_and_failed (set intersection, output {'198.51.100.22'}) — self-served, one 🟡 else->elif proxy self-corrected (verify-don't-proxy, 3rd clean instance in 3 increments). Inc 7 report.py aligned text table (f-string alignment) — one Tier 1 reframe on a header-wider-than-field overflow, user diagnosed + articulated 'a width is a minimum not a maximum'. RESUME AT — loginwatch Increment 8: '--format csv output', new concept = the csv module (pipe-friendly output). Forward setup already flagged to user: report.py's create_report currently PRINTS; Inc 8 wants formatting to RETURN a string so a caller/flag can choose destination (csv vs table) — revisit the print-vs-return design at Inc 8. Files in /home/emrebektas/sectools: loginwatch.py (count_failed_by_ip, flag_suspicious, find_accepted_and_failed + __main__ pipeline), parser.py (parse_line, parse_file), report.py (create_report). Inc 6+7 UNCOMMITTED — propose sectools commit next session if not done at wrap. WP001 retest DUE 2026-07-31 (loginwatch-embedded enumerated brief; watch parameter VALUES + format constraints hold unprompted; positive signals banked Inc 5 boundary + Inc 6 fix). WATCH: `with` context-manager still not re-tested (report.py opened no file) — confirm unprompted next file-open or log a WP. HEAD-OF-YEAR REVIEW (Fable) first due 2026-08-06 — speaks FIRST at bootstrap. Bandit at current_level 6 (cold-redo retest 2-4 weeks out). REMAINING DEBT: ship sectools public (spellcheck SPEC.md + OPSEC pass + confirm GitHub repo). CTF next-step given this session: continue Bandit bandit6+ (warm, low-friction) OR start next ladder rung picoGym/CyLab General Skills; operating rules — no AI before the flag, 30-45min struggle floor, log stumpers, describe in own words. [Prior session 21 note retained below] SESSION 21 (2026-07-24) — BANDIT GYM, debt #1 PAID. Low-attention session (user at grandad's, ~1h); tutor PUSHED Bandit per diversion rule, user cleared bandit0->6 self-directed (+2 over the 0->4 target). Bandit current_level now 6, last_touched 2026-07-24. TAUGHT: banner-reading for operational intel; human-readable vs binary via `file`/`file -i`(MIME)/`strings`/`xxd`/`cat -v`, printable-byte-range concept + defender tie-in (run `file` before opening unknown artifacts; `strings` = first-pass triage); bulk-classify a dir with `file * | grep text` (user was going one-at-a-time), the `./` dash-prefix gotcha, and 'most tools take a list of filenames'. OPSEC WIN: user refused to read overthewire/notes.txt (level passwords) into context unprompted; tutor elevated the real risk (public repo, not context) and gitignored overthewire/ (was untracked -> `git add -A` would have leaked). COLD-REDO STRATEGY AGREED: wipe notes.txt + redo all levels cold, WAIT 2-4 WEEKS first (genuine recall). No write-up (gym session). RESUME AT — loginwatch Increment 6 'Dual-role IP detection (Failed ∩ Accepted)', the STANDOUT defender feature, new concept = set operations / cross-referencing: build a function finding IPs in BOTH the Failed set AND the Accepted set; in data/auth-sample.log the planted dual-role IP is 198.51.100.22 (6 Failed + 1 Accepted) = expected single result. loginwatch.py (in /home/emrebektas/sectools) has count_failed_by_ip + flag_suspicious; parser.py has parse_line + parse_file; sectools commits aa6f73b (Inc3), 1f84551 (Inc4+5). Detection spine complete (6/15): parse->count->flag; dual-role is the next layer. WP001 retest DUE 2026-07-31 (loginwatch-embedded, enumerated brief; watch that parameter VALUES + format constraints hold unprompted). WATCH: `with` context-manager idiom still not re-tested; confirm unprompted next file-open. HEAD-OF-YEAR REVIEW (Fable) first due 2026-08-06 — speaks FIRST at bootstrap. REMAINING DEBT: ship sectools public (spellcheck SPEC.md + OPSEC pass + confirm GitHub repo). Next session: normal focus -> loginwatch Inc 6; short/low-energy -> more Bandit (bandit6 onward) or the sectools ship task.",
-  "last_weekly_summary": "2026-05-24",
+  "pickup_note": "SESSION 23 (2026-07-29) — loginwatch Increment 8 (--format csv) DONE in the planned hour; Bandit was briefed (target bandit6->10) but NOT started — user had to leave. Bandit still at level 6, last touched 2026-07-24. Re-offer it as the short-session option. loginwatch now 9/15. RESUME AT — Increment 9: 'cli.py with argparse' (flagged as a ⚠wall). The groundwork is already laid: __main__ holds an `output_format` variable driving an if/elif/else dispatcher, so argparse's job is to supply that value from a real --format flag instead of a hardcoded literal; the log path ('data/auth-sample.log') and the threshold (5) are also currently hardcoded and are the other two obvious flags. Keep the else branch — it is what stops an unrecognised --format from silently printing nothing. FILES in /home/emrebektas/sectools: loginwatch.py (count_failed_by_ip, flag_suspicious, find_accepted_and_failed + __main__ dispatcher), parser.py (parse_line, parse_file), report.py (create_report table + create_csv_report with lineterminator='\\n'). Inc 8 changes UNCOMMITTED at time of writing — commit message proposed at wrap; sectools has no GitHub remote yet. PROGRAM CHANGE THIS SESSION — WP001 RETIRED at the user's explicit instruction: no more weak-point retests, no per-task completeness grading, no 'this is the fingerprint' commentary. The active weak-point board is now EMPTY. Standing rule saved to memory (feedback_weak_point_ceremony) and it extends to future weak points: log quietly, do not narrate. Keep the review protocol's does-it-work / strong / weak / security-implication spine and drop the weak-point verdict section. ALSO OWNED THIS SESSION: two tutor-side teaching defects the user called out — (1) do not withhold pure lookup knowledge as a 'find the defect' trap (fair only for reasoning available from what is on screen); (2) teach the concept BEFORE the method that depends on it. His verdict was blunt ('all your explainations here have been poor'); the re-taught versions landed. Explanation quality is the thing to watch next session. OPEN WATCH ITEMS (do not surface as failings): the `with` context-manager idiom still un-retested — report.py deliberately opens no file, so confirm it fires unprompted at the next real file-open; awk action-block syntax still not durable, folds into Increment 11. HEAD-OF-YEAR REVIEW (Fable) due 2026-08-06 — speaks FIRST at bootstrap. Bandit at level 6 pre-session with a cold-redo retest 2-4 weeks out. REMAINING DEBT: ship sectools public (spellcheck SPEC.md + OPSEC pass + create the GitHub repo). [Prior note: SESSION 22 (2026-07-26) — loginwatch Inc 6 + Inc 7 done in one ~1h coding sitting (user had a headache, chose coding over theory; ended on CTF work). loginwatch now 8/15. Inc 6 find_accepted_and_failed (set intersection, output {'198.51.100.22'}) — self-served, one 🟡 else->elif proxy self-corrected (verify-don't-proxy, 3rd clean instance in 3 increments). Inc 7 report.py aligned text table (f-stri]",
+  "last_weekly_summary": "2026-07-29",
   "program_decisions": [
     {
       "date": "2026-07-16",
@@ -1336,7 +1332,7 @@
     "suite": "sectools",
     "one_line": "CLI auth-log brute-force detector: aggregates failed logins by source IP, flags brute-force sources over a threshold, and surfaces dual-role IPs (Failed AND Accepted = credential-compromise signal). All synthetic/localhost data.",
     "role": "FIRST portfolio project AND the BASELINE reference — how every future project is approached, designed, implemented, tested, and showcased. Get this right; it is the template.",
-    "status": "IN PROGRESS — Increments 0-7 done (8/15). Detection spine + first report layer complete: parse -> count -> flag -> dual-role -> aligned text report. NEXT: Increment 8 (--format csv output, new concept = the csv module / pipe-friendly output). sectools local repo = 3 commits (f88f24e Inc0, aa6f73b Inc3, 1f84551 Inc4+5); Inc 6+7 (find_accepted_and_failed in loginwatch.py + new report.py) DONE but UNCOMMITTED as of session 22 — commit proposed at wrap. GitHub repo still NOT created (confirm before public; SPEC.md spellcheck pending — one of the two open debts).",
+    "status": "IN PROGRESS — Increments 0-8 done (9/15). Detection spine + both report formats complete: parse -> count -> flag -> dual-role -> aligned text table OR machine-readable CSV, selected by an output_format variable in __main__ (becomes a real --format flag at Increment 9). sectools local repo = 4 commits through 8be978d (Inc 6+7); Inc 8 changes to loginwatch.py + report.py UNCOMMITTED at time of writing — commit proposed at wrap. GitHub repo still NOT created (confirm before public; SPEC.md spellcheck pending — the one remaining open debt).",
     "started_date": "2026-07-17",
     "track": "python (primary) + bash (30%: install/runner scripts)",
     "repo": {
@@ -1422,8 +1418,13 @@
       },
       {
         "n": 8,
-        "increment": "--format csv output",
-        "new_concept": "the csv module (pipe-friendly output)"
+        "increment": "`--format csv` output",
+        "new_concept": "the csv module (csv.writer + file-like objects + dialect defaults)",
+        "status": "done",
+        "done_date": "2026-07-29",
+        "hint_tier_reached": 0,
+        "hint_tier_used": "Zero formal hint tiers on the code. One concept question asked before starting ('do i need to write to a file or standard output') — answered as concept teaching, not a hint. Two TUTOR-SIDE teaching defects owned in session (see notes): the CRLF quirk was framed as a withheld defect rather than taught, and the first explanation of the control-comparison method was muddled. User called both out; tutor conceded and re-taught from zero.",
+        "notes": "Increment 8. Built create_csv_report(records_to_report) in report.py: csv.writer(sys.stdout) + writerow for header + loop of writerow for rows; dispatcher in loginwatch.py __main__ via an output_format variable with if/elif/else. FIRST SUBMISSION was correct against the brief and clean on every specified constraint — function name, one parameter, exact lowercase header `source_ip,failed_count` (written correctly despite create_report's 'SOURCE IP'/'FAILED' sitting three lines above), csv module used with no manual joining, row order preserved (no re-sort), create_report untouched, stdlib only, output_format named and set as specified. CONCEPT LANDED PRE-CODE: asked whether csv needed a file, and after the file-like-object explanation stated the design rationale himself — stdout so the output can be redirected with `>` or piped to another program. That is Bash L1 redirection/pipe knowledge used to justify a Python API decision, unprompted (cross-track link logged). 🟡 MODERATE FIXED: the dispatcher's original if/elif had no else, so an unrecognised output_format printed NOTHING and exited successfully. Harmless while the value is a hardcoded literal, dangerous at Increment 9 when argparse makes it user input — for a DETECTION tool, silent empty output is indistinguishable from 'scanned the log, found no brute-force sources'. A misconfiguration renders as a clean bill of health. Closed on revision with an else branch printing an error. Also took the 🟢 rename 'string' -> 'table' unprompted (survives into the --format flag) and dropped a redundant list(record). CRLF / LINE-ENDINGS TEACHING (the substantial concept of the session, and a tutor-process failure first): csv.writer defaults to the excel dialect, whose lineterminator is '\\r\\n' on EVERY platform including Linux, per RFC 4180. So the CSV emitted Windows line endings while the table (via print) emitted LF. Invisible on screen; visible as ^M$ vs $ under `cat -A`. Consequence taught with evidence rather than assertion: a downstream consumer splitting on \\n receives the \\r welded onto the last field of every row, so fields[1] == '8' is False while int(fields[1]) still works — numeric paths keep passing while string comparisons silently miss, which is the worst shape of bug for this tool. Fixed with csv.writer(sys.stdout, lineterminator='\\n'); verified ^M gone and downstream fields clean. Framed as a DECISION not a bug: spreadsheet consumer -> CRLF (spec-correct, Excel expects it), Unix pipe consumer -> LF. User restated the rule correctly unprompted; tutor sharpened it to 'the consumer decides, not the OS you are sitting at'. TUTOR DEFECTS OWNED (both user-flagged, both conceded): (1) the CRLF quirk was presented as 'there is a defect you cannot see and I will not tell you what it is' — gotcha framing applied to pure lookup knowledge. User: 'How can you expect me to convert ^M$ to something else, i have 0 knoweledge of this. This is a specific quirk... you are critiquing me for something you should be teaching.' Correct, and the distinction now stands as a rule: withholding is fair for reasoning available from what is on screen (the else branch, the >= boundary), unfair for domain knowledge that can only be told. (2) The control-comparison explanation (why compare table output against CSV output) was delivered BEFORE teaching what ^M is, so there was nothing for the user to conclude from the difference — ordering error, conceded and dropped. DESIGN QUESTION (print vs return): user initially conflated two independent axes — what shape the bytes are (format) versus who owns the destination (print vs return). Corrected: a function returning a CSV string is exactly as machine-readable; the caller just prints it. Real trade-off taught — print streams with flat memory but fixes the destination at write time; return lets the caller choose but assembles the whole report in memory. Concrete cost of his (correct) choice named and deferred to Increment 13: testing a printing function needs stdout capture (pytest capsys), testing a returning function is a plain equality assert. WATCH ITEM STILL OPEN: the `with` context-manager idiom was again not re-tested — report.py opens no file (that is the whole point of writing to stdout). Confirm it fires unprompted at the next genuine file-open."
       },
       {
         "n": 9,
@@ -1494,5 +1495,51 @@
       "legal": "Authorized — OverTheWire issues the credentials; the game is the point. No CMA concern.",
       "diversion_rule": "See CLAUDE.md Program Amendments 'Wargame diversions'. Tutor PROACTIVELY pushes Bandit (states it, doesn't just offer) when: >=7d since last touch, OR short/low-energy session, OR a Linux-CLI gap surfaced last session. Floor ~1 in 5 sessions is Linux-CLI so the 70/30-Python project doesn't starve Linux fluency. User explicitly asked to be pushed to this ('push me away and say go do some linux wargames')."
     }
-  }
+  },
+  "retired_points": [
+    {
+      "id": "WP001",
+      "track": "cross-track",
+      "issue": "Instruction-precision / end-to-end follow-through: identifies correct tool but does not always assemble the full solution per the exact brief (skips sub-tasks, uses wrong parameter values)",
+      "first_observed": "2026-04-27",
+      "promoted_from": "WA001",
+      "promoted_date": "2026-04-28",
+      "evidence_2026-05-08": "Re-surfaced briefly during WP002 retest submission (pipeline missed Failed-only filter and intermediate-inspection step, both explicit brief constraints). Not formally counted as a WP001 failure since the dedicated WP001 retest immediately followed and passed cleanly.",
+      "evidence_2026-05-11": "Soft evidence — Python L1 #3 (Password Auditor) brief required calling audit() on all four test passwords; first two submissions called on one. Closed on revision 3 after explicit nudge in review 2. Not a formal failure (WP001 retest is 2026-05-15, this was in-challenge brief execution), but the pattern recurred. Same flavour as Bash L0 First Footprints Task 2/4 — right tool selected, partial brief executed until nudged. Implication for 2026-05-15 retest design: include a multi-sub-task brief that tests whether all parts are executed without prompting.",
+      "evidence": [
+        "Diagnostic task 3 (Python string split) — partial assembly",
+        "Bash L0 First Footprints Task 2 round 1 — skipped listing entirely",
+        "Bash L0 First Footprints Task 4 round 1 — used -n 5 instead of -n 10"
+      ],
+      "stage": 2,
+      "retest_due": "2026-07-31",
+      "evidence_2026-07-23": "POSITIVE SIGNAL toward this retest. loginwatch Increment 5 (flag_suspicious) — user wrote `value >= threshold` (boundary-correct) on the FIRST try, unprompted. This is the exact remaining WP001 gap the SPEC.md retest (2026-07-17) flagged: the '>5' vs required '>=' parameter/boundary slip. Here the correct comparison operator held with no nudge, on a security-relevant detection threshold (an IP with exactly `threshold` fails must be flagged; boundary-tested at threshold=6). Also self-served a lambda sort key. Single in-challenge instance, not a formal retest — but it directly evidences the parameter-precision facet closing. Weigh at the 2026-07-31 retest.",
+      "failures": 0,
+      "retest_history": [
+        {
+          "date": "2026-07-17",
+          "outcome": "held-stage-2 (pass-with-revision; NOT clean-unprompted, so no advance to mastery; NOT a failure, so no reset)",
+          "challenge": "loginwatch Increment 0 — SPEC.md enumerated-brief retest (7 required sections, in order, each ## headed). First WP001 retest since the 2026-07-16 Concepts-archive pivot; embedded in project work by design.",
+          "notes": "Enumeration core HELD unprompted — all 7 sections present, correct order, first submission. That is the discipline WP001 most directly tracks and it fired on its own. BUT two specified requirements slipped INSIDE the graded brief and needed the review to surface: (1) threshold written '>5' where brief specified 'at or above' (>=) — parameter/semantic substitution, the WP001 fingerprint, and a security-relevant off-by-one (IP with exactly 5 fails escapes flagging); (2) ## headings dropped wholesale (explicit enumerated constraint). Both closed cleanly on a single revision with no further nudges, plus input-mechanism sharpened. Because the misses needed prompting, this is not the clean-unprompted pass mastery requires; because the enumeration held and the misses were precision-within-section, it is not a stage-0 reset either. Call: HOLD stage 2, failures unchanged (0), next retest 2026-07-31. User offered strict-bar alternative (count as failure) at session end but session ended before they chose; default applied. Note for next retest design: keep the enumerated-brief format; watch specifically whether specified PARAMETER VALUES and FORMAT CONSTRAINTS (not just section presence) hold unprompted — that is the remaining gap."
+        },
+        {
+          "date": "2026-05-08",
+          "outcome": "passed",
+          "challenge": "Brief Precision (3 sub-tasks: head -5 syslog, tail -3 auth.log, grep -c 'sudo' auth.log)",
+          "notes": "All three sub-tasks correct first try. Used grep -c rather than piping to wc -l (single-tool idiomatic). Quoted 'sudo' defensively. Each sub-task its own command, no chaining. Tier 1 reframe used on task 3 (two valid shapes pointed out without naming the flag); user self-served from there."
+        },
+        {
+          "date": "2026-05-15",
+          "outcome": "passed",
+          "challenge": "Multi-Sub-Task Brief Precision (4 sub-tasks A/B/C/D on auth-snippet log: count Accepted, last 3 Failed, unique Failed-IPs sorted, count of unique Failed-IPs)",
+          "notes": "All 4 sub-tasks delivered clean on first submission, zero nudges. Task B trap explicitly avoided — user wrote `grep 'Failed' | tail -3` rather than `tail -3 auth-snippet.log` (which would have contaminated with the Accepted line at position 29). Output-type discipline held: numbers where 'a single number' specified, IPs without counts where 'just IPs' specified. Brief-design discipline (count concrete deliverables explicitly, per dashboard process note 10) validated by clean result. Stage 1 → 2. Two soft WP001 misses ELSEWHERE in same session (head -1 vs head -5 on WP002 retest; counted IPs vs usernames on WP004 retest) — both on implicit-enumeration briefs. Reading: when briefs explicitly enumerate concrete deliverables, WP001 holds; when implicit, substitution still surfaces. One more clean retest at stage 2 → mastered."
+        }
+      ],
+      "evidence_2026-05-15": "Two soft WP001 hits same session as the WP001 retest passed cleanly. (1) WP002 retest first submission: brief said top 5, user wrote head -1 (number substitution). (2) WP004 retest first submission: brief said count distinct invalid USERNAMES, user counted distinct source IPs (parameter substitution; variable name 'failed_ips' revealed the gap). Both on briefs where the concrete deliverable was implicit. Dedicated WP001 retest brief was explicitly enumerated and passed 4/4 clean. The contrast itself is the signal: enumeration discipline closes the gap.",
+      "status": "retired-by-user-decision",
+      "retired_date": "2026-07-29",
+      "retired_reason": "User instruction 2026-07-29, session 23: stop surfacing WP001 as a graded per-task item. His words: 'i think you are stuck on this WP001 move past it, you are examining it every single task. You are critiquing how much of the task i complete, the most important part is the code, the theory and context and reasoning comes with it. it is becoming annoying now seeing it every task, you are wasting tokens on it for unecessary reasoning, it is a weak point that will not just dissapear. ignore it and move on.' NOT mastered, NOT failed — retired. No further retests, no per-submission verdicts, no 'this is the WP001 fingerprint' commentary. If imprecision actually breaks code, flag it as a normal code issue on its own merits. Durable feedback memory saved: feedback_weak_point_ceremony. Applies to future weak points too: log it, watch quietly, do not narrate it every session.",
+      "final_state_at_retirement": "Stage 2, 0 failures. Last graded observation (Inc 8 brief, 2026-07-29): all six specified parameter values / format constraints held unprompted on first submission — including the CSV header `source_ip,failed_count` written correctly while the sibling create_report using 'SOURCE IP'/'FAILED' sat three lines above it. That was the exact facet the 2026-07-17 retest named as the remaining gap, and it closed. Sub-task completeness (pasting both outputs) slipped. Pattern noted across the two retests: the facet last called out closes, the other drifts — attention allocation, not a knowledge gap."
+    }
+  ]
 }
