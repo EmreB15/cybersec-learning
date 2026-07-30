@@ -1,25 +1,34 @@
 # Cybersecurity Training Dashboard
-*Last updated: 2026-07-29 — Session 23. **`loginwatch` 8/15 → 9/15** (Increment 8, `--format csv`). **WP001 retired at the user's instruction — the active weak-point board is now empty.** Increment 9 (`argparse`) next.*
+*Last updated: 2026-07-30 — Session 24. **Bandit 6→11** (five levels, one past target) **+ `loginwatch` 9/15 → 10/15** (Increment 9, `argparse` — the ⚠wall cleared). `loginwatch` is now a **real CLI tool**. Increment 10 (exit codes) next.*
 
 ---
 
 ## Pickup Here
 
-**RESUME AT — loginwatch Increment 9: "`cli.py` with `argparse`"** — flagged ⚠**wall**.
-- **Groundwork already laid:** `__main__` holds an `output_format` variable driving an `if/elif/else` dispatcher. `argparse`'s job is to supply that value from a real `--format` flag instead of a hardcoded literal.
-- The **log path** (`data/auth-sample.log`) and the **threshold** (`5`) are also hardcoded — the other two obvious flags.
-- **Keep the `else` branch.** It's what stops an unrecognised `--format` from silently printing nothing.
-- Files in `/home/emrebektas/sectools`: `loginwatch.py`, `parser.py`, `report.py` (`create_report` table + `create_csv_report`).
+**RESUME AT — loginwatch Increment 10: "Nonzero exit on findings"** (`sys.exit` / exit codes).
+- **Unusually good groundwork:** he *met* exit code **2** this session from the receiving end — argparse rejecting `--format xml`, `--threshold abc`, and a missing path. He also chose `choices=` over his own `else` **because** argparse errors go to **stderr with a nonzero exit** while his `else` printed to **stdout with exit 0**. He already has the model; Increment 10 is him *emitting* a code instead of receiving one.
+- **The hook:** a detector that always exits `0` can't be branched on by `run-daily.sh` at Increment 11 (`if ./loginwatch.py …; then`). That's what `$?` is for.
+- **Design question to put to him:** is *"brute-force sources found"* an **error**, or a normal successful run that happened to find something? Show `grep`'s precedent — `0` = match, `1` = no match, `2` = error.
+- Files in `/home/emrebektas/sectools`: `loginwatch.py` (three `add_argument` calls + `args` wiring), `parser.py`, `report.py`. **Inc 9 uncommitted at write time.**
 
-**Done this session (23):** Increment 8 in the planned hour. Bandit briefed but not started.
-- **`create_csv_report`** via `csv.writer(sys.stdout)`. First submission clean on all six specified constraints — including writing the header `source_ip,failed_count` correctly while `create_report`'s `'SOURCE IP'`/`'FAILED'` sat three lines above it.
-- **Design reasoning arrived before the code:** asked whether `csv` needed a file, then justified stdout himself with Bash `>` and `|` — Bash shaping a Python API decision, the harder direction of transfer.
-- **🟡 fixed — silent empty output.** The dispatcher had no `else`, so an unrecognised format printed *nothing* and exited successfully. For a detection tool that reads as *"scanned the log, found no brute-force sources."* A misconfiguration rendering as a clean bill of health. Also took the `"string"` → `"table"` rename unprompted (survives into the `--format` flag).
-- **CRLF taught from zero.** `csv.writer` defaults to the `excel` dialect — `\r\n` on *every* platform, per RFC 4180. Invisible on screen, visible as `^M$` under `cat -A`. Fixed with `lineterminator="\n"`, verified. Framed as a **decision**: spreadsheet consumer → CRLF; Unix pipe → LF. *The consumer decides, not the OS you're sitting at.*
+**Done this session (24):** the pairing he asked for by name — *"overthewire work into sectools work."* ~2h10.
 
-**Tutor defects owned (user-flagged, both conceded):** (1) the CRLF quirk was withheld as *"a defect you cannot see"* — gotcha framing applied to pure lookup knowledge. Withholding is fair only for reasoning available from what's on screen. (2) The control-comparison method was explained *before* teaching what `^M` is, leaving nothing to conclude. Verdict was blunt — *"all your explainations here have been poor"* — and the re-taught versions landed. **Explanation quality is the thing to watch next session.**
+**Bandit 6 → 11 (~70 min, solo, zero hints).** Two acquisitions he named himself:
+- **`2>/dev/null`** — not a command but the realisation that a program has **two output streams that route independently**, and that a destination can be **nowhere**. He'd had `2>` and `2>&1` since Evidence Trail in May; the missing piece was `/dev/null` as a target.
+- **`base64 -d` carried over from picoCTF** — he recognised the *shape* (alphanumeric text with `=` padding = encoding, not encryption), not the level. Unprompted transfer.
+- Tutor posed the danger (empty output conflates *"found nothing"* with *"was blocked from looking"*); **he reached the collision himself**, then it was sharpened into false-negatives + the nastier case: `2>/dev/null` silences **your own typos**, so a broken command looks like a clean negative.
 
-**⭐ Head-of-Year Review (Fable):** due **2026-08-06** — speaks **first** at bootstrap.
+**Increment 9 — `argparse`, the ⚠wall — cleared without reaching a formal hint tier.** Every question he asked was a **syntax/API gap, never a reasoning gap**: does `add_argument` return the value (declare vs collect) · how does argparse tell positional from optional (the **dashes**; there is no `positional=True`) · does `required` mean "use the default" (`required` and `default` are opposite corners) · do I assign `parse_args()` (validation is the side effect, the return value is the payload).
+- **Design calls, all his:** `path` positional — correct, and it matches his own `SPEC.md` line 13; `--threshold` / `--format` optional with defaults so the bare invocation still works; **`choices=` adopted over the `else`, justified by *channel*.**
+- **One crash mid-build:** `required=True` on a positional → `TypeError`. Taught as a concept (positionals are required *by definition*; argparse refuses the contradiction rather than ignoring it), not patched as a one-word fix.
+- **Verified by tutor:** behaviour preserved · `--format csv` · `--threshold 7` cuts to one row · `--help` generated with `{csv,table}` self-documenting · `--format xml` → exit 2 with **nothing** on stdout under `2>/dev/null` · `--threshold abc` rejected **before the log is opened**.
+- **⚠ Accepted risk:** the `else` was removed as unreachable. A future `choices` entry added without a matching branch reintroduces silent-nothing. Named, accepted, his call.
+
+**His headline, unprompted:** writing his first `--help` page retroactively made *every other tool's* `--help` legible — *"it makes soo much more sense now wow."* The consumer→author crossing, which is exactly what the pairing was built to produce. **His idea, not the tutor's.**
+
+**Explanation quality** (last session's flagged concern) **held.** All support was lookup/API knowledge delivered plainly and up front; only the `2>/dev/null` danger was posed as a question — because that one *was* derivable from what he had on screen. **Keep that split.**
+
+**⭐ Head-of-Year Review (Fable):** due **2026-08-06** — speaks **first** at bootstrap. Next session or the one after.
 
 ---
 
@@ -45,8 +54,8 @@ The per-task ceremony had grown larger than the code review it was attached to. 
 
 **The baseline.** First portfolio project *and* the reference template for how every future project is built, tested, and showcased. A CLI auth-log brute-force detector: aggregate failed logins by source IP, flag brute-force sources over a threshold, and surface **dual-role IPs** (Failed *and* Accepted = credential-compromise — the "thinks like a defender" feature).
 
-- **Interface:** CLI only. **Status: 9/15 increments — detection spine complete, both output formats complete.**
-- **Repo:** `/home/emrebektas/sectools` — 4 commits through `8be978d`, **Inc 8 uncommitted**. **GitHub not yet created.**
+- **Interface:** CLI only. **Status: 10/15 increments — detection spine complete, both output formats complete, real CLI complete.**
+- **Repo:** `/home/emrebektas/sectools` — 5 commits through `1def5b4`, **Inc 9 uncommitted**. **GitHub not yet created.**
 
 | # | Increment | New concept | |
 |---|-----------|-------------|---|
@@ -59,8 +68,8 @@ The per-task ceremony had grown larger than the code review it was attached to. 
 | 6 | Dual-role IP detection | set operations / cross-referencing ⭐ | ✅ |
 | 7 | `report.py` text table | f-string alignment | ✅ |
 | 8 | `--format csv` | **the `csv` module** + file-like objects + dialect defaults | ✅ |
-| 9 | `cli.py` argparse | **argparse** ⚠wall | 🔜 next |
-| 10 | Nonzero exit on findings | `sys.exit()` / exit codes | ⬜ |
+| 9 | `argparse` CLI | **argparse** ⚠wall · positional vs optional · boundary validation | ✅ |
+| 10 | Nonzero exit on findings | `sys.exit()` / exit codes | 🔜 next |
 | 11 | `run-daily.sh` | Bash vars + `$?` + `if` (+ **awk** revisit) ⚠wall | ⬜ |
 | 12 | `install.sh` | Bash functions + heredoc + `set -euo pipefail` | ⬜ |
 | 13 | pytest + fixtures | automated testing | ⬜ |
@@ -87,8 +96,8 @@ The per-task ceremony had grown larger than the code review it was attached to. 
 
 | Track | Level | Progress | Challenges Done | Status |
 |-------|-------|----------|-----------------|--------|
-| Python | **L2 (in progress)** | loginwatch 9/15 | 4 (L1) | L1 complete; **L2 underway via loginwatch.** Primary focus. |
-| Bash | **L2 (pending)** | — | 4 (L1) | L1 complete. **Longest-neglected track — last formal touch 2026-05-10.** L2 arrives at Increments 11–12; Bandit/CTF carrying Linux load meanwhile. |
+| Python | **L2 (in progress)** | loginwatch 10/15 | 4 (L1) | L1 complete; **L2 underway via loginwatch.** Primary focus. `argparse` + piping-ready output = **L2's "tool building" criteria substantially met.** |
+| Bash | **L2 (pending)** | — | 4 (L1) | L1 complete. Last *formal* touch 2026-05-10, but **Bandit is carrying real Linux load** (11 levels; stream routing landed today). L2 proper arrives at Increments 11–12. |
 | Concepts | **ARCHIVED** | ████ 3/3 | 3 | Archived 2026-07-16 — retained for history, reinstatable. |
 | Scenarios | — | Locked | 0 | Unlocks when Python L2 + Bash L2 both complete. |
 
@@ -114,10 +123,12 @@ The per-task ceremony had grown larger than the code review it was attached to. 
 
 Self-directed **Linux CLI fluency** practice in parallel with the project. Free, legal, no VM.
 
-- **Status:** bandit0 → 6 cleared (2026-07-24). Session 23 target **bandit6 → 10** was briefed but not started (user had to leave) — re-offer it. Banked so far: `file`/`file -i`/`strings`/`xxd`, human-readable classification, glob-over-many-files, the `./` dash-prefix trick.
-- **Paid off this session:** `cat -A` and `xxd` turned on his *own Python output* to expose a CRLF bug — first time the Bandit toolkit was used as a debugging instrument rather than a puzzle-solver.
-- **Cold-redo retest:** wipe notes, redo bandit0→6 cold **after 2–4 weeks**.
-- **How:** log stumpers in [external/bandit-notes.md](external/bandit-notes.md) — *still empty; nothing logged from the bandit0→6 run.* No passwords. https://overthewire.org/wargames/bandit/
+- **Status: bandit11.** bandit0→6 cleared 2026-07-24; **bandit6→11 cleared 2026-07-30 — five levels, one past the briefed 6→10 target, solo, zero hints.** Sitting at bandit11 (ROT13), not started.
+- **Banked:** `file`/`file -i`/`strings`/`xxd`, human-readable classification, glob-over-many-files, the `./` dash-prefix trick, **multi-predicate `find`**, **`2>/dev/null`**, **`base64 -d`**, **`xargs`**.
+- **Paid off:** *(s23)* `cat -A`/`xxd` turned on his own Python output to expose a CRLF bug. *(s24)* **stream routing became a design principle** — `2>/dev/null` from the user's side, then `choices=` on stderr from the author's side, in the same session.
+- **Cold-redo retest:** wipe notes, redo bandit0→6 cold **after 2–4 weeks** (i.e. from ~2026-08-07).
+- **✅ Notes log is no longer empty.** He wrote the first entries in [external/bandit-notes.md](external/bandit-notes.md) himself at the wrap — unprompted, without being re-asked. **`2>/dev/null`** and **`xargs`** *(the latter never came up in conversation — it surfaced only in the file)*. The cold-redo retest now has something to check against. No passwords. https://overthewire.org/wargames/bandit/
+- **OPSEC verified 2026-07-30:** `overthewire/notes.txt` holds level passwords, is covered by [.gitignore:11](.gitignore#L11), and `git log` confirms it has **never** been committed. Clean. *(Note: `external/bandit-notes.md` IS public — lessons only, no credentials.)*
 
 ---
 
@@ -138,6 +149,9 @@ Self-directed **Linux CLI fluency** practice in parallel with the project. Free,
 - **awk action-block syntax** — not yet durable. Folds into Increment 11.
 - **Byte-level output verification** (`cat -A` / `xxd` on anything another program will read) — taught fresh at Inc 8. Natural next occasion is Increment 11's CSV post-processing.
 - **CSV / formula injection** — `csv` escapes delimiters and quotes; it does *nothing* about a field starting `=`, `+`, `-`, `@` executing in a spreadsheet. Becomes live the moment a username or raw log message reaches a column. ⚠️ Verify at `owasp.org/www-community/attacks/CSV_Injection`.
+- **`choices` / dispatcher drift** — the permitted-values list and the `if/elif` that acts on them are two places holding one fact. A structural fix (one source of truth) was named and **deliberately deferred** as a second concept. Revisit if a third format appears.
+- **Dead computation** — `find_accepted_and_failed` runs every invocation and its result is discarded; **dual-role IPs are the spec's headline feature and never reach the report.** Pre-existing, not from Inc 9. Needs a home before the README is written.
+- **`import parser`** — shadows a stdlib module name that was *removed* in Python 3.10, so it works here. On an older interpreter it would silently import the wrong thing. Rename before publishing.
 
 ---
 
@@ -150,6 +164,7 @@ Self-directed **Linux CLI fluency** practice in parallel with the project. Free,
 - [x] Portfolio has 10+ archived write-ups *(2026-05-18 — 11 total)*
 - [x] First L2 challenge started *(2026-07-18)* · **First multi-file Python program** *(2026-07-23)*
 - [x] **First machine-readable tool output** *(2026-07-29 — `loginwatch` speaks CSV)*
+- [x] **First real CLI — a tool someone else could run without editing the source** *(2026-07-30)*
 - [ ] Lab environment fully set up — vulnerable target VM installed
 - [ ] Scenarios unlocked — Python L2 + Bash L2 both complete
 - [ ] All active tracks reach Level 3
@@ -167,8 +182,8 @@ Self-directed **Linux CLI fluency** practice in parallel with the project. Free,
 
 ## Up Next
 
-**Next session:** **Increment 9 — `cli.py` with `argparse`** (⚠wall; the dispatcher is already shaped for it). Short/low-energy instead? Continue **Bandit** or ship `sectools` public.
-**Python (L2):** continues through loginwatch.
+**Next session:** **Increment 10 — nonzero exit on findings** (`sys.exit`; he's already met exit 2 from the receiving end). Optional 10-min warm-up: **Part B of Inc 9** — extract the interface into `cli.py`, leaving `loginwatch.py` as pure detection logic. Short/low-energy instead? **Bandit 11+** (ROT13 next) or ship `sectools` public.
+**Python (L2):** continues through loginwatch. Tool-building criteria substantially met.
 **Bash (L2):** scripting basics arrive at Increments 11–12; awk revisit baked in.
 **Scenarios:** locked until Python L2 + Bash L2 both complete.
 
@@ -176,9 +191,11 @@ Self-directed **Linux CLI fluency** practice in parallel with the project. Free,
 
 ## Cross-Track Connections
 
-**11 logged.** Two added 2026-07-29:
-- ***stdout as the composability seam*** — Bash `>` and `|` supplied the justification for a Python API decision (print, not return). Transfer in the harder direction: Bash shaping Python design, not Python reimplementing a Bash command.
-- ***byte-level inspection*** — Bandit's `cat -A`/`xxd` pointed at his own Python program's output to expose `csv.writer`'s `\r\n` default.
+**13 logged.** Two added 2026-07-30 — both from the deliberate Bandit→sectools pairing:
+- ***the CLI contract, from both sides in one session*** — 70 minutes obeying other people's contracts (`ssh -p 2220`, `find / -user X -size 33c`, `base64 -d`), then writing his own. He reasoned out positional-vs-optional **before** knowing the syntax. Result: *"it makes soo much more sense now."*
+- ***stderr, from redirecting it to emitting on it*** — `2>/dev/null` in Bandit, then `choices=` chosen over his own `else` **because** argparse errors land on stderr with exit 2 rather than stdout with exit 0. Bash stream discipline driving a Python API decision.
+
+*Previously (2026-07-29): stdout as the composability seam · byte-level inspection.*
 
 ---
 
@@ -186,9 +203,9 @@ Self-directed **Linux CLI fluency** practice in parallel with the project. Free,
 
 - Write-ups generated / archived: **11 / 11**
 - Total challenges completed: **11** · attempted-unfinished: 2
-- `loginwatch` increments: **9 / 15**
-- Bandit levels cleared: **6** (bandit0→6, session-23 target 6→10)
-- Total sessions: **23** · Total hours: **~20.5**
+- `loginwatch` increments: **10 / 15**
+- Bandit levels cleared: **11** (bandit0→11)
+- Total sessions: **24** · Total hours: **~22.5**
 - Weak points mastered: **2** (WP002, WP004) · retired: 1 (WP001)
 - Active tracks: **Python, Bash**
 
@@ -196,7 +213,7 @@ Self-directed **Linux CLI fluency** practice in parallel with the project. Free,
 
 ## Weekly Rhythm
 
-**~4 hours over 3 sessions** in the 7 days to 2026-07-29 — just under the 5–10h band, not drifting. Adding today: ~5h over 4 sessions.
+**~6 hours over 4 sessions** in the 7 days to 2026-07-30 — **inside the 5–10h band.** Four sessions in eight days is the near-daily rhythm he said he wanted.
 
 ---
 

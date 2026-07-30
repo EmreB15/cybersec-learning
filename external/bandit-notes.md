@@ -11,3 +11,7 @@ Rule: struggle first, read the level's hint page, try commands. Only look at a w
 ---
 
 <!-- entries below -->
+
+when you run a command if you get a lot of output and the majority is errors or permission denied. use 2>/dev/null to throw the errors into a black hole and get the answer from the minority of the output.
+
+xargs is used before a command but it is used after a pipe. If you want a command to read the path names but not the literal path names. So read the strings as a file target (the input) of the command being piped into.
