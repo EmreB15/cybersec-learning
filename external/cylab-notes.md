@@ -241,3 +241,134 @@ python3 check_password.py   # → flag
 **Cold-redo (~2026-08-22):** fresh instance — do I recognise "custom wordlist from personal info" → reach for cupp → feed the OSINT → point the checker at its output, solo?
 
 **MY BIGGEST TAKEAWAY (across the whole session, not just this challenge):** sometimes the answer is a lot easier than you think — spend time **searching and reading first**, before jumping into building something. Reading the provided `check_password.py` up front would have shown me the checker was already written and that cupp was the intended tool — I'd have skipped the build-my-own-generator detour entirely. This is the same reflex as `nmap -sV`, `file`, and `sudo -l` from today: **enumerate/read before you act.** In pentest terms this is the *enumeration* phase — "enumeration is 90% of the work." Step zero of any challenge: read everything you were given.
+
+---
+**COLD-REDO LOG — Sudo Make Me a Sandwich (2026-09-30):** first redo, after the ~2mo illness gap. Concept recall CORRECT when restated (sudo -l = enumerate allowed commands; emacs allowed → read the flag as root). BUT solved by asking an external LLM (Gemini) rather than self-powered — an answer-lookup, which skips the recall rep the redo exists to train. Verdict: *understanding intact, unprompted recall not yet demonstrated.* Not re-scheduled as failed — this was an ungraded re-warm. Re-test the SELF-POWERED recall on a future redo; teaching point delivered (use tutor Tier-1 nudge, not an answer source).
+
+---
+2026/09/30  Time Machine [General Skills] — recover a flag from git history: `ls -la` reveals hidden `.git` → `git log` shows the flag in an old commit message — SOLO, no external help (redo priority: LOW-MED, cold-redo ~2026-10-21)
+
+**Workflow learned (reusable for any download-zip challenge):** get → own folder (out of the public repo) → `unzip` → **enumerate before acting** (`ls -la` for hidden files, `file *` for real types, then read). The `.git` dir only showed under `ls -la` because `-a` reveals dotfiles.
+**Defender's note:** git history is permanent — deleting a secret in a later commit does NOT remove it; `git log`/`git show`/`git reflog` recover it. Committed secrets = leaked secrets. This is the exact attack my own repo's **gitleaks pre-commit hook** defends against (blocks secrets from entering history in the first place). Stood on both sides of the same mechanism.
+**First fresh solo solve after the ~2mo gap — re-warm worked.**
+
+---
+2026/09/30  Super SSH [General Skills] — connect over SSH to a NON-default port with `ssh user@host -p <port>` — SOLO (redo priority: LOW, cold-redo ~2026-10-21)
+**Skill:** services aren't always on their default port (SSH default = 22); `-p` points ssh at wherever it actually listens.
+**Defender's note:** moving SSH off 22 is *obscurity, not security* — cuts automated-scanner noise but `nmap -sV` finds it instantly. Pairs with Printer Shares: `nmap -sV` (find the service/port) → `ssh -p` (connect to it). Recon → access, same enumerate-first spine.
+
+---
+2026/09/30  Endianness [General Skills] — big-endian vs little-endian byte order of a word; got each char's hex byte with `echo -n <word> | xxd` then reversed the bytes for little-endian — SOLO (applied, not just read) (redo priority: MED — self-flagged "won't remember", cold-redo ~2026-10-21, NOTES CLOSED)
+**Concept:** endianness = the order the BYTES of a value sit in. Big-endian = most-significant byte first (natural reading order). Little-endian = reverse byte order. Whole bytes flip as units, not digits/bits.
+**WHY it matters (the hook):** little-endian = how x86/x64 store memory addresses → you write exploit addresses "backwards" (BINARY EXPLOITATION). Big-endian = "network byte order" → how multi-byte fields sit in packets (PACKET ANALYSIS / scapy L3). Not trivia; both are ahead on the path.
+**Gotcha:** `echo` adds a trailing newline byte 0x0a — use `echo -n` (or Python `.encode()` on the literal) or it pollutes the answer.
+**RETENTION FLAG (his own, reliable):** said "i doubt i will remember this." Application done (used the tool himself, not read). Cement = the scheduled cold-redo (~2026-10-21, notes closed) — the second pull is the rep that counts. Don't let it slip like the awk one did.
+
+---
+2026/09/30  Blame Game [General Skills] — `git blame <file>` to find WHO authored the line breaking the program — needed a Tier 2 nudge to reach `git blame` (redo priority: MED, cold-redo ~2026-10-21)
+**Recognised it was git again (transfer from Time Machine, same session) — got to `git log` solo, then stalled on "long log, what am I looking for"; Tier 1 (reduce the log, transfer from Log Hunt) didn't land, Tier 2 named `git log --oneline` + `git blame` → solved.**
+**What git blame does:** annotates every line of a file with the LAST commit that changed it — hash, AUTHOR, date, line. `git log` = timeline (what happened, commit by commit); `git blame` = fingerprint (who's behind each line now). Two views of the same history.
+**Real use:** debugging (who wrote this broken line, in which commit → read it for the why) + security forensics (attributing a vuln/backdoor change to an author+commit).
+**⚠️ Caveat banked:** git authorship is self-declared (`git config user.name` = anything) → blame shows the CLAIMED author, not verified identity. A lead, not proof. Real fix = signed commits (GPG/SSH).
+
+---
+
+2026/10/03  Binary Digits [Forensics — Easy, picoCTF 2026] — a file of ASCII `1`/`0` digits decoded to a JPEG; flag was rendered INSIDE the image — needed Tier 1 + Tier 2 (redo priority: MED-HIGH, cold-redo ~2026-10-24, NOTES CLOSED)
+
+**FIRST FORENSICS CHALLENGE EVER.** New category.
+
+**The chain:**
+```
+.bin file  ->  `file` says ASCII text, NOT binary        # the extension lied
+           ->  `wc`: ONE line, 71424 chars, charset {0,1}
+           ->  71424 / 8 = 8928, no remainder             # 8 bits per byte
+           ->  CyberChef: From Binary  ->  magic bytes FF D8 FF E0 + "JFIF"
+           ->  Render Image            ->  flag visible in the picture
+```
+
+**What I got right solo:** trusted `file` over the `.bin` extension (first real observation — the tool reads the bytes, the extension is just a label someone typed); recalled 8 bits/byte from the **Endianness** notes three days earlier and applied it to a new context.
+
+**The deduction I made without noticing:** the division coming out CLEAN at 71424 proves there is no trailing newline. If the file ended in `0x0a`, the real digit count would be 71423, which does NOT divide by 8. **The maths verified the file structure** — I didn't have to trust the file, I checked it against itself. (Same trailing-newline trap as `echo` vs `echo -n` in Endianness — second meeting, different doorway.)
+
+**WHERE I ACTUALLY GOT STUCK (the redo target):** my own theories were *"server credentials"* or *"something I need to decrypt"* — **both assumed the data needed further ACTION to mean anything.** I never considered the plainest option: **it's just a file.** An ordinary one. Tier 2 had to name it, and CyberChef's `Magic` did the identification, not me. This is the same reflex as my own Password Profiler takeaway — *"sometimes the answer is a lot easier than you think."* Reaching for complexity before checking the simple reading.
+**Rule to bank: an unknown blob is probably just a FILE. Identify it before theorising about it.**
+
+**MAGIC NUMBERS / FILE SIGNATURES (the core concept):** nearly every file format begins with a fixed byte sequence declaring what it is. Saw it live: `ÿØÿà` = `FF D8 FF E0` (JPEG start-of-image marker), followed by the literal ASCII string `JFIF`. **This is how `file` actually works** — it reads opening bytes, never the extension. Seeing the mechanism beats seeing the output.
+
+**ENTROPY — free triage tool, from the Magic report:** raw `1`/`0` text scored **0.90** (only two symbols, barely any information per character); the decoded JPEG scored **5.26** (dense, varied bytes). Entropy measures randomness/density, max 8. **Low = plain text or simple encoding. High (approaching 8) = compressed or encrypted.** A file that *claims* to be a config but scores 7.9 is lying to you.
+
+**ENCODING != ENCRYPTION.** That JPEG was never protected — just *written down differently*. No key, nothing to crack. Anyone who recognises the representation gets the whole thing back.
+
+**Reading a CyberChef `Magic` report:** four fields matter — `recipe` (chain tried), `data` (first ~100 bytes out), `fileType` (what it identified), `matchingOps` (suggested next ops). **Ignore `languageScores`** when every `probability` is `0` — that just means "not human text." And **Magic is a scout, not a cook**: the output table's left column is headed *"Recipe (click to load)"* — those are buttons. It reports candidates; you choose and load one.
+
+**CyberChef input mechanics:** never copy-paste a large file through the clipboard (truncation + silent whitespace mangling). **Drag the file onto the Input pane**, or use the open-file icons top-right of it. Then check the character count under the pane matches what `wc -c` said — verify the load BEFORE interpreting the output.
+
+**Defender's note:** binary content encoded as plain text is a standard **exfiltration / evasion** trick. A signature-based filter scanning for known file headers sees a wall of `1`s and `0`s and passes it — the magic bytes aren't present to match until something decodes it. Same principle as base64-encoded payloads defeating naive content inspection. **Detection that only matches file signatures is beaten by any encoding layer.**
+
+**Cold-redo (~2026-10-24, notes closed):** given an unidentified blob — do I go "decode it and run `file` on the RESULT" immediately, solo, instead of inventing a theory about credentials or ciphertext first?
+
+---
+
+2026/10/03  Riddle Registry [Forensics — Easy, picoMini by CMU-Africa] — flag hidden in PDF **metadata**: `pdfinfo` -> anomalous `Author` field -> base64 -> decode — SOLO, no tutor hints (redo priority: MED, cold-redo ~2026-10-24)
+
+**The chain:** `pdfinfo <file>` -> the `Author` field held a long opaque character string instead of a name -> recognised it as out of place -> CyberChef -> `Magic` said base64 -> decode -> flag. The PDF's visible body text was deliberate garbled nonsense — a decoy. **Don't read the document; read *about* the document.**
+
+**`stat` FAILED FIRST — and the reason IS the concept.** I tried `stat` and it didn't give me what I needed. **There are two different layers both called "metadata":**
+
+| Tool | Layer | What it shows |
+|---|---|---|
+| `stat` | **Filesystem** — what the OS records *about* the file | size, inode, permissions, owner, access/modify/change timestamps |
+| `pdfinfo` / `exiftool` | **Embedded** — what the file records about *itself*, inside its own format | Title, **Author**, Creator, Producer, CreationDate, page count |
+
+`stat` can't see inside a PDF's structure — to the filesystem it's just a bag of bytes with a size and a timestamp. **Dead end for a good reason, and worth remembering: "metadata" is ambiguous — ask which layer.**
+
+**THE REAL WIN (and it was mine):** nobody told me which field to look at. I spotted that `Author` — a field that should hold a *name* — contained an opaque blob, and flagged it as anomalous. **Recognising "this doesn't belong here" is the core of detection work.** It's the same judgment `loginwatch` automates over auth logs. Knowing *what to look for* is the skill; the command is an implementation detail.
+
+**Method note — honest:** I found `pdfinfo` by asking another AI to list Linux commands that show file metadata. That is a **TOOL lookup, which the operating rules permit** — the forbidden thing is an *answer/walkthrough* lookup. Line stays correct: *"what command shows metadata?"* = fine; *"how do I solve Riddle Registry?"* = not. **Two caveats:** (1) look it up once, then BANK it — re-discovering the same tool every time is the forgetting problem in miniature, which is what this file is for; (2) **verify tools an LLM hands you** — they routinely invent plausible commands and flags. `man <tool>` / `apt search` first. (verify-don't-proxy)
+
+**Coaching point:** I used `Magic` to *tell* me it was base64 rather than calling it myself. My own Magic rule says verify your guess, don't skip the thinking — and base64 is already in my Encoding Recognition cheat sheet above. **Tell: charset `A-Z a-z 0-9 + /`, often `=` padding, length a multiple of 4.** Base64 is the most common encoding in CTF — target is to call it on sight, then let Magic confirm.
+
+**TOOLKIT UPGRADE — `exiftool`:** `pdfinfo` (from `poppler-utils`) is PDF-only. **`exiftool` is the general metadata tool** — images, PDFs, Office docs, audio, video. `exiftool <file>` reads; **`exiftool -all= <file>` strips** (the defender's side). ⚠️ **Verify:** on Ubuntu/Pop it's packaged as `libimage-exiftool-perl`, not `exiftool` — confirm with `apt search exiftool` before installing.
+
+**Defender's note:** metadata leakage is a live problem, not a puzzle. Published PDFs and images quietly ship internal usernames, software versions (→ which exploits apply), file paths, and sometimes GPS coordinates. Attackers harvest it from a target's public documents as free recon; defenders strip it before publication. **Same instinct as the OPSEC scrub pass on my own write-ups before they go public.**
+
+**Cold-redo (~2026-10-24):** "flag is in the metadata" — do I reach straight for `exiftool`/`pdfinfo` (not `stat`), scan for the field whose *content doesn't match its name*, and call the encoding by its character set before pasting it anywhere?
+
+---
+
+2026/10/03  Hidden in plainsight [Forensics — Easy, picoMini by CMU-Africa] — **steganography**: a passphrase hidden in JPG metadata unlocks a payload embedded in the image itself, extracted with `steghide` — needed Tier 1 only (redo priority: MED, cold-redo ~2026-10-24)
+
+**The chain:** enumerate the JPG -> found a **comment field in the metadata** (went there unprompted — straight transfer from Riddle Registry, same session) -> decoded it -> got `steghide:<base64 blob>` -> **got stuck here** -> Tier 1 reframe -> split on the colon: left half = the TOOL to use, right half = base64 -> decoded that -> the passphrase -> `steghide extract -sf <file>` -> payload -> flag.
+
+**WHERE I GOT STUCK — and it was a misreading, not a knowledge gap:** the challenge said *"hidden payload"* but the hint said *"check the metadata"*, and I read those as contradicting each other. **They don't — they're two stages.** The metadata does NOT contain the payload. It contains the **KEY to extracting** the payload. The payload stays in the image the whole time.
+**Rule to bank: layered challenge — the breadcrumb and the treasure live in different places.** When two instructions seem to point different directions, they're probably sequential, not competing. That reframe alone did most of the unblocking.
+
+**The structure I missed:** `steghide:<blob>` is a **colon-separated key:value**. A colon separates a name from a value — split it before you try to interpret it as one thing. Left side was a *tool name*, right side was *input for that tool*, needing one more decode first.
+
+**Base64 recognition — STILL doing this with `Magic` instead of by eye.** Second time today. The tell, from my own cheat sheet: mixed-case letters + digits, often `=` padding, **length a multiple of 4**. The blob was 12 characters ending in `=`. **Target: call it on sight, then let Magic confirm me.** Recognition is the speed; the tool is just the decoder.
+
+**STEGANOGRAPHY vs CRYPTOGRAPHY — the distinction the category is built on:**
+- **Cryptography** hides the **CONTENT** of a message. It's obvious it exists; you just can't read it.
+- **Steganography** hides the **EXISTENCE** of a message. The goal is nobody noticing there's anything to read at all. The image still looks like an ordinary image.
+
+**`steghide` — WHY IT NEEDS FLAGS** (I had the command before I understood it):
+
+| Flag | Role |
+|---|---|
+| `-cf` / `--coverfile` | the innocent-looking carrier file |
+| `-ef` / `--embedfile` | the secret being hidden |
+| `-sf` / `--stegofile` | **the file with something hidden in it** |
+| `-xf` / `--extractfile` | where to write what comes out |
+| `-p` / `--passphrase` | the passphrase |
+
+Embedding juggles **three files at once** (cover + secret + output), so positional arguments would be ambiguous — you'd have to memorise an order. The flags **name which file plays which role**. Extracting needs only one file, but keeps the same vocabulary: **`-sf` = "the file I'm pulling data out of."** Extract prompts for the passphrase (or `-p`).
+
+**CROSS-TRACK LINK — I already made this exact design decision myself.** At **loginwatch Increment 9** I built the argparse CLI and chose what's positional vs what's a named flag. Same rule, both sides of it: **one obvious input can be positional; multiple inputs with different roles need names.** Met it as an author, now met it as a user.
+
+**Correction worth keeping:** I said I "decrypted" the base64. It's **decoded** — no key, no cipher, just a representation change. (My own `encoding != encryption` note from Binary Digits, logged 40 minutes earlier the same session.) Keep the words straight; the difference is real.
+
+**Method note:** I asked an AI to explain `steghide` and it handed me the command — a tool lookup, permitted — **but it gave me the command without the understanding, which is exactly why I then had to ask what the flags were for.** `man steghide` would have given me BOTH, from the authoritative source, in one step. **Habit to build: when a tool confuses me, `man` first — it's faster than the follow-up question.**
+
+**Defender's note:** steganography is an **exfiltration channel**. Data smuggled inside ordinary-looking holiday photos walks past content inspection that's hunting for documents and archives — because nothing about the file announces that it's carrying anything. Detection is therefore **statistical, not signature-based**: entropy and byte-distribution anomalies, file size inconsistent with visual content, structural oddities after the image's end marker. (Ties straight back to the **entropy** triage idea from Binary Digits, two challenges earlier the same session.)
+
+**Cold-redo (~2026-10-24):** an "ordinary" image with something inside — do I enumerate the metadata first, recognise a `tool:value` breadcrumb for what it is, call base64 by its character set WITHOUT Magic, and reach for `man` rather than an AI when the tool's flags confuse me?
