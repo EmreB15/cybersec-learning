@@ -5,10 +5,26 @@
 
 ## Pickup Here
 
-**RESUME AT — he picks one. All three are small.**
+**NEXT SESSION IS CTF — his stated plan.** He closed session 28 after a heavy Python run, took a short break, and went straight to CTF work in a fresh context. **Don't open by steering him to loginwatch** — he chose the variety lane deliberately.
 
-1. **Finish the parser hardening** *(Python, directly continues tonight)* — `outcome` is still read as `words[5]`. On a short line that's an `IndexError`; on a variant line it yields junk like `outcome='ssh2'`, which matches neither `"Failed"` nor `"Accepted"` and so **silently drops the event from both detection functions**. Fix is the anchor pattern he already applied to the IP. Then a **skipped-line counter**, so silent drops become visible — an attacker who can provoke malformed lines is currently invisible and nobody knows.
-2. **Increment 11 — `run-daily.sh`** — the Bash wrapper that *consumes* the exit codes he just built. The payoff, and the reason Increment 10 came first. Carries the planted set-order false-positive lesson and the type-it-yourself `awk '!x[$0]++'` task. He asked for Python, so only steer here if he wants Bash.
+**CTF queue, in priority order:**
+1. **Two overdue cold-redos, HIGH** — **Piece by Piece** and **Printer Shares**. The two he got most stuck on; both fell inside the illness gap and have never been re-pulled.
+2. **Sudo Make Me a Sandwich** — one clean **self-powered** re-test. The 2026-09-30 redo was answer-assisted (Gemini), so recall is still unproven.
+3. **Fresh challenges** — his momentum is in **Forensics** (3 solo solves on 2026-10-03).
+4. Already queued: the 2026-09-30 four ~2026-10-21 · the 2026-10-03 three ~2026-10-24. **Endianness** he self-flagged *"i doubt i will remember this"* — notes-closed, don't let it slip.
+
+**Live target:** call **base64 on sight** by character set (`A-Za-z0-9+/`, often `=` padding, length a multiple of 4) and let CyberChef's `Magic` *confirm* rather than identify. He flagged this habit against himself twice on 2026-10-03.
+
+**Rules back in force:** tool-lookups fine, **answer-lookups not** — tiered nudge from the teacher, not another AI. Describe the challenge in his own words first. ~struggle → stuck-report → nudge. Write-ups = failure trail + defender's note.
+
+---
+
+## When he returns to the project (not this session unless he asks)
+
+**`loginwatch` 12/15, 14 tests green, clean tree, 11 commits through `409c68e`.** Three resume options, all small:
+
+1. **Finish the parser hardening** — `outcome` is still read as `words[5]`. On a short line that's an `IndexError`; on a variant line it yields junk like `outcome='ssh2'`, which matches neither `"Failed"` nor `"Accepted"` and so **silently drops the event from both detection functions**. Fix is the anchor pattern he already applied to the IP. Then a **skipped-line counter**, so silent drops become visible — an attacker who can provoke malformed lines is currently invisible and nobody knows.
+2. **Increment 11 — `run-daily.sh`** — the Bash wrapper that *consumes* the exit codes he just built. The payoff, and the reason Increment 10 came first. Carries the planted set-order false-positive lesson and the type-it-yourself `awk '!x[$0]++'` task.
 3. **Stream-separation asserts** — the tests check `returncode` only. Adding `result.stdout == ""` plus a path-in-stderr check would pin the stdout/stderr split permanently.
 
 > ### 📌 TEACHING RULES ADOPTED THIS SESSION — now mandatory
