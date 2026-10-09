@@ -372,3 +372,56 @@ Embedding juggles **three files at once** (cover + secret + output), so position
 **Defender's note:** steganography is an **exfiltration channel**. Data smuggled inside ordinary-looking holiday photos walks past content inspection that's hunting for documents and archives — because nothing about the file announces that it's carrying anything. Detection is therefore **statistical, not signature-based**: entropy and byte-distribution anomalies, file size inconsistent with visual content, structural oddities after the image's end marker. (Ties straight back to the **entropy** triage idea from Binary Digits, two challenges earlier the same session.)
 
 **Cold-redo (~2026-10-24):** an "ordinary" image with something inside — do I enumerate the metadata first, recognise a `tool:value` breadcrumb for what it is, call base64 by its character set WITHOUT Magic, and reach for `man` rather than an AI when the tool's flags confuse me?
+
+---
+
+2026/10/08  Printer Shares [General Skills] — **COLD REDO #1** (original 2026-07-31, due 2026-08-14, run 55 days late) — **verdict: PARTIAL PASS.** smbclient half now solo; service-identification half still unproven. *(logged by the tutor at Emre's request — not his own words)*
+
+**What flipped from guided to solo.** In July the entire solve was handed over by another AI. This time: given the error `Not enough '\' characters in service`, he reasoned out that **a "service" is host + the specific shared thing on it**, not a hostname — unprompted. And he found the share-enumeration flag **in smbclient's own usage output** after a single Tier 2 nudge ("the tool has a mode that lists shares"). `smbclient -L <host> -p <PORT>` → `shares  Disk  Public Share With Guests`. Then service string → `smb: \>` → `get` → flag.
+**Transferable bit: read the tool's own usage block.** Works on every tool, not just this one.
+
+**WHAT THE REDO DID NOT PROVE — and it's the second miss in a row.** The July entry set its own test: *"the real test is whether `nmap -Pn -sV` is my first move on any unknown port."* It wasn't. The sequence was `nc` → saw an IP → **read the picoCTF webpage hints to learn it was SMB**. The hints performed the identification, which is precisely the job `nmap -sV` exists to do. So:
+- SMB-client mechanics: **proven**.
+- *"Ask the port what it is"* reflex: **still unproven, 0 for 2.**
+- Declined the confirmation `nmap` run (instance already down — reasonable; relaunching to re-see a known answer has little value). **Standing reprompt instead: next challenge with an unknown port/service, `nmap -Pn -sV` is the required first move, held to by the tutor.**
+
+**`nmap` flags — one job each** (he flagged these as not yet memorised):
+| Flag | Job |
+|---|---|
+| `-Pn` | skip host discovery. picoCTF drops pings → without it nmap declares the host down and never scans (the "looks hung" symptom from July) |
+| `-sV` | connect + fingerprint the **s**ervice **V**ersion — unknown port becomes a named service |
+| `-p` | which **p**ort (fresh instance = fresh port) |
+One sentence: ***"don't ping it, do fingerprint it, here's the port."***
+
+**NEW LESSON, and the best thing in the session — THE SHELL REWRITES YOUR ARGUMENT BEFORE THE COMMAND SEES IT.** Typed `\\<host>\shares`; smbclient reported receiving `\<host>shares` — four backslashes in, one out, and the one before `shares` gone, gluing the words together. **Backslash is bash's escape character:** `\\` → one literal backslash, `\s` → plain `s` (backslash consumed). So the error was describing a *different string* than the one typed, which is why it read as nonsense.
+- **Fix, two ways:** forward slashes `//host/share` (bash treats `/` as ordinary; smbclient accepts the form identically), or single-quote it `'\\host\share'` (quotes switch escape processing off).
+- **Rule to bank:** when a command rejects an argument as malformed, **check whether the shell mangled it before the command ran** — the error text usually echoes back what actually arrived. Compare that to what you typed.
+- **Same family as the Bash L1 redirection bug** (`find . && ... > file 2>&1` — terminal output was the evidence the command shape was wrong). *Read what actually happened, not what you intended.* (WP002 family.)
+
+**Other mechanics:** `IPC$` is not a folder — it's Samba's control channel, exposed by every SMB server, never where flags live. `-D` sets a directory *inside* a share once connected; it is **not** how you name the share (he tried `-D shares` — harmless no-op on a `-L` listing). `-N` skips the password prompt for anonymous access rather than pressing Enter at it.
+
+**Defender's note:** `Public Share With Guests` is a real misconfiguration, not a puzzle contrivance. Anonymous-readable SMB shares leak internal documents constantly; `smbclient -L -N <host>` is a standard first move in pentests *and* internal audits. The defensive control is share-level auth + removing guest access, not hoping nobody enumerates.
+
+**COLD REDO #2 (~2026-11-05, priority HIGH — the unproven half only):** on a challenge offering an **unidentified port**, is `nmap -Pn -sV -p <port> <host>` the **first** command run, before any webpage hint, any `nc`, and any guess from the challenge title?
+
+---
+
+2026/10/09  Piece by Piece [General Skills] — **COLD REDO #1** (original 2026-08-02, due 2026-08-22, run 48 days late) — **verdict: FAIL.** Technique not retained; needed a Tier 2 nudge to reach `cat`. *(logged by the tutor at Emre's request — not his own words)*
+
+**Graded against his own August criterion:** *"given a pile of numbered/mystery files, is my first move to `file` them, suspect reassembly, and `cat`-in-order → `unzip` — solo this time?"* → **no on both halves.** First move was `zip`, and `cat` only arrived after a nudge.
+
+**THE WRONG TURN — `zip` instead of `cat`, and why it looped.** Ran `zip part_a*`, which **created a new archive** instead of joining anything: `zip` takes its **first** argument as the *name of the archive to create*, so the glob handed it `part_aa` → made `part_aa.zip` → packed the other four inside. Unzipping that gave the same four pieces back. **Create → unpack → same place.** Burned ~6 commands in the loop.
+- **The tell he had and didn't read:** zip's own output listed `adding: part_ab, part_ac, part_ad, part_ae` — **`part_aa` was absent**, because it had been consumed as the output filename. The evidence that the command had been misunderstood was printed on screen. (WP002 family again — *read the output you were given*, second time in two challenges this session.)
+- **The misread is in the verb.** Instructions said *"combine the parts into one file."* **`zip` compresses files into an archive — the opposite direction of travel.** The archive already existed; it had been chopped up. The job was to glue fragments back byte-for-byte, which is `cat`'s actual purpose (conCATenate; `cat file` to view is just the one-argument case).
+
+**THE RECOGNITION LESSON — the filenames were the answer.** `part_aa part_ab part_ac part_ad part_ae` is **`split`'s default output naming**: `split` appends sequential two-letter suffixes `aa`, `ab`, `ac`… So a set of files differing only by a trailing `aa/ab/ac` **is a fingerprint of `split`, and the inverse of `split` is `cat`.** The flag itself said it: `z1p_and_spl1t_f1l3s`.
+**Rule to bank: identify from the artefact, not from the title.** Same shape as calling base64 by its character set. ⚠️ Verify the suffix detail with `man split` (`-a` changes suffix length, `-d` makes them numeric) — worth 30 seconds so the fingerprint is recognised in its variants too.
+
+**WHAT WAS SOLO AND GOOD:** after the nudge he cleaned the directory back to the five original pieces **before** globbing — removing the junk `part_aa.zip` that would otherwise have matched `part_a*` and corrupted the output. He was warned the trap existed but not walked through it. Then `cat part_a* > zipped.zip` → `unzip` → password prompt → `flag.txt`, first try, no further help.
+
+**`file` REFLEX IS NOW 0 FOR 3.** Skipped in August, skipped today, and skipped a **third** time when the tutor asked for `file part_aa` directly in-session. It has been written down as "the reflex I skipped" twice. **Writing it down is not working.**
+→ **NEXT REDO IS GRADED ON `file` ALONE** — pass/fail on whether `file` is the first command run against an unknown artefact, independent of whether the flag is captured.
+
+**Defender's note (extends the August entry):** splitting is an evasion technique — per-piece AV/DLP scanning sees five harmless fragments, and the payload only exists after reassembly. The detection counterpart is the same fingerprint read above: **sequential `*_aa/_ab/_ac` filenames arriving together are themselves an indicator**, as is a file whose `file` output doesn't match its extension. Scan-on-reassembly, not scan-on-write.
+
+**COLD REDO #2 (~2026-10-23, priority HIGH, shorter interval than standard because this was a fail):** a pile of mystery/sequential files. **Graded on: (1) `file` run first. (2) `cat`, not `zip`, reached solo.**

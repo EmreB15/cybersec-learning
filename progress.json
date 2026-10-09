@@ -2,8 +2,8 @@
  "schema_version": "3.0",
  "user": "Emre",
  "started_date": "2026-04-27",
- "last_session": "2026-10-07",
- "session_count": 28,
+ "last_session": "2026-10-09",
+ "session_count": 29,
  "head_of_year_review": {
   "role": "Program-level trajectory review, distinct from the teacher's per-session work. Metaphor set by user 2026-07-23: teacher = Opus tutor (in-session — hint tiers, code review, weak points); head of year = Fable (steps back across weeks to judge the arc). See CLAUDE.md 2026-07-23 amendment.",
   "conducted_by": "fable-agent",
@@ -610,6 +610,38 @@
    "tier": 2,
    "tier_name": "CONCEPT NUDGE",
    "outcome": "Wrote `\"threshold --50\"` as a single list element with the dashes on the wrong token. Named the rule — one list element per word the shell would split on, and the list is a command line so values stay strings — without writing the line. Corrected first try. No other hints across the whole session's four pieces of work."
+  },
+  {
+   "date": "2026-10-08",
+   "challenge": "picoCTF Printer Shares (cold redo #1)",
+   "task": "smbclient refusing the connection — `Not enough '\\' characters in service`",
+   "tier": 2,
+   "tier_name": "CONCEPT NUDGE",
+   "outcome": "Tier 1 reframe (what does smbclient call that positional argument, and what would want backslashes in it) got him to 'the thing on the machine has a location' — correct, unaided. Tier 2 named the missing STEP, not the flag: 'before connecting you must enumerate what shares exist; smbclient has a mode for it and it is in the usage block you already pasted.' He found `-L` himself. Then burned two attempts on the service string: first `/shares` (share without host), then `\\\\host\\shares` — where BASH ATE THE BACKSLASHES and smbclient reported receiving `\\hostshares`. That error echoing the mangled string is the best teaching artefact of the challenge: the shell rewrites an argument before the command sees it. Quote the set or use forward slashes."
+  },
+  {
+   "date": "2026-10-08",
+   "challenge": "picoCTF Piece by Piece (cold redo #1)",
+   "task": "reassembling split files — reached for `zip` instead of `cat`",
+   "tier": 2,
+   "tier_name": "CONCEPT NUDGE",
+   "outcome": "Ran `zip part_a*` → zip consumed `part_aa` as the OUTPUT archive name and packed the other four inside; unzipping returned the same pieces. ~6 commands lost in the loop. The evidence was printed on screen (`adding:` listed only part_ab..ae, part_aa absent) and was not read. Tier 2 named the direction of travel — 'zip COMPRESSES into an archive; you need to JOIN fragments, and the tool is a three-letter abbreviation of concatenate' — without typing it. He got it immediately, cleaned the junk .zip out of the glob path unprompted, and finished solo. `file` was skipped three times including once when asked for directly."
+  },
+  {
+   "date": "2026-10-09",
+   "challenge": "OverTheWire bandit11→12 (ROT13)",
+   "task": "expressing a 13-place rotation with `tr`",
+   "tier": 4,
+   "tier_name": "PSEUDOCODE",
+   "outcome": "Tool selection was SOLO and was the hard part — he manned six candidates and picked `tr`. The syntax then needed three tiers: Tier 2 (you already own this tool — it appears in your Log Hunt notes as `tr -d '\\n'`; translation is its main job), Tier 3 (tr takes two character SETS mapped positionally, not a shift amount; SET2 is the alphabet beginning 13 in and wrapping), Tier 4 (a four-blank skeleton after he explicitly asked: 'you must nudge me how to do this'). Produced `tr a-zA-Z n-za-mN-ZA-M` correctly first try after the skeleton, with lowercase/uppercase in matching order on both sides — the part that fails silently if reversed. Self-corrected `>` to `|` unaided along the way."
+  },
+  {
+   "date": "2026-10-09",
+   "challenge": "OverTheWire bandit12→13 (hexdump + repeated compression)",
+   "task": "data.txt is a hexdump, not a compressed file",
+   "tier": 2,
+   "tier_name": "CONCEPT NUDGE",
+   "outcome": "He ran `file` (first time in the session) and it said `ASCII text`, then he ran `gzip` anyway — the reflex fired but the READING did not. Tier 2: a hexdump is a rendering of bytes, not the bytes (`1f8b` on screen is four ASCII characters; the real file holds two); `hexdump`/`hd` only travel one way, so find the dump tool that reverses. He took `xxd -r` from there and ran the whole ~9-layer loop essentially solo, needing only `-f` pointed out on `tar`. THE REFLEX IS NOW BUILT BY REPETITION rather than by note."
   }
  ],
  "cross_track_links": [
@@ -774,6 +806,15 @@
    ],
    "concept": "stderr — met as a consumer in Bandit, now written to as an author",
    "context": "At Bandit he banked `2>/dev/null` as a destination for unwanted stderr. At loginwatch Increment 10 he wrote TO stderr for the first time (print(..., file=sys.stderr)), and the proof the error went to the right stream was `2>/dev/null` silencing it. Same mechanism, opposite side. Reason it matters here: stdout carries the report/CSV data, stderr carries diagnostics — an error line injected into a CSV stream corrupts whatever consumes it."
+  },
+  {
+   "date": "2026-10-09",
+   "tracks": [
+    "bash",
+    "python"
+   ],
+   "concept": "identify by content, not by label or position",
+   "context": "bandit12 forced the distinction twice over: `file` reads MAGIC NUMBERS (`1f 8b` = gzip, `BZh9` = bzip2) and tells the truth about a file's format, while `gzip` dispatches on the FILENAME EXTENSION and will refuse a genuine gzip file named `.gzip`. The extension is a label; the leading bytes are the artefact. Same decision he had already made as an author in Python at loginwatch parser.py — replacing `words[-4]` (trust the POSITION) with `words.index('from') + 1` (anchor on a LANDMARK in the content), which is what fixed the `ip='for'` misattribution bug on 2026-10-07. And again the same night in Piece by Piece: `part_aa/ab/ac` filenames are `split`'s signature, so the artefact names its own tool. Security payload: extension-based trust is an attack surface (`invoice.pdf.exe`, upload filters that accept `.jpg` without reading bytes) — content inspection is the control, labels are attacker-supplied input."
   }
  ],
  "session_log": [
@@ -1268,6 +1309,33 @@
    "duration_minutes_actual": null,
    "note_on_duration": "No time lock — user's call ('I can have as long as i want. I just want to focus on coding'). Session ran past midnight into 2026-10-08. Untracked again; durations have now been null for 3 consecutive sessions, which makes the head-of-year's 'frequency over volume' call unmeasurable.",
    "summary": "Session 28 (2026-10-07) — HEAVIEST PYTHON SESSION OF THE PROGRAMME, and the one where the user corrected the tutor's teaching method three separate times, correctly each time. He opened 'i want to focus heavy on python work today', which also happened to be head-of-year priority #2 (Python untouched since 2026-07-31, 68 days). No weak-point retests due. DELIVERED: loginwatch Increment 10 (exit-code contract + error handling), Increment 13 pulled forward (pytest), plus three unbriefed extensions — detection unit tests, type hints/docstrings, and parser.py tests that exposed and fixed a real IP-misattribution bug. 14 tests green, six commits, 12/15 increments. THREE METHOD CORRECTIONS FROM HIM, ALL VALID: (1) 'this is being too long winded i just want to code' — two walls of explanation had turned a 5-line change into most of a session; (2) 'its two different skills figuring out what to do and then how to do it... For now lets focus on implementation' — produced the implementation-vs-decomposition mode split, now a standing rule; (3) 'YOU NEVER ASKED ME TO LOOK AT THE OUTPUT???? I FOLLOWED THE INSTRUCTIONS. stop moving the goal posts' — the tutor had filed a next-step as a 🟡 weakness when the brief's own step table specified returncode asserts only. This was a REPEAT of the already-recorded evaluation-scope rule; conceded and the rule sharpened to a hard test (quote the line of my own brief a finding violates, or it is not a finding). FOUR TEACHING HIGH POINTS: (a) the exit-2 regression — narrowing the try block dropped sys.exit(2), so the handler fell through to a NameError; taught 'catching an exception does not stop execution'. (b) Mutation testing — tutor broke the source in a throwaway copy to grade his suite; found two tests that defended nothing, which reading the file had not revealed. He had called the earlier see-it-fail exercise 'pointless' and was largely right; this was the version with real information value. (c) He blessed a buggy output into a test (ip='for') and was pulled up on it, then redid it TDD-style. (d) HE diagnosed the documentation gap himself ('i didnt comment when writing up loginwatch') which led to type hints; said 'i like the signatures it might be a good habit to get into'. ALSO: acknowledged his 3 solo Forensics solves from 2026-10-03 (Binary Digits, Riddle Registry, Hidden in plainsight) — the CTF lane now runs WITHOUT the tutor, which is what freed this session for project work. Exactly the spine/variety split the head of year asked for. Asked twice about real-world applicability ('how much decomposition would i actually do?', 'is test writing something i need to get used to?') — answered with the junior-vs-senior split and the detection-engineering-vs-SOC split."
+  },
+  {
+   "date": "2026-10-08",
+   "duration_minutes_planned": null,
+   "duration_minutes_actual": null,
+   "note_on_duration": "No time lock — his call: 'we arent counting time just moving on to some ctf work'. Session ran past midnight into 2026-10-09. FOURTH consecutive session with null durations. The head-of-year's 'frequency over volume' call remains unmeasurable; stop asking mid-session (he reacts badly to process overhead) and instead estimate from the transcript at wrap.",
+   "summary": "Session 29 (2026-10-08→09) — CTF/LINUX VARIETY SESSION, run exactly as the s28 pickup note specified. Two overdue cold-redos plus a pushed Bandit diversion. No weak-point retests due; head-of-year not due until 2026-10-14. DELIVERED: (1) PRINTER SHARES cold redo — PARTIAL PASS. The smbclient half flipped from fully-AI-guided (July) to solo: from the error `Not enough '\\' characters in service` he reasoned out that a 'service' is host+share, not a hostname, and he found `-L` in smbclient's own usage output off one Tier 2 nudge. But the half the redo existed to test — his own criterion 'is `nmap -Pn -sV` my first move on any unknown port' — FAILED for the second time: he used `nc`, then read the picoCTF webpage hints to learn it was SMB. Declined the confirmation nmap run (instance already down, reasonable); standing reprompt set instead. (2) PIECE BY PIECE cold redo — FAIL against his own criterion. First move was `zip part_a*`, which CREATED an archive (zip takes arg 1 as the output name) and looped him back to the same five pieces; `cat` only arrived after a Tier 2 nudge. He did clean the junk .zip out of the directory before globbing, unprompted, after being warned the trap existed. The `file`-first reflex was skipped for the THIRD time, including once when asked for it directly. Re-queued at a shortened interval, graded on `file` alone. (3) BANDIT 11→13, pushed under the diversion rule after 70 days cold. bandit11 ROT13 via `tr` (he selected `tr` himself after manning six candidates — the hard part, solo; needed Tier 2→3→4 on the syntax). bandit12 — the hexdump/repeated-compression level, his hardest so far — solved, and it is where the `file`-before-every-step loop finally became a habit through ~9 iterations of forced repetition. METHOD: he pushed back twice, and the second time he was RIGHT and the tutor was wrong — see program_decisions 2026-10-09. No write-up generated (two CTF redos + two Bandit levels), so wrap-publish did not apply; he authorised commit+push explicitly.",
+   "tracks_touched": [
+    "bash",
+    "ctf",
+    "wargames"
+   ],
+   "retests_due": [],
+   "challenges_completed": [],
+   "cold_redos_run": [
+    {
+     "challenge": "Printer Shares",
+     "verdict": "partial pass",
+     "requeued": "2026-11-05"
+    },
+    {
+     "challenge": "Piece by Piece",
+     "verdict": "fail",
+     "requeued": "2026-10-23"
+    }
+   ],
+   "wargames": "bandit11 -> bandit13"
   }
  ],
  "checkpoints_reached": [
@@ -1368,6 +1436,27 @@
     "Hidden in plainsight"
    ],
    "implication": "THE CTF LANE NOW RUNS WITHOUT THE TUTOR — three solves logged solo with genuinely good self-coaching in external/cylab-notes.md: he caught the `stat` (filesystem) vs `pdfinfo` (embedded) metadata-layer distinction himself, flagged his own Magic-instead-of-recognition habit TWICE unprompted, corrected his own 'decrypted' -> 'decoded' slip, and recorded the verify-tools-an-LLM-hands-you rule. Directly serves the head-of-year's 2026-09-30 refine call: project is the spine, CTF is the variety lane. Because he self-drives the variety lane, session time can go to the project — which is what happened on 2026-10-07. Cold-redos for these three queued ~2026-10-24. Do not spend session time drilling them unless he asks."
+  },
+  {
+   "course": "picoCTF cold-redo audit + OverTheWire Bandit (in-session, tutor-run)",
+   "noted_date": "2026-10-09",
+   "surfaced_in_session": "2026-10-08 (session 29, run live)",
+   "topics_covered": [
+    "SMB share enumeration (`smbclient -L`), service string as host+share",
+    "shell escaping — bash consumes backslashes before the command sees the argument",
+    "`split` output naming (`part_aa/ab/ac`) as a recognisable fingerprint; `cat` as its inverse",
+    "`tr` as positional character-set substitution; wrap-around as two touching ranges",
+    "`xxd -r` to reverse a hexdump",
+    "magic numbers (`1f 8b` gzip, `BZh9` bzip2) and how `file` actually works",
+    "extension-based vs content-based format dispatch (`gzip` vs `tar` vs `file`)"
+   ],
+   "challenges": [
+    "Printer Shares (cold redo)",
+    "Piece by Piece (cold redo)",
+    "bandit11→12",
+    "bandit12→13"
+   ],
+   "implication": "THE COLD-REDO MECHANISM IS DOING ITS JOB AND THE NEWS IS MIXED. Two HIGH-priority redos run 48 and 55 days late; one partial pass, one outright fail. Both failed on the SAME axis — the identification-first reflex (`nmap -sV` on an unknown port, `file` on an unknown artefact). That axis is now the single tracked thread across the CTF lane, and bandit12 was the intervention: ~9 forced iterations of `file` → read → act, which is the first time it was trained by repetition rather than written down as a resolution. Grade the next two redos on identification alone, independent of flag capture. Lesson for the programme: HIGH-priority redos must not be allowed to drift 7 weeks — they were overtaken by the illness gap and then by project momentum."
   }
  ],
  "level_calibration_decisions": [
@@ -1437,8 +1526,8 @@
    "notes": "30-line synthetic SSH auth log on web-prod-01, all entries May 24 single-day, spanning hours 03/07/11/14/18/22 to test multi-hour grouping if desired (today's brief did not require it). 26 Failed + 4 Accepted lines. Failed brute-force IPs: 45.95.169.84=4 (03:xx, admin+oracle, password-spray shape), 193.32.162.157=2 (07:xx, postgres), 89.248.165.74=1 (11:xx, test), 218.92.0.142=8 (14:xx, root, sustained burst), 171.25.193.78=4 (18:xx, multiple usernames git/jenkins/nginx/ubuntu, password-spray shape), 152.32.146.215=7 (22:xx, admin, sustained burst with one Accepted-emre at 22:17 interleaved). Accepted lines: 10.0.0.15 deploy ×2, 10.0.0.20 emre ×2. Tutor-key verified pre-delivery: First Failed = 'May 24 03:15:22', Last Failed = 'May 24 22:20:18'. Used 2026-05-24 — passed (WP004 mastered)."
   }
  },
- "pickup_note": "NEXT SESSION IS CTF — HIS STATED PLAN. He closed session 28 on 2026-10-07 (which ran past midnight into 10-08), took a 30-45 minute break, and went straight to CTF work in a FRESH context. So session 29 opens as a CTF session, not a project session. Do not open by steering him to loginwatch; he has just done a heavy project session and chose the variety lane deliberately.\n\nCTF QUEUE, in priority order: (1) TWO OVERDUE COLD-REDOS, HIGH — **Piece by Piece** and **Printer Shares**, the two he got most stuck on; both fell inside the ~59-day illness gap and have never been re-pulled. (2) **Sudo Make Me a Sandwich** needs ONE clean self-powered re-test — the 2026-09-30 redo was answer-assisted (he asked Gemini), so concept recall was correct when restated but self-powered recall is still unproven. (3) Fresh challenges after that — he has moved into FORENSICS (3 solo solves on 2026-10-03) and that is where his momentum is. (4) Batches already queued: 2026-09-30 four (Time Machine, Super SSH, Endianness, Blame Game) ~2026-10-21; 2026-10-03 three (Binary Digits, Riddle Registry, Hidden in plainsight) ~2026-10-24. Endianness he self-flagged 'i doubt i will remember this' — notes-closed, don't let it slip.\n\nCTF OPERATING RULES IN FORCE: tool-lookups fine, ANSWER-lookups not — come to the teacher for a tiered nudge, NOT another AI. He is already policing this line himself in external/cylab-notes.md ('look it up once, then BANK it'; 'verify tools an LLM hands you'). Describe the challenge in his own words before acting. ~struggle → stuck-report → tiered nudge. Write-ups = failure trail + defender's note. Log everything in external/cylab-notes.md. Base64 recognition is his live target: call it on sight by character set (A-Za-z0-9+/, often '=' padding, length a multiple of 4) and let CyberChef's Magic CONFIRM rather than identify — he flagged this habit against himself twice on 2026-10-03.\n\nTEACHING RULES ARE MANDATORY AND APPLY TO CTF TOO (adopted session 28 from his own corrections — see program_decisions 2026-10-07): IMPLEMENTATION MODE IS THE DEFAULT (decompose into numbered steps, he does the work, decide incidental trade-offs for him with one line of why). CAP EXPLANATIONS AT ~ONE SCREEN — he said 'this is being too long winded i just want to code' and he was right. BEFORE WRITING ANY 🔴/🟡, QUOTE THE LINE OF MY OWN BRIEF IT VIOLATES — else it is a teaching observation, not a finding; he called out goal-post-moving once in session 28 and was correct. STOP WHEN HE SAYS HE HAS SOLVED IT. Four consecutive sessions where his pushback on method was right — treat as data.\n\nPROJECT STATE, FOR WHEN HE RETURNS TO IT (not this session unless he asks): loginwatch 12/15, 14 tests green, working tree clean in ~/sectools, 11 commits through 409c68e. Resume options: (a) finish the parser hardening — `outcome` is still read as words[5], which raises IndexError on short lines and yields junk like outcome='ssh2' on variant ones, silently dropping the event from BOTH detection functions; fix is the anchor pattern he already applied to the IP, then add a skipped-line COUNTER so silent drops become visible. (b) Increment 11 — run-daily.sh, the Bash wrapper that consumes the exit codes he just built; carries the PLANTED set-order false-positive lesson and the type-it-yourself awk '!x[$0]++' task. (c) Small: tests assert returncode only — adding result.stdout == \"\" and a path-in-stderr check would pin the stream separation.\n\nOTHER OPEN ITEMS: BANDIT untouched since 2026-07-30 (bandit11, ROT13) — 69+ days, diversion overdue on every trigger; push it on the next short or low-energy session. GITHUB REPO for sectools STILL NOT CREATED — open debt #1 since July, head-of-year priority #2, ~10 minutes, and there is now much more worth showing (documented exit-code contract + 14-test mutation-verified suite). MYPY not installed — two wrong type hints shipped in session 28 that no test can catch. DURATIONS NULL FOR THREE SESSIONS — ask for a rough number at wrap even when he declines a time lock. cybersec-learning is AHEAD OF origin/main BY 1 COMMIT (5a83f2c) — not pushed; he did not ask and the standing auto-push authorization covers write-up wraps only.\n\nHEAD-OF-YEAR REVIEW (Fable) NEXT DUE 2026-10-14 — it speaks FIRST at that session's bootstrap, before the teacher greets. MANDATORY: Agent tool with model=fable.",
- "last_weekly_summary": "2026-07-29",
+ "pickup_note": "SESSION 30 — HEAD-OF-YEAR REVIEW IS DUE 2026-10-14. If the session falls on or after that date, the FABLE AGENT SPEAKS FIRST, before any greeting or plan (CLAUDE.md 2026-07-23 amendment, bootstrap step 10). Brief it on: Inc 10+13 shipped and 14 tests green (its priority #2 half-done), sectools STILL not public (its priority #2 other half, open since July), the s29 CTF cold-redo results below, Bandit unstuck at 13, and the fact that the tutor was corrected on method for the FIFTH consecutive session.\n\nRECOMMENDED PLAN — loginwatch INCREMENT 11 (`run-daily.sh`). Reasons: it is the Bash L2 deliverable, and Bash L2 + Python L2 is what unlocks Scenarios; it consumes the exit-code contract he built at Inc 10, which is why Inc 10 came first; and after a CTF/Linux session the spine is due. IT CARRIES TWO PLANTED LESSONS — DO NOT PRE-EMPT EITHER: (a) report.py loops over a SET, so output order flips between runs and will fire a false positive the moment run-daily.sh diffs day-to-day — let him build it, let it fire, then let him find the cause; (b) make him actually TYPE `awk '!x[$0]++'` rather than reading it, since it is already in his Log Hunt notes and has never been used in anger.\n\nALSO AVAILABLE, SMALLER: ship sectools public (~10 min — spellcheck SPEC.md, OPSEC scrub, create the GitHub repo, push). Open debt #1 since July and now has materially more worth showing: a documented exit-code contract and a 14-test mutation-verified suite. Offer a loginwatch write-up too (exit codes + test suite) — strong portfolio material and none has been written since July.\n\nS29 COLD-REDO RESULTS AND THE ONE THREAD THAT MATTERS: both redos failed on the SAME axis — IDENTIFY THE THING BEFORE ACTING ON IT. Printer Shares (partial pass): smbclient half now solo, but `nmap -Pn -sV` was NOT his first move for the second time; he used the webpage hints instead. Piece by Piece (FAIL): reached for `zip` instead of `cat`, and skipped `file` for the third time including once when asked for it directly. THE INTERVENTION WAS bandit12 — ~9 forced iterations of `file` → read → act, the first time the reflex was trained by repetition rather than written down. REQUEUED, GRADED ON IDENTIFICATION ALONE regardless of flag capture: Piece by Piece ~2026-10-23 (`file` first? `cat` not `zip`?), Printer Shares ~2026-11-05 (`nmap -Pn -sV` the FIRST command, before any hint or guess?), bandit12 ~2026-11-06 (`xxd -r` first? `file` between every step?). Standing reprompt: on ANY challenge with an unknown port, `nmap -Pn -sV` is required as the first move and the tutor holds him to it. Still queued from before: Sudo Make Me a Sandwich needs one clean self-powered re-test (last was Gemini-assisted); 2026-09-30 batch ~2026-10-21; 2026-10-03 batch ~2026-10-24. Endianness he self-flagged 'i doubt i will remember this'.\n\nBANDIT IS UNSTUCK — at bandit13 (sshkey.private), touched 2026-10-09 after 70 days cold. The diversion push worked and bandit12 earned its place. Next diversion trigger is 2026-10-16 (7 days). Cold-redo of bandit0→6 still outstanding since ~2026-08-07.\n\nMETHOD — READ THIS BEFORE THE FIRST BRIEF. The s28 rules all still stand (implementation mode is the DEFAULT; explanations capped at ~one screen; quote the line of my own brief before writing any finding; stop when he says he has solved it). NEW THIS SESSION, and it came from the tutor being flatly wrong: NO PATTERN WITHOUT EVIDENCE — do not assert a trend ('second time tonight') unless the transcript order supports it, and do not close an exchange with an appended moral. He escalated to 'make this mistake again and we done for the night' and he was right on the facts. Single errors get a one-line fix and no commentary. He also asked the tutor to do the note-logging for him this session ('you can do the logging for me') — entries in external/*.md are labelled tutor-written so the record stays honest about voice.\n\nDURATIONS NULL FOR A FOURTH SESSION. Do not ask him mid-session — he reacts badly to process overhead. Estimate from the transcript at wrap instead.",
+ "last_weekly_summary": "2026-10-09",
  "program_decisions": [
   {
    "date": "2026-07-16",
@@ -1474,6 +1563,14 @@
    "decision": "(A) TWO NAMED TEACHING MODES. Implementation mode is the DEFAULT: the tutor decomposes the work into numbered concrete steps, the user writes the code, hint tiers address how-to-implement only, and architecture/design trade-offs are decided BY THE TUTOR with one line of justification. Decomposition mode only when explicitly agreed and announced: the user gets the spec, produces the step list himself, and the tutor reviews the plan before any code. Never mix them in one brief. (B) CAP TEACHING LENGTH. New-concept explanations get about one screen, then the code task. Correct a misreading in two or three sentences, not two sections. (C) EVALUATION-SCOPE RULE HARDENED to a test: before writing any 🔴/🟡, quote the line of the tutor's own brief it violates; if that is impossible it is a teaching observation or the next increment's objective, never a weakness. An under-specified brief is the tutor's defect. (D) TYPE HINTS + DOCSTRINGS are now expected in his Python by default (his own adoption) — review accordingly.",
    "user_rationale": "His words: 'im just a bit slow when it comes to understanding what needs to be done. Its two different skills figuring out what to do and then how to do it' and 'i think its good for me to decompose but thats a different way of teaching and teaching implementation is different. For now lets focus on implementation.' He values decomposition but wants it trained deliberately rather than smuggled into every coding task. On length: 'this is being too long winded i just want to code and improve my python.' On scope: 'stop moving the goal posts.' FOURTH CONSECUTIVE SESSION in which his pushback on teaching method was correct (sessions 25, 26, 27 pattern continues) — treat as data, not mood. On hints: 'i like the signatures it might be a good habit to get into.'",
    "where_recorded": "Also written to the tutor's persistent memory: feedback_implementation_vs_decomposition_mode, feedback_teach_short_he_came_to_code, and an appended hard test in feedback_evaluation_scope + his framing appended to feedback_show_the_path."
+  },
+  {
+   "date": "2026-10-09",
+   "type": "teaching-method (standing rule, tutor was wrong)",
+   "decision": "NO PATTERN WITHOUT EVIDENCE. Do not assert a behavioural trend ('second parsing miss tonight', 'this keeps happening') unless the transcript order actually supports it, and do not close a teaching exchange with an appended moral. Single errors get a one-line fix and no commentary.",
+   "trigger": "At bandit12 the tutor labelled his stall a reading-comprehension failure and stacked it with the earlier `zip`/`cat` misread into a 'second parsing miss'. His transcript showed `hexdump -C data.txt` and `hd --help` running BEFORE the decompression attempts — he had engaged with the hexdump correctly and was blocked by not knowing `xxd -r`. A tool-knowledge gap, not a reading gap. His words: 'i didnt miss this... You always nit pick these small things', then 'make this mistake again and we done for the night. You telling me i have misread is completely bogus'. He was right on the facts; the tutor conceded and stopped appending lessons for the rest of the session.",
+   "rationale": "Manufacturing a trend from one data point invents a weakness that does not exist — the same defect the 2026-07-29 evaluation-scope rule and the 2026-10-07 quote-the-brief rule were written to stop. This is the FIFTH consecutive session in which his pushback on method was correct. Treat that as a reliable signal, not mood. Also mirrored into Claude Code memory as feedback_no_pattern_without_evidence.md so it survives context loss.",
+   "status": "active — standing"
   }
  ],
  "active_project": {
@@ -1648,13 +1745,13 @@
   "bandit": {
    "platform": "OverTheWire Bandit — https://overthewire.org/wargames/bandit/",
    "purpose": "Linux CLI fluency gym. Self-directed, runs in parallel with project work; builds the grep/find/awk/permissions/pipes muscle that speeds up everything else.",
-   "status": "in progress — bandit0→6 cleared 2026-07-24 (session 21); bandit6→11 cleared 2026-07-30 (session 24) — five levels, one PAST the briefed 6→10 target. Sitting at bandit11 (ROT13), not started. Key acquisitions: 2>/dev/null as a destination for unwanted stderr, and base64 -d recognised from prior picoCTF/CyLab exposure (transfer, not instruction). THIRD acquisition surfaced only in his written notes, never in chat: xargs — converting piped text into ARGUMENTS for a command that takes filenames positionally rather than on stdin. NOTES FILE NO LONGER EMPTY — he wrote both/three entries himself, unprompted, before the wrap. Standing side-task closed.",
-   "current_level": 11,
-   "last_touched": "2026-07-30",
+   "status": "in progress — bandit0→6 cleared 2026-07-24 (s21); bandit6→11 cleared 2026-07-30 (s24); bandit11→13 cleared 2026-10-09 (s29) after a 70-day cold spell, pushed by the tutor under the diversion rule. Sitting at bandit13 (sshkey.private), not started. s29 acquisitions: (1) `tr` is POSITIONAL character-set substitution, not a shift amount — a wrap-around is two touching ranges (`n-z` then `a-m`), uppercase is a separate range and must appear in the same order on both sides or letters silently map to the wrong case; generalises to any ROT-N. (2) `xxd -r` reverses a hexdump — `hexdump`/`hd` only go bytes→text; a hexdump is a RENDERING of bytes, not the bytes. (3) MAGIC NUMBERS — `1f 8b` = gzip, `BZh9` = bzip2, visible in the raw dump; this is how `file` works. (4) `gzip` dispatches on FILENAME EXTENSION (hence the level's `mv` instruction being load-bearing), `tar` ignores the extension but requires `-f`. bandit12 is where the `file`-before-every-step reflex was finally built by repetition rather than by note.",
+   "current_level": 13,
+   "last_touched": "2026-10-09",
    "notes_log": "external/bandit-notes.md",
    "legal": "Authorized — OverTheWire issues the credentials; the game is the point. No CMA concern.",
    "diversion_rule": "See CLAUDE.md Program Amendments 'Wargame diversions'. Tutor PROACTIVELY pushes Bandit (states it, doesn't just offer) when: >=7d since last touch, OR short/low-energy session, OR a Linux-CLI gap surfaced last session. Floor ~1 in 5 sessions is Linux-CLI so the 70/30-Python project doesn't starve Linux fluency. User explicitly asked to be pushed to this ('push me away and say go do some linux wargames').",
-   "notes_log_status": "NOT empty as of 2026-07-30 — first entries written by the user unprompted at session 24 wrap (2>/dev/null as a black hole for error-dominated output; xargs as the pipe→arguments bridge). No passwords. The cold-redo retest now has something to check against."
+   "notes_log_status": "Tutor-logged for s29 at his explicit request ('you can do the logging for me'); entries for bandit11→12 and bandit12→13 are labelled as tutor-written so the record stays honest about voice. His own two earlier entries (2>/dev/null, xargs) remain."
   }
  },
  "retired_points": [
