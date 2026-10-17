@@ -2,16 +2,16 @@
  "schema_version": "3.0",
  "user": "Emre",
  "started_date": "2026-04-27",
- "last_session": "2026-10-12",
- "session_count": 30,
+ "last_session": "2026-10-17",
+ "session_count": 31,
  "head_of_year_review": {
   "role": "Program-level trajectory review, distinct from the teacher's per-session work. Metaphor set by user 2026-07-23: teacher = Opus tutor (in-session — hint tiers, code review, weak points); head of year = Fable (steps back across weeks to judge the arc). See CLAUDE.md 2026-07-23 amendment.",
   "conducted_by": "fable-agent",
   "conducted_by_rule": "MANDATORY — Agent tool with model=fable. The head of year is ALWAYS a Fable agent, never the teacher model. User's explicit instruction: 'make sure this is a fable agent.'",
   "cadence_days": 14,
   "established_date": "2026-07-23",
-  "last_review": "2026-09-30",
-  "next_review_due": "2026-10-14",
+  "last_review": "2026-10-17",
+  "next_review_due": "2026-10-31",
   "ordering_rule": "When next_review_due <= today, the head of year speaks to the user FIRST at Session bootstrap (bootstrap step 10) — before the teacher greets or plans. User's explicit instruction 2026-07-23: 'have my head of year talk to me before you talk to me.'",
   "review_shape": [
    "what got done this fortnight",
@@ -33,12 +33,29 @@
      "Make something public: create loginwatch GitHub repo + land Increment 10",
      "Teacher accountability: full structural map in every brief, failure-first, and stop when he says he's already solved it"
     ]
+   },
+   {
+    "date": "2026-10-17",
+    "covers": "2026-09-30 -> 2026-10-17 (second review; 3 days late, due 10-14)",
+    "on_track": "amber",
+    "summary": "AMBER again, and that repetition IS the finding: best attendance (4 sessions + a CTF day in 13 days) and the most code the programme has produced did not move the colour, because the two things that would have - something public, and project sessions he leaves wanting more - did not happen. Graded its own three priorities: #1 cold-redo re-warm DONE and graded honestly; #2 make-something-public HALF (Inc 10 landed plus much more, but EmreB15/sectools still does not exist and the local repo has no remote after 3.5 months - the head of year took partial blame for never naming who flips the switch or when); #3 teacher accountability FAILED (s28 three valid method corrections, s30 six method failures, he was right every time). CONFIRMED the dashboard's claim that the tutor's method is the main risk to him STAYING, but REJECTED the 'not his retention' half - the cold redos show retention failing live, so there are TWO risks and the teacher's self-criticism must not bury the one the programme exists for. Named a new concern: seven standing teaching rules written across four project sessions, each after a failure, none preventing the next - 'the rulebook is complete; another rule is not the fix.' Also: the new minutes-coding metric is unmeasurable as declared (5 sessions of null durations) - use GIT (commits + line counts per session) instead of asking him; and loginwatch is only 141 lines of application Python after three months, which it read as evidence he has been right about where the hours went. Flagged record drift (progress.json still says Python L1 and Bash last active May; dashboard said 11 commits and a dirty tree, actual 18 and clean) as the programme failing its own verify-don't-proxy discipline. Explicitly endorsed the relaxed security constraint and the retained strictness ('tests inside the build, not instead of it'). CALL: REFINE then HOLD STILL - the brief was rewritten on his terms five days ago; this fortnight tests compliance, not more legislation.",
+    "priorities": [
+     "Two project sessions he closes because he's DONE, not because he's fed up - code inside ten minutes, spec locked in the repo first, explanations one screen, tutor records git line counts at wrap so the metric becomes real at zero cost to him. NO new teaching rules this fortnight: if a session goes wrong, stop, don't legislate. One 'I'm lost' is the signal, not three.",
+     "Decide sectools-public in one sentence today, yes or no, so it stops being a debt and becomes a decision",
+     "Retention lane stays on schedule but OUTSIDE project time: 09-30 CTF batch ~10-21, Piece by Piece ~10-23 graded on `file` alone, Bandit 13 (7-day trigger passed). One short variety session this fortnight, only when he asks."
+    ],
+    "user_response": {
+     "priority_1": "'maybe' - no commitment given",
+     "priority_2": "DECIDED, and it is a NO to public: 'i want it on github but the repo should be private, sectools is good for beginner, the stuff i display on my github i need to make sure its done properly, documented properly and without heavy AI reliance.' Debt #1 is therefore CLOSED AS A DECISION, not outstanding work. Replaced by: push sectools to a PRIVATE repo, and a recorded standard for anything PUBLIC on his GitHub - done properly, documented properly, no heavy AI reliance.",
+     "priority_3": "'not sure'"
+    },
+    "teacher_handoff": "Priority 1 (two sessions he closes because he is done): session 31 delivered the first half - 2 measured hours, 3 increments, 3 commits, and he closed on 'ok i got it. It all works' plus a method correction rather than on frustration. One more needed by 2026-10-31. Priority 2: ANSWERED - private repo, not public; debt closed as a decision. Priority 3: deferred one session at his request for Python; re-triggers session 32. The 'no new legislation' instruction was followed: tonight's method failure is logged against the existing one-new-concept rule, and no eighth rule was written."
    }
   ]
  },
  "tracks": {
   "python": {
-   "level": 1,
+   "level": 2,
    "level_complete_criteria": "4 challenges done, no unresolved critical or moderate weak points (or escape via remediation). STATUS 2026-05-11 SESSION 9: 4/4 challenges done — PYTHON L1 COMPLETE. WP004 retest 2026-05-14 is the conditional verification gate (same standard as Bash L1's WP002 carry).",
    "level_complete_date": "2026-05-11",
    "challenges_completed": [
@@ -95,8 +112,9 @@
    "challenges_attempted": [],
    "current_challenge": null,
    "current_challenge_text": null,
-   "last_active": "2026-10-12",
-   "last_active_session": 25
+   "last_active": "2026-10-17",
+   "last_active_session": 31,
+   "level_note": "CORRECTED 2026-10-17: this field read 1 until tonight while dashboard.md and the checkpoints both recorded L2 since 2026-07-18. L1 completed 2026-05-11; L2 has been the active level since the first L2 challenge on 2026-07-18. Bookkeeping lag fixed, not a level granted - flagged by the second head-of-year review."
   },
   "bash": {
    "level": "L1",
@@ -175,7 +193,8 @@
    ],
    "current_challenge": null,
    "current_challenge_text": null,
-   "last_active": "2026-05-10"
+   "last_active": "2026-05-10",
+   "last_active_note": "Bash TRACK challenges last active 2026-05-10. Linux CLI work is more recent and runs in the wargames/CTF lanes - Bandit 2026-10-09, picoCTF 2026-10-09 - which is why dashboard.md reads 2026-10-09. Both are true; the track's own challenges are the stale number and Increment 11 (run-daily.sh) is still the Bash L2 gate on Scenarios."
   },
   "concepts": {
    "level": 1,
@@ -650,6 +669,30 @@
    "tier": 1,
    "tier_name": "REFRAME",
    "outcome": "One Tier 1 was enough: asked him to put len(words) next to what words.index('from')+1 evaluates to, then pointed out that his guard asks 'is from present?' which is TRUE for this line. He produced the bounds check himself. Note on the rest of the session: the outcome-landmark fix took one Tier 1/2 reframe ('line 14 already asks which word is present and throws the answer away'); everything else he did unhinted. The hint tiers were NOT the bottleneck tonight - the tutor's sequencing was."
+  },
+  {
+   "date": "2026-10-17",
+   "challenge": "passcheck Increment 1 - case_variants + year_variants (Python L2)",
+   "task": "Two pure generators returning sets, against 14 frozen cases",
+   "tier": 0,
+   "tier_name": "NONE",
+   "outcome": "Self-served end to end in 28 minutes. Got stuck once on his own account - his index arithmetic would not pick the short form out of a 2-character year - and resolved it himself by reaching for negative slicing (year[-2:]), which is both the intent-stating form and the one that cannot raise. No hint requested."
+  },
+  {
+   "date": "2026-10-17",
+   "challenge": "passcheck Increment 2 - leet_variants via itertools.product (Python L2)",
+   "task": "test_leet_matches_uppercase_but_preserves_other_case: leet_variants('REX') returned {'REX'}",
+   "tier": 1,
+   "tier_name": "REFRAME",
+   "outcome": "Opened by asking whether he needed to sort by something - pytest's set diff reads as unordered so it looked like an ordering problem, when 'Extra items in the right set: R3X' is a membership statement. Corrected the set-ordering misconception as free concept explanation, then one Tier 1: 'Rex passes, REX does not - walk line 20 with c = \"E\".' He found c.lower() himself and additionally applied all three outstanding green-level review notes unprompted, including rewriting the accumulate loop as a set comprehension. WP002-family note (read the output you were given): the diff named the missing string. Fixed off one reframe; no weak point logged."
+  },
+  {
+   "date": "2026-10-17",
+   "challenge": "passcheck Increment 4 - build_candidate_set (Python L2)",
+   "task": "Chain case_variants -> leet_variants -> year_variants into one accumulated set",
+   "tier": 4,
+   "tier_name": "PSEUDOCODE",
+   "outcome": "Tiers 2, 3 and 4 in 25 minutes, and the escalation was caused by a tutor-side gap, not by him. He had written `after_cases.add(x for x in case_variants(word))`, putting two generator OBJECTS into the set - because the increment 1 brief taught set(), .add() and a | b and never taught the merge form (.update() / .union()), which was this increment's central operation. Tier 2 named add-vs-update and conceded the gap. He then asked a scope question (whether to combine words - no, that is increment 3) and said the multiplicity was the hard part, so Tier 3 gave the three stages in English, including that he never loops over years at all because year_variants takes the whole list. His third signal - 'you havent explained the final step? we have a copy set and the additional set? i feel like this final function was a step up and im not getting it at all' - was ALSO correct: the Tier 3 wording for stage C ('starts as a copy of stage B, then loop over stage B') was genuinely muddled. Tier 4 pseudocode replaced it with one set, one loop, add-then-merge. He finished in the remaining minutes, chose .union() over .update() unprompted, and reached the STAGED (non-nested) decomposition entirely on his own - which is equivalent to the spec's nested wording and was confirmed to him as valid before he spent time on it."
   }
  ],
  "cross_track_links": [
@@ -823,6 +866,15 @@
    ],
    "concept": "identify by content, not by label or position",
    "context": "bandit12 forced the distinction twice over: `file` reads MAGIC NUMBERS (`1f 8b` = gzip, `BZh9` = bzip2) and tells the truth about a file's format, while `gzip` dispatches on the FILENAME EXTENSION and will refuse a genuine gzip file named `.gzip`. The extension is a label; the leading bytes are the artefact. Same decision he had already made as an author in Python at loginwatch parser.py — replacing `words[-4]` (trust the POSITION) with `words.index('from') + 1` (anchor on a LANDMARK in the content), which is what fixed the `ip='for'` misattribution bug on 2026-10-07. And again the same night in Piece by Piece: `part_aa/ab/ac` filenames are `split`'s signature, so the artefact names its own tool. Security payload: extension-based trust is an attack surface (`invoice.pdf.exe`, upload filters that accept `.jpg` without reading bytes) — content inspection is the control, labels are attacker-supplied input."
+  },
+  {
+   "date": "2026-10-17",
+   "tracks": [
+    "python",
+    "ctf"
+   ],
+   "concept": "personal-detail derivation wordlists",
+   "context": "picoCTF 'Password Profiler' (session 26, 2026-08-02) handed him cupp - OSINT facts in, attack wordlist out - and, as the s26 log notes, 'the challenge itself PROVIDED the checker'. passcheck is him writing that checker. Same generator, opposite end of the fight: cupp generates to guess, passcheck generates to reject. The CTF lane supplied the attacker's half of a tool the project session built the defender's half of."
   }
  ],
  "session_log": [
@@ -1351,6 +1403,13 @@
    "duration_minutes_actual": 180,
    "note_on_duration": "ESTIMATED FROM TRANSCRIPT, not measured. No time lock (his call: 'not setting an amount of time'). Ran past midnight into 2026-10-12. Fifth consecutive session without measured durations; per the standing note, do not ask him mid-session.",
    "summary": "Session 30 (2026-10-11->12) - PYTHON PROJECT SESSION, his choice ('continue with python work... focus on implementation'). Pickup note recommended Increment 11 (run-daily.sh) but that is Bash, so the tutor substituted the one logged open gap in the Python code: INCREMENT 11a, PARSER HARDENING. DELIVERED (all 23 tests green): parse_line no longer reads the outcome as words[5]; it classifies every line into one of three exits (not-an-event -> None; parseable -> dict; login event with no recoverable IP -> raise MalformedLoginLine). parse_file returns (records, skipped_count). loginwatch unpacks both, warns to stderr when nonzero, and an unreadable path now exits 2 via an OSError handler below the FileNotFoundError one. SPEC.md gained INPUT FORMAT + SKIPPED LINES sections. Test suite 14 -> 23 (11 frozen parse_line inputs, 2 parse_file, +1 exit-code). New fixture data/auth-variants.log. MEASURED PAYOFF on that fixture: old positional parser crashed AND undercounted (2 failures vs the true 3 - the ISO-8601-timestamped attempt silently vanished, so at --threshold 3 the tool returned a false all-clear on a live brute force). THE SESSION'S REAL STORY IS A TEACHING FAILURE, NOT A CODE ONE. The tutor (a) introduced a brand-new concept (custom exception classes) alongside the actual objective, so class theory consumed most of the session while the parsing work sat untouched; (b) corrected its own wrong brief IN THE MIDDLE of teaching that new concept, so he could not tell which half was 'learn this' and which was 'I was wrong'; (c) reviewed by producing a fresh adversarial log line each round with no fixed acceptance criterion, which he correctly called 'moving the goalposts'; (d) asserted twice that his custom __init__ 'dropped the message' - FALSE, BaseException.__new__ stores positional args before __init__ runs, demonstrated and retracted. He escalated repeatedly ('you just confused me', 'this project feels ruined now, i feel so lost'), and on every point he was factually right. FIX APPLIED MID-SESSION: reverted the working tree to 409c68e (his attempt preserved in stash@{0}), then LOCKED THE SPEC IN THE REPO before he restarted - 11 frozen inputs written into tests/test_parser.py with a dated comment saying nothing is added to the list, plus SPEC.md prose, plus a stated acceptance criterion ('23/23 and nothing escapes parse_file but FileNotFoundError'). After the lock he completed parts 1-4 and the refactor with ONE Tier 1 hint. SOLO WINS: he reached the bounds check `words.index('from')+1 >= len(words)` from a reframe alone - chose to TEST the condition rather than catch IndexError, which is strictly better because a blanket IndexError catch would relabel genuine coding bugs as bad input; he had already rebuilt the exception class and all of parse_file himself while the tutor was still writing the restated brief; and his refactor (outcome variable + if/elif/else + one guard + one return) was his FIRST refactor performed under a green test suite, verified in 0.3s. CONCEPT WORK THAT STUCK: handler order matters only where handlers overlap (one a subclass of the other), exactly one handler runs per try, try PLACEMENT decides how much work is abandoned not which error is caught (demonstrated on his own fixture: try outside the loop lost a whole attacker IP), and the bug-vs-expected-condition distinction - a custom exception type means the counter cannot absorb real bugs. Written up as a runnable reference at python-track/exception-handler-order.py. NOTHING COMMITTED - both repos dirty at wrap. SECOND HALF OF THE SESSION (after both repos were committed, he asked to 'carry on with some more python work'): THE TUTOR CHOSE MYPY (debt #2) AND THAT WAS THE WRONG CALL. Built a .venv with mypy 2.4.0 + pytest 9.1.1, ran it, and the debt's premise turned out to be wrong - there were NO incorrect type hints; report.py simply had none, so mypy had been silently skipping its bodies while reporting 'checked 3 source files'. He annotated the parameters, which let mypy inside create_csv_report for the first time and surfaced 5 pre-existing errors with one cause: `record` was a single name holding a tuple, then a list of CSV cells, then a str IP, then a list again. Runtime-harmless (writer.writerow takes any iterable), invisible to all 23 tests, and a genuine maintenance hazard. Tutor also broke pytest collection by switching to `.venv/bin/pytest` (a console script, which unlike `python -m pytest` does not put the repo root on sys.path) and wrongly presented it as his problem before checking - owned within one turn. Fixed properly with pyproject.toml carrying [tool.mypy] strict + [tool.pytest.ini_options] pythonpath, so both tools now run bare. THEN HE CALLED IT: 'this isnt python. This is some worthless file checker... i want to learn python stop floating around this', followed by 'im officially done for this session. These python sessions are always the same for me, i start enthusiastic and then you somehow always find ways to make me want to just close the code editor'. HE IS RIGHT AND THE PROGRAMME'S OWN LOG ALREADY SAID SO - s25 recorded 'arrived in a good mood, explicitly enjoying the coding... Left frustrated'. Three of the last four project sessions ended demoralised, and the shared ingredient is that the headline work was UPKEEP rather than BUILDING. Tutor did the remaining tidy at his request (-> None on both report.py functions; the `record` rebinding removed by giving each thing its own name). mypy clean, 23 tests green, CSV output byte-identical. DEBT #2 CLOSED. The structural finding that should have been stated at bootstrap and was not: LOGINWATCH'S PYTHON IS FINISHED - Increments 11, 12, 14 and 15 are Bash, packaging and docs, so no amount of loginwatch work will give him the Python building he keeps asking for. He needs a NEW PROGRAM."
+  },
+  {
+   "date": "2026-10-17",
+   "duration_minutes_planned": 120,
+   "duration_minutes_actual": 120,
+   "note_on_duration": "MEASURED, not estimated - 22:00 to 00:00 BST, locked at the stated two hours. First measured duration in six sessions, which was a head-of-year ask. He set the number himself at bootstrap ('ok lets mark 2 hours and go for it').",
+   "summary": "Session 31 (2026-10-17) - NEW PROJECT, THREE INCREMENTS, AND THE FIRST PROJECT SESSION IN FOUR TO END ON A WIN. He opened with 'ok im back / i would like to do some python work'.\n\nHEAD-OF-YEAR REVIEW #2 ran FIRST (due 10-14, three days late), conducted by a Fable agent per the mandatory rule. Verdict AMBER - the same colour as review #1, which it named as the finding: best attendance and most code the programme has produced, yet the colour did not move because nothing is public and project sessions kept ending badly. It graded its own three priorities done / half / FAILED, confirmed that the tutor's method is the main risk to him STAYING but rejected the dashboard's 'not his retention' half (the cold redos show retention failing live - two risks, not one), and flagged that seven standing teaching rules had been written across four project sessions with each failure producing a rule that did not prevent the next: 'the rulebook is complete; another rule is not the fix.' Call: REFINE then HOLD STILL - no new legislation, test compliance. It also caught three record-drift errors in progress.json and dashboard.md, all three verified and corrected tonight.\n\nHIS ANSWERS: priority 1 'maybe', priority 3 'not sure', and priority 2 ANSWERED PROPERLY - 'no i want it on github but the repo should be private, sectools is good for beginner, the stuff i display on my github i need to make sure its done properly, documented properlym and without heavy AI reliance.' That closes a debt that had stood since July as a DECISION rather than outstanding work, and it sets his portfolio bar: public means done properly, documented properly, no heavy AI reliance. Logged to program_decisions.\n\nTHE SESSION: offered three builds and let him pick (engagement rule) - passcheck (his own parked idea), peel (a layered-encoding decoder built from his own picoCTF charset cheat sheet), netcalc (a subnet calculator from bitwise arithmetic). He chose PASSCHECK. New tool, second in the sectools suite, inverts cupp: person's own details in, every plausible derivation generated, candidate password REJECTED if it falls inside that set. NIST SP 800-63B 5.1.1.2 requires exactly this screening against 'context-specific words... and derivatives thereof'.\n\nSHIPPED - derive.py, 38 lines, four pure functions, all his, three commits, 35 tests green:\n  INC 1 (28 min, ZERO HINTS) case_variants + year_variants.\n  INC 2 (47 min, one Tier 1) leet_variants via itertools.product - every substitutable character an independent binary choice, count doubling per character (aeios -> 32, password -> 16).\n  INC 4 (25 min, Tiers 2-3-4) build_candidate_set - three accumulating stages, case -> leet -> year, the only function allowed to know the others exist. Increment 3 (joins) deliberately deferred past 4 because composition is what makes the tool work.\nMEASURED PAYOFF: ['liverpool'] + ['1998','2020'] -> 240 candidates, and 'L1v3rp00l1998' is one of them. Thirteen characters, mixed case, digits, passes every common complexity rule, caught by code he wrote in one evening. Adding 'emre' takes it to 290.\n\nSOLO WINS WORTH NAMING. (1) He carried the one-guard/one-return shape from last session's refactor onto a brand-new file unprompted. (2) He hit his own obstacle on year_variants - index arithmetic would not pick the short form out of a 2-character year - and resolved it with negative slicing, which is the intent-stating form AND the one that cannot raise IndexError. (3) He built the one-option list for non-substitutable characters rather than branching around them, which is why two frozen tests pass with no code written for them and the function contains no special case. (4) He applied ALL THREE outstanding green-level review notes unprompted, including going back into increment 1's code that increment 2 never touched, and rewriting his accumulate loop as a set comprehension. (5) He reached the STAGED (non-nested) decomposition of increment 4 by himself; it is equivalent to the spec's nested wording and he was told so before he spent time doubting it.\n\nHIS SPEC ARGUMENT, WON. His year_variants applied the short form unconditionally where the spec said 4-character years only. The frozen corpus could not detect it (the set swallows the duplicate), and over-generating is the SAFE direction of error for a screener - too large a derivation set costs one extra password attempt, too small lets a guessable password through. The SPEC was amended to his implementation, with his reasoning recorded in it. The tutor had also said 'pytest is your green light, not me', so failing him on something pytest could not see would have been goalpost-moving; it was flagged as a weak test (tutor-written) rather than a weak implementation.\n\nTHE ONE METHOD FAILURE, WHICH HE DIAGNOSED HIMSELF: 'the part that confused me the most was the lack of teaching. You needed to teach me the update function or the union function. the code itself now i see it is easy i had it i was on the right track. i would have struggled with the final set but the others i essentialy had it.' He is right. The increment 1 brief taught set(), .add() and `a | b` and never the merge form, and increment 4's central operation was merging a set into an accumulator - so he wrote `after_cases.add(x for x in case_variants(word))` and put two generator OBJECTS into his set. Every one of the three hint tiers tonight traces to that gap. His third signal ('you havent explained the final step? we have a copy set and the additional set? i feel like this final function was a step up and im not getting it at all') was also correct - the Tier 3 stage-C wording was genuinely muddled. SEVENTH consecutive session of correct pushback on method. Per the head of year's explicit call, this was logged against the EXISTING one-new-concept/pre-built-machinery rule and NO eighth rule was written.\n\nCONCEPTS THAT LANDED: sets dedupe, have no order, and {} is a dict; set equality is membership, not order (pytest's 'Extra items in the right set' is a membership statement - he initially read it as an ordering problem and asked whether to sort); itertools.product takes one iterable per POSITION and `*` unpacks a list of choice-lists into those positions; a uniform one-option list removes the need for a special case; join takes any iterable of strings including tuples; .add() takes one item where .update()/.union()/`|` take an iterable; and the security principle that for a screener, over-generation is the safe direction of error.\n\nRECORD DRIFT CORRECTED (all three found by the head of year, all three verified): python track level 1 -> 2 (dashboard and checkpoints had said L2 since 2026-07-18); total_hours 26.3 -> 31.3 (session 30's 3h had never been added); cross_track_connections 18 -> 20. Bash last_active left at 2026-05-10 with a note explaining that track challenges and Linux-lane work are different numbers and both are true.\n\nNo weak-point retests were due and none were logged. Bandit diversion (trigger passed 10-16) deferred one session because he asked for Python; it re-triggers session 32."
   }
  ],
  "checkpoints_reached": [
@@ -1388,6 +1447,18 @@
    "id": "all_tracks_l1_complete",
    "date": "2026-05-18",
    "note": "ALL THREE CORE TRACKS AT LEVEL 1 COMPLETE. Bash L1 (2026-05-10), Python L1 (2026-05-11), Concepts L1 (2026-05-18). 13 sessions over 21 calendar days. From zero-domain-knowledge diagnostic 2026-04-27 to all-tracks-L1-complete 2026-05-18. Scenarios still locked (require all tracks at L2). L2 entries available on all three tracks; highest-priority gating item is the WP002 retest due 2026-05-19. Pivot/L2-shape reasoning showing reliably at L1 in last three Concepts challenges — Concepts L2 entry pace may not need scaffolding."
+  },
+  {
+   "checkpoint": "Second portfolio tool started - passcheck, from his own parked idea, chosen from three offered builds",
+   "date": "2026-10-17"
+  },
+  {
+   "checkpoint": "First combinatorial Python - itertools.product and a choice-list per position",
+   "date": "2026-10-17"
+  },
+  {
+   "checkpoint": "First project session in four to end on a win rather than frustration - and the first measured session duration in six",
+   "date": "2026-10-17"
   }
  ],
  "totals": {
@@ -1395,12 +1466,15 @@
   "challenges_attempted_unfinished": 2,
   "writeups_generated": 11,
   "writeups_archived": 11,
-  "cross_track_connections": 18,
-  "total_hours": 26.3,
+  "cross_track_connections": 20,
+  "total_hours": 31.3,
   "weak_points_mastered": 2,
   "ctf_flags_captured": 17,
   "loginwatch_increments_done": 12,
-  "loginwatch_tests_passing": 23
+  "loginwatch_tests_passing": 23,
+  "total_hours_note": "CORRECTED 2026-10-17: field read 26.3 while dashboard.md read ~29.3. Session 30's ~3h transcript estimate had never been added. 26.3 + 3.0 (s30, estimated) + 2.0 (s31, MEASURED - first measured duration in six sessions) = 31.3.",
+  "passcheck_tests_passing": 35,
+  "passcheck_increments_done": 3
  },
  "diagnostic": {
   "completed": true,
@@ -1541,8 +1615,8 @@
    "notes": "30-line synthetic SSH auth log on web-prod-01, all entries May 24 single-day, spanning hours 03/07/11/14/18/22 to test multi-hour grouping if desired (today's brief did not require it). 26 Failed + 4 Accepted lines. Failed brute-force IPs: 45.95.169.84=4 (03:xx, admin+oracle, password-spray shape), 193.32.162.157=2 (07:xx, postgres), 89.248.165.74=1 (11:xx, test), 218.92.0.142=8 (14:xx, root, sustained burst), 171.25.193.78=4 (18:xx, multiple usernames git/jenkins/nginx/ubuntu, password-spray shape), 152.32.146.215=7 (22:xx, admin, sustained burst with one Accepted-emre at 22:17 interleaved). Accepted lines: 10.0.0.15 deploy ×2, 10.0.0.20 emre ×2. Tutor-key verified pre-delivery: First Failed = 'May 24 03:15:22', Last Failed = 'May 24 22:20:18'. Used 2026-05-24 — passed (WP004 mastered)."
   }
  },
- "pickup_note": "SESSION 31 - THE NEXT SESSION IS A NEW PROGRAM. DO NOT OPEN WITH LOGINWATCH, TESTS, TYPES, PACKAGING OR DOCS.\n\nWHY, IN ONE LINE: loginwatch's Python is finished (Inc 11 and 12 are Bash, 14 is packaging, 15 is docs), and three of the last four project sessions ended with him demoralised because the headline work was upkeep rather than building. Session 30 did it twice. His words at close: 'These python sessions are always the same for me, i start enthusiastic and then you somehow always find ways to make me want to just close the code editor and go do something else.' The programme's own log said the same thing on 2026-07-31 and it was not acted on. See program_decisions 2026-10-12 and Claude Code memory feedback-build-dont-maintain.\n\nTHE PROGRAM, WHICH IS HIS OWN IDEA (was debt #4, now the active build): a BLUE-TEAM PASSWORD-STRENGTH CHECKER that inverts cupp - given a person's own details (name, partner, pet, DOB, employer, postcode), generate every plausible derivation (case variants, leetspeak substitution, appended years, concatenations) and REJECT a candidate password that appears in that set. Real defensive security: NIST SP 800-63B 5.1.1.2 recommends screening candidate passwords against context-specific dictionaries, which is exactly this. Pure stdlib Python - string manipulation, sets, itertools, scoring, argparse. Nothing borrowed from loginwatch. Candidate sectools sibling, so it extends the suite.\n\nOFFER A CHOICE FIRST (new rule 2026-10-12 - engagement is a requirement): present the password checker alongside ONE or TWO alternatives and let him pick. The domain constraint is now RELAXED - a security link is a plus, not a requirement, and any IT-world project qualifies, so the alternatives do not have to be security-flavoured. Then hand him an implementation brief for increment 1 and let him WRITE CODE in the first ten minutes. Do not open with a spec-writing exercise, a test-first exercise, or a project-structure discussion - loginwatch already proved he can do those and they are not what he is short of. The spec can be written once something runs. Lock the acceptance criterion in the repo before he starts (standing rule from 2026-10-11) and pre-write any incidental machinery as labelled scaffolding (standing rule from 2026-10-11).\n\nHEAD-OF-YEAR REVIEW DUE 2026-10-14 (Fable). If session 31 falls on or after that date the FABLE AGENT SPEAKS FIRST, before any greeting or plan. Brief it on: Increment 11a shipped (the parser can no longer return a false all-clear) and debt #2 closed, BUT its priority #2 - sectools public - is STILL open since July; Bash L2 / Increment 11 is still the Scenarios gate and still untouched; and the thing it most needs to see, which is that the tutor's METHOD is now the programme's main risk, not his pace and not his retention. Session 30 produced THREE new standing teaching rules from six separate method failures, and he was right every time. It is the sixth consecutive session of correct pushback.\n\nUNCOMMITTED AT WRAP: /home/emrebektas/sectools has report.py + pyproject.toml modified/untracked; cybersec-learning has progress.json + dashboard.md. Commit messages were proposed in the session-30 transcript. Stage explicit files only.\n\nSTILL OPEN, NONE OF IT TO BE VOLUNTEERED AS 'PYTHON WORK': ship sectools public (debt #1, since July, ~10 min) - worth RAISING as a separate 10-minute errand, not as a session plan. loginwatch write-up (debt #3, none since July; the false-all-clear bug with measured 2-vs-3 before/after numbers is the strongest portfolio material to date). Increment 11 run-daily.sh when he wants BASH work - it carries two planted lessons: report.py iterates a SET so dual-role output order flips between runs and will fire a false positive once run-daily.sh diffs day-to-day (let it fire), and make him actually TYPE awk '!x[$0]++'.\n\nCTF/BANDIT QUEUE: Piece by Piece redo ~2026-10-23, Printer Shares ~2026-11-05, bandit12 ~2026-11-06, all graded on IDENTIFICATION alone regardless of flag capture. Bandit at bandit13 (sshkey.private), last touched 2026-10-09, next diversion trigger 2026-10-16. 2026-09-30 batch ~2026-10-21, 2026-10-03 batch ~2026-10-24. Sudo Make Me a Sandwich needs one clean self-powered re-test.",
- "last_weekly_summary": "2026-10-09",
+ "pickup_note": "SESSION 32 - CONTINUE passcheck. It is a live build with building work left, so no backfilling with upkeep. Repo /home/emrebektas/sectools, 21 commits, clean at wrap, 35 tests green, PASSCHECK-SPEC.md holds the increment map.\n\nWHERE IT STANDS: derive.py has four functions - case_variants, year_variants, leet_variants, build_candidate_set - all his, all pure, 38 lines. Composing them over ['liverpool'] + ['1998','2020'] yields 240 candidates and catches 'L1v3rp00l1998'. Increments 1, 2 and 4 are done; 3 (joins) was deliberately deferred past 4.\n\nNEXT BUILD, RECOMMENDED: INCREMENT 5 - screen(password, candidates) returning a verdict plus WHICH fact and rule chain matched, then INCREMENT 6 (argparse CLI). That pair is what makes passcheck a tool he can run on a real password instead of a module he imports, and 6 reuses argparse which he has already done in loginwatch, so 5 is where the thinking is. Increment 3 (joins) is the alternative if he wants something purely mechanical - same concept as increment 2, no new machinery, pure typing volume.\n\nHOW TO RUN IT - the one correction from tonight, and it is a REPEAT of an existing rule, not a new one: INCIDENTAL MACHINERY MUST BE HANDED TO HIM, NOT DISCOVERED. Tonight's only escalation (Tiers 2-3-4 on increment 4) happened because the increment 1 brief taught set(), .add() and `a | b` but never the merge form (.update()/.union()), which was increment 4's central operation - so he built one out of .add() and a generator expression. His read: 'the part that confused me the most was the lack of teaching. You needed to teach me the update function or the union function... the code itself now i see it is easy i had it i was on the right track.' He was right. Before writing any brief, list the operations the objective actually requires and check each one has been handed to him; if not, hand it over in the brief. Per the head of year's explicit call tonight, this is logged as the EXISTING one-new-concept rule being broken and NO new rule was written.\n\nALSO: the Tier 3 wording for stage C was muddled ('starts as a copy of stage B, then loop over stage B'). When describing an accumulator, say one set, one loop, and what happens per item.\n\nWHAT WORKED AND SHOULD BE REPEATED VERBATIM: offer two or three builds and let him pick (he picked passcheck from three, which was his own parked idea); lock the frozen corpus and the spec section in the repo BEFORE he starts, with the pass condition stated as a number ('14 passed', '25 passed', '35 passed'); tell him pytest is the green light, not the tutor; commit each increment as its own commit. Two hours, three increments, three commits, no demoralised ending - the first project session in four to close that way.\n\nOUTSIDE PROJECT TIME, head-of-year priority 3: Bandit 13 (sshkey.private) untouched since 2026-10-09, diversion trigger passed 2026-10-16 - deferred ONE session tonight because he asked for Python, so it re-triggers next session. picoCTF 09-30 batch requeued ~2026-10-21; Piece by Piece ~2026-10-23, graded on `file`-first alone. Bandit0-6 cold redo still outstanding.\n\nNOT TO BE VOLUNTEERED AS PYTHON WORK: the loginwatch write-up (debt #3) - raise it as a separate errand, not as the session; loginwatch Increments 11/12 when he wants BASH; packaging or docs for either project.",
+ "last_weekly_summary": "2026-10-17",
  "program_decisions": [
   {
    "date": "2026-07-16",
@@ -1613,6 +1687,16 @@
    "decision": "CODING VOLUME IS THE PROGRAMME, AND THE SECURITY CONSTRAINT RELAXES. (1) Minutes spent writing code is the metric a session is judged on. (2) A cybersecurity link is a PLUS, NOT A REQUIREMENT - any IT-world project qualifies (tooling, parsers, CLIs, automation, data wrangling, networking utilities, APIs); do not contort a project into a security shape, and do not reject a good coding project for lacking one. Take a free security angle where one exists - that is what a brief's CONTEXT section is for. (3) Engagement is a requirement, not a nicety: offer a CHOICE of two or three builds at session start rather than assigning one. (4) STRICTNESS IS EXPLICITLY WELCOME - he values that the tutor knows what production code looks like and how far he is from it, so the review protocol stays sharp. Rigorous review is NOT the same thing as filling a session with upkeep; his objection was to the second, so do not go soft on code review after being corrected about session content.",
    "user_words": "'coding is the best way to learn, you just need to keep me coding, making it fun and somewhat engaging. If the project can somehow link to cybersecurity thats a plus. I dont mind you somewhats being strict since you know what actual production code looks like and how far i am from that. if the project doesnt link to cybersecurity that is fine as long as it stays within the IT world, i just need to be coding or else i can't get good and consistent.'",
    "written_to": "CLAUDE.md Program Amendments as the 2026-10-12 entry (now the most recent override), and Claude Code memory as feedback-keep-him-coding."
+  },
+  {
+   "date": "2026-10-17",
+   "decision": "sectools goes to GitHub PRIVATE, not public. His words: 'i want it on github but the repo should be private, sectools is good for beginner, the stuff i display on my github i need to make sure its done properly, documented properly and without heavy AI reliance.'",
+   "effects": [
+    "Open debt #1 ('ship sectools public', standing since July, head-of-year priority #2 twice) is CLOSED as a decision. Do not resurface it as outstanding work.",
+    "Replacement task, lower stakes: create a PRIVATE GitHub repo and push, so the 18 commits are backed up off-machine. Still needs the OPSEC scrub + SPEC.md spellcheck first.",
+    "NEW STANDARD recorded for anything he puts on his PUBLIC GitHub: done properly, documented properly, and without heavy AI reliance. This is his portfolio bar and it now governs what gets proposed as portfolio work - a public-facing project must be one he can defend as substantially his own.",
+    "Read in context: this is not avoidance. He is distinguishing a learning repo from a portfolio piece, which is the right distinction, and it raises the bar on what the programme should be building toward."
+   ]
   }
  ],
  "active_project": {
@@ -1620,7 +1704,7 @@
   "suite": "sectools",
   "one_line": "CLI auth-log brute-force detector: aggregates failed logins by source IP, flags brute-force sources over a threshold, and surfaces dual-role IPs (Failed AND Accepted = credential-compromise signal). All synthetic/localhost data.",
   "role": "FIRST portfolio project AND the BASELINE reference — how every future project is approached, designed, implemented, tested, and showcased. Get this right; it is the template.",
-  "status": "IN PROGRESS - 12/15 numbered increments done (0-10 + 13), PLUS unnumbered Increment 11a (parser hardening) completed 2026-10-11. Remaining numbered: 11 (run-daily.sh, Bash - the Bash L2 gate and therefore the Scenarios gate), 12 (install.sh), 14 (pyproject.toml + console entry point), 15 (README + MANUAL). Test suite 14 -> 23. The parser no longer reads fields by position: every line is classified into one of three exits and NO input of any shape can abort a scan. SPEC.md now documents INPUT FORMAT (the two recognised outcome words, the `from` landmark, the three line classes) and SKIPPED LINES (counted, reported to stderr so stdout stays machine-readable). An unreadable path now exits 2 via an OSError handler placed below the FileNotFoundError one - which matters because a crash previously exited 1, the code SPEC.md defines as 'findings present', so run-daily.sh would have read a dead tool as a detection. AS OF WRAP 2026-10-12 NOTHING IS COMMITTED: /home/emrebektas/sectools is dirty (SPEC.md, parser.py, loginwatch.py, tests/test_parser.py, tests/test_exit_codes.py modified; data/auth-variants.log untracked) and stash@{0} holds the discarded first attempt. GitHub repo still NOT created - open debt #1 since July. 2026-10-12 ADDENDUM: report.py fully annotated (-> None on both functions, parameter types from the producing functions) and the `record` rebinding removed; pyproject.toml added carrying [tool.mypy] strict = true and [tool.pytest.ini_options] pythonpath/testpaths, so bare `mypy` and `pytest` both work from the venv at /home/emrebektas/sectools/.venv (mypy 2.4.0, pytest 9.1.1; .venv already gitignored). mypy --strict CLEAN on all three modules, 23 tests green, CSV output byte-identical. DEBT #2 (install mypy) IS CLOSED. *** STRUCTURAL NOTE FOR BOOTSTRAP: LOGINWATCH'S PYTHON IS FINISHED. Increment 11 (run-daily.sh) and 12 (install.sh) are Bash; 14 is packaging config; 15 is documentation. Do NOT offer loginwatch work in answer to a request for Python building - there is none left. ***",
+  "status": "IN PROGRESS - 12/15 numbered increments done (0-10 + 13), PLUS unnumbered Increment 11a (parser hardening) completed 2026-10-11. Remaining numbered: 11 (run-daily.sh, Bash - the Bash L2 gate and therefore the Scenarios gate), 12 (install.sh), 14 (pyproject.toml + console entry point), 15 (README + MANUAL). Test suite 14 -> 23. The parser no longer reads fields by position: every line is classified into one of three exits and NO input of any shape can abort a scan. SPEC.md now documents INPUT FORMAT (the two recognised outcome words, the `from` landmark, the three line classes) and SKIPPED LINES (counted, reported to stderr so stdout stays machine-readable). An unreadable path now exits 2 via an OSError handler placed below the FileNotFoundError one - which matters because a crash previously exited 1, the code SPEC.md defines as 'findings present', so run-daily.sh would have read a dead tool as a detection. AS OF WRAP 2026-10-12 NOTHING IS COMMITTED: /home/emrebektas/sectools is dirty (SPEC.md, parser.py, loginwatch.py, tests/test_parser.py, tests/test_exit_codes.py modified; data/auth-variants.log untracked) and stash@{0} holds the discarded first attempt. GitHub repo still NOT created - open debt #1 since July. 2026-10-12 ADDENDUM: report.py fully annotated (-> None on both functions, parameter types from the producing functions) and the `record` rebinding removed; pyproject.toml added carrying [tool.mypy] strict = true and [tool.pytest.ini_options] pythonpath/testpaths, so bare `mypy` and `pytest` both work from the venv at /home/emrebektas/sectools/.venv (mypy 2.4.0, pytest 9.1.1; .venv already gitignored). mypy --strict CLEAN on all three modules, 23 tests green, CSV output byte-identical. DEBT #2 (install mypy) IS CLOSED. *** STRUCTURAL NOTE FOR BOOTSTRAP: LOGINWATCH'S PYTHON IS FINISHED. Increment 11 (run-daily.sh) and 12 (install.sh) are Bash; 14 is packaging config; 15 is documentation. Do NOT offer loginwatch work in answer to a request for Python building - there is none left. *** | 2026-10-17: PYTHON WORK COMPLETE. Remaining increments are Bash (11 run-daily.sh, 12 install.sh), packaging (14) and docs (15). Not to be offered as 'Python work'. Increment 11 remains the Bash L2 gate on Scenario missions. Five minor flagged code items outstanding, none blocking.",
   "started_date": "2026-07-17",
   "track": "python (primary) + bash (30%: install/runner scripts)",
   "repo": {
@@ -1849,5 +1933,62 @@
    "retired_reason": "User instruction 2026-07-29, session 23: stop surfacing WP001 as a graded per-task item. His words: 'i think you are stuck on this WP001 move past it, you are examining it every single task. You are critiquing how much of the task i complete, the most important part is the code, the theory and context and reasoning comes with it. it is becoming annoying now seeing it every task, you are wasting tokens on it for unecessary reasoning, it is a weak point that will not just dissapear. ignore it and move on.' NOT mastered, NOT failed — retired. No further retests, no per-submission verdicts, no 'this is the WP001 fingerprint' commentary. If imprecision actually breaks code, flag it as a normal code issue on its own merits. Durable feedback memory saved: feedback_weak_point_ceremony. Applies to future weak points too: log it, watch quietly, do not narrate it every session.",
    "final_state_at_retirement": "Stage 2, 0 failures. Last graded observation (Inc 8 brief, 2026-07-29): all six specified parameter values / format constraints held unprompted on first submission — including the CSV header `source_ip,failed_count` written correctly while the sibling create_report using 'SOURCE IP'/'FAILED' sat three lines above it. That was the exact facet the 2026-07-17 retest named as the remaining gap, and it closed. Sub-task completeness (pasting both outputs) slipped. Pattern noted across the two retests: the facet last called out closes, the other drifts — attention allocation, not a knowledge gap."
   }
- ]
+ ],
+ "active_build": {
+  "name": "passcheck",
+  "suite": "sectools",
+  "started_date": "2026-10-17",
+  "track": "python",
+  "level": "L2",
+  "repo": "/home/emrebektas/sectools",
+  "one_line": "Blue-team password screener that inverts cupp: a person's own details in, every plausible derivation generated, a candidate password rejected if it falls inside that set.",
+  "origin": "His own idea, parked 2026-07 as open debt #4, promoted to the active build 2026-10-12 and chosen by him from three offered options on 2026-10-17.",
+  "security_basis": "NIST SP 800-63B 5.1.1.2 - candidate passwords must be screened against context-specific words 'and derivatives thereof'. Derivatives is the whole job: length and character-class rules pass R3x1998! happily. https://pages.nist.gov/800-63-3/sp800-63b.html",
+  "spec": "PASSCHECK-SPEC.md",
+  "tests": "tests/test_derive.py - 35 frozen cases, all written before implementation",
+  "design_principle": "For a screener, over-generation is the SAFE direction of error: too large a derivation set costs a user one extra attempt, too small lets a guessable password through. Settled by his own argument on 2026-10-17 and the spec was amended to his implementation.",
+  "increments": [
+   {
+    "n": 1,
+    "what": "derive.py - case_variants + year_variants",
+    "status": "done 2026-10-17",
+    "hints": "none",
+    "commit": "68d6d17"
+   },
+   {
+    "n": 2,
+    "what": "leet_variants - itertools.product combinatorics",
+    "status": "done 2026-10-17",
+    "hints": "Tier 1",
+    "commit": "f66c73e"
+   },
+   {
+    "n": 3,
+    "what": "joins - concatenate pairs of facts",
+    "status": "deferred past 4; mechanical, no new machinery"
+   },
+   {
+    "n": 4,
+    "what": "build_candidate_set - compose the three generators",
+    "status": "done 2026-10-17",
+    "hints": "Tiers 2,3,4",
+    "commit": "ffa1709"
+   },
+   {
+    "n": 5,
+    "what": "screen(password, candidates) - verdict plus which fact and rule chain matched",
+    "status": "NEXT - recommended"
+   },
+   {
+    "n": 6,
+    "what": "argparse CLI",
+    "status": "pending - reuses argparse he already did in loginwatch"
+   },
+   {
+    "n": 7,
+    "what": "scoring and the report",
+    "status": "direction only"
+   }
+  ]
+ }
 }
