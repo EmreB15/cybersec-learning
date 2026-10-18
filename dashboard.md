@@ -1,118 +1,119 @@
 # Cybersecurity Training Dashboard
-*Last updated: 2026-10-17 — Session 31. **A new tool, three increments, and the first project session in four that he closed on a win instead of walking away from it.***
+*Last updated: 2026-10-19 — Session 32. **Bandit 13→16, increment 5a green at 49 — and he finished the session by specifying how briefs should be sized.***
 
 ---
 
 ## Pickup Here
 
-> ### ⭐ CONTINUE `passcheck` — it is a live build with building work left.
-> No backfilling with upkeep. The repo is clean, 21 commits, **35 tests green**, and [PASSCHECK-SPEC.md](../sectools/PASSCHECK-SPEC.md) holds the increment map.
+> ### ⭐ NOTHING WAS COMMITTED. Commit first, then increment 5b — one line.
+> `/home/emrebektas/sectools` holds uncommitted changes to `derive.py`, [PASSCHECK-SPEC.md](../sectools/PASSCHECK-SPEC.md) and `tests/test_derive.py`, plus an untracked `tests/test_screen.py`. **49 green** in `test_derive.py`; 8 frozen and red in `test_screen.py` awaiting `screen.py`.
 
-**Where it stands:** `derive.py` is **38 lines, four pure functions, all his** — `case_variants`, `year_variants`, `leet_variants`, `build_candidate_set`. Increments 1, 2 and 4 are done; 3 was deliberately deferred past 4.
+**Increment 5a is closed.** The red finding was fixed — **tutor-applied, at his explicit request**, so it isn't credited to him. His 47 were his: the tree walk, both stage comparisons, `sorted()` in both places, `parts + ["year"]` over `.append`. The fix deleted 8 lines and added none, and the tutor's *first* recommendation for it was wrong and would have broken two frozen tests.
 
-**Next build — Increment 5: `screen(password, candidates)`** returning a verdict *plus which fact and which rule chain matched*, then **Increment 6 (argparse CLI)**. That pair turns `passcheck` from a module he imports into a tool he can run on a real password. Increment 6 reuses argparse he already did in `loginwatch`, so **5 is where the thinking is**. Increment 3 (`joins`) is the alternative if he wants something purely mechanical — same concept as increment 2, no new machinery, pure typing volume.
+**→ 5b: `screen.py`**, importing nothing from `derive`. `screen(password, candidates) -> tuple[str, str] | None`. Exact match, no normalising. **It should come out one line** — he's been told that if it's longer, 5a built the wrong structure. 8 frozen tests exist. Pass condition: `pytest` → **57 passed**.
 
-> ### 📌 THE ONE CORRECTION FROM TONIGHT — and it is a REPEAT, not a new rule
-> **Incidental machinery must be handed to him, not discovered.** Before writing any brief, list the operations the objective actually requires and check each one has already been given to him. If not, it goes in the brief. Tonight's only escalation traces entirely to this. **Per the head of year's explicit call, no eighth teaching rule was written.**
->
-> Also: when describing an accumulator, say **one set, one loop, and what happens per item.** The Tier 3 wording for stage C ("starts as a copy of stage B, then loop over stage B") was muddled and he was right to call it.
+> **5b is also a probe.** The conditional expression `A if cond else B` was tutor-applied, not written by him. If 5b needs it and he reaches for it unaided, it landed. **Don't prompt him toward it.**
 
-**Repeat verbatim next session — this is what worked:** offer two or three builds and let him pick · lock the frozen corpus and spec section in the repo **before** he starts, with the pass condition stated as a number · tell him **pytest is the green light, not the tutor** · one commit per increment.
+**→ Increment 6, already split** — see the correction below.
 
-**Not to be volunteered as "Python work":** the `loginwatch` write-up (debt #2 — raise as a separate errand) · `loginwatch` Increments 11/12 when he wants **Bash** · packaging or docs for either project.
+| | What he builds | Runnable? |
+|---|---|---|
+| **6a** | argparse skeleton — repeatable `--word` / `--year`, prints what it parsed | yes |
+| **6b** | wire in `build_candidate_map` + `screen` on `--password`, print REJECTED / ACCEPTED | yes |
+| **6c** | the explanation line — *"rejected: derived from 'liverpool' by case+leet+year"* | the finished tool |
 
 ---
 
-## Session 31 (2026-10-17) — `passcheck` increments 1, 2 and 4
+> ### 📌 TWO METHOD CHANGES — BOTH RAISED BY HIM, BOTH NOW STANDING
+>
+> **1. Grow the shape one level at a time** *(his, 2026-10-19)*
+>
+> > *"Honestly a better approach here would have been starting off with just case then adding the leet and then the year. So i would understand it better."*
+>
+> He's right. Split his way, **each sub-step adds exactly one loop and one comparison** — and at two levels deep it's nearly impossible to miss that the source word lives in the enclosing loop and can't be recovered from a finished candidate. The insight would have arrived free, at a depth where it's obvious, then scaled twice. Instead the whole four-level shape arrived at once and the insight had nowhere to come from.
+>
+> **The programme already had this pattern and the tutor broke it.** Increments 1, 2 and 4 were one generator at a time, each green before the next. It was abandoned exactly where the difficulty stopped being *a new function* and became *a new shape*. It's also better on the metric that counts: more typing, three green lights, three commits.
+>
+> **2. Draw the shape of the data at brief time** *(his, 2026-10-18)*
+>
+> > *"your explaination for tier 2 is useless because im struggling to see the bigger picture"*
+>
+> Tier 2 named a technique to someone who couldn't see the data's shape. What moved him in one step was Tier 3 **drawing the derivation as a tree**. Prose describing a tree is not a tree. This is **"show the path"** applied to data flow rather than file layout.
+>
+> **Neither becomes an eighth teaching rule.** Both are the existing one-new-concept rule being broken. The head of year's standing call stands: test compliance, don't legislate.
 
-**Two hours, stated and measured** — 22:00 to 00:00, the first measured duration in six sessions. Three increments, three commits, no demoralised ending.
+**Repeat verbatim:** offer two or three builds and let him pick · lock the spec section and frozen tests in the repo **before** he starts, pass condition as a number · verify tutor-written tests against a reference implementation that **imports his functions**, so expected values are computed, not guessed · pytest is the green light, not the tutor · one commit per increment.
 
-He picked the build from three offered: `passcheck` (his own idea), `peel` (a layered-encoding decoder from his own picoCTF charset cheat sheet), `netcalc` (a subnet calculator from bitwise arithmetic).
+**New:** ⏱ **warn him at the halfway mark of any timed chunk.** The Bandit chunk ran 50 minutes against a 25-minute budget with no check-in, and that is what cost increment 5b.
 
-**What `passcheck` is.** It inverts `cupp`. `cupp` takes a person's details and generates a wordlist to attack them with; `passcheck` takes the same details and **rejects** any candidate password that falls inside that set. ⚠️ **Verify** [NIST SP 800-63B §5.1.1.2](https://pages.nist.gov/800-63-3/sp800-63b.html) — screening candidates against "context-specific words... and derivatives thereof" is the actual requirement. *Derivatives* is the whole job: no complexity rule catches `R3x1998!`.
+**Not to be volunteered as "Python work":** the `loginwatch` write-up (debt #2 — a separate errand) · `loginwatch` Increments 11/12 when he wants **Bash** · packaging or docs for either project.
 
-| Inc | What | Time | Hints | Commit |
-|-----|------|------|-------|--------|
-| 1 | `case_variants` + `year_variants` | 28 min | **none** | `68d6d17` |
-| 2 | `leet_variants` via `itertools.product` | 47 min | Tier 1 | `f66c73e` |
-| 3 | `joins` | — | *deferred past 4* | — |
-| **4** | **`build_candidate_set` — compose all three** | 25 min | Tiers 2,3,4 | `ffa1709` |
+---
 
-**Measured payoff.** `build_candidate_set(["liverpool"], ["1998","2020"])` → **240 candidates**, and `L1v3rp00l1998` is one of them. Thirteen characters, mixed case, digits, passes every complexity rule in common use — caught by code he wrote in one evening. Adding `"emre"` takes it to 290.
+## Session 32 (2026-10-18) — Bandit 13→16, then `passcheck` increment 5a
+
+**108 minutes, measured** — 22:29 to 00:17. A stated 90 plus a 20-minute extension he asked for at 23:56, three minutes from lock, when he was stuck and wanted to finish. Second consecutive measured session.
+
+| Chunk | Budget | Actual | Outcome |
+|---|---|---|---|
+| Bandit 13→16 | 25 min | **50 min** | 3 levels, commands looked up |
+| `passcheck` 5a | 60 min | ~35 min | **47 passed**, 1 red outstanding |
+| Increment 5b | — | — | **cut for time** |
+
+### Bandit 13→16 — fast, and honestly graded
+
+Three levels in ~50 minutes. **He disclosed unprompted** that he used AI chatbots for the commands and then self-served the flags with `--help`.
+
+The `--help` half is the part that transfers and was named as such. But on *these* levels the command **is** the answer — `ssh -i`, then talking to a port, then talking to a port wrapped in TLS, with no parsing or decoding underneath — so "which tool do I need" was an **answer-lookup**, not the permitted tool-lookup. Passwords banked; recall unproven.
+
+**→ Cold redo queued 2026-11-01, graded on tool recall alone,** not flag capture: does a plain TCP client arrive unaided, and when the level says the port speaks SSL is a TLS client reached for *deliberately* rather than retrying the plain one? Full entry in [external/bandit-notes.md](external/bandit-notes.md).
+
+### A real design finding came out of the tutor's prep
+
+Provenance built by iterating generator **sets** is non-deterministic *across processes*. A candidate reachable by two routes — `"4"` from `"a"` via leet and from `"A"` via case+leet — takes whichever route is visited last, and string hashing is randomised per process. **Measured across 15 `PYTHONHASHSEED` values: 2 of 6 candidates flipped.** Wrapping the two inner set iterations in `sorted()` removed it on all 15.
+
+That became a frozen spec requirement with the reason recorded: **a security tool that gives two different explanations for the same password on two runs is defective, not quirky.**
+
+### Increment 5a — the ladder, and why it was climbed
+
+Tiers **1, 2, 3 and 4** in ~35 minutes. His first architecture built one set per rule-combination and classified candidates by membership over the finished `build_candidate_set` output. Real thinking — it even resolved the double-route ambiguity deterministically through `elif` order, with no `sorted()` needed — but **structurally unable to report the source word**, because by the time it iterated the finished set the origin had been discarded. pytest said it in one line: `assert ('4','leet') == ('a','leet')`, index 0.
+
+He diagnosed the rewrite himself — *"i have the feeling i need to rewrite all the code"* — and was told plainly he was right, and that the scope was **one function body**, ~20 lines deleted and ~15 written, not the project.
 
 **⭐ Solo wins worth naming.**
-1. He carried **one-guard/one-return** from last session's refactor onto a brand-new file, unprompted.
-2. He hit his own obstacle in `year_variants` — index arithmetic wouldn't pick the short form out of a 2-character year — and solved it with **negative slicing**, which is both the intent-stating form *and* the one that cannot raise `IndexError`.
-3. He gave non-substitutable characters a **one-option list** instead of branching around them. That's why two frozen tests pass with **no code written for them** and the function contains no special case at all.
-4. He applied **all three** outstanding 🟢 review notes unprompted — including going back into increment 1's code that increment 2 never touched, and rewriting his accumulate loop as a set comprehension.
-5. He reached the **staged (non-nested)** decomposition of increment 4 himself. It's equivalent to the spec's nested wording, and he was told so before he wasted time doubting it.
+1. Once he had the shape, he wrote the tree walk **correctly on the first attempt**: source word carried from the root, each stage compared to its **immediate parent** rather than the root, `sorted()` in both places.
+2. `parts + ["year"]` rather than `.append` — the list-aliasing trap, dodged deliberately after one warning. Appending would have left `"year"` stuck in `parts` for every later candidate and the bug would have looked random.
+3. He diagnosed his own architecture as unfixable **before** being told.
+4. He flagged his finished solution as *"kind of silly"* **before review** — correct, and a first.
 
-**He won a spec argument.** His `year_variants` applied the short form unconditionally where the spec said 4-character years only. The frozen corpus couldn't detect it — the set swallows the duplicate — and **over-generating is the safe direction of error for a screener**: too large a derivation set costs one extra password attempt, too small lets a guessable password through. **The spec was amended to his implementation**, with his reasoning recorded in it. Since the tutor had said "pytest is your green light, not me", it was flagged as a *weak test* (tutor-written) rather than a weak implementation.
-
-**Concepts that stuck:** sets dedupe, have no order, and `{}` is a dict · set equality is **membership, not order** — pytest's `Extra items in the right set` is a membership statement · `itertools.product` takes one iterable **per position**, and `*` unpacks a list of choice-lists into those positions · a uniform one-option list removes the need for a special case · `join` takes any iterable of strings, tuples included · `.add()` takes **one item**, `.update()`/`.union()`/`|` take an **iterable** · and the security principle above.
+**Concepts that stuck:** a dict is built by assignment, and re-assigning a key **overwrites** with no error · `sorted()` on a set gives an ordered **list**, and that is what makes dict-write order reproducible · set iteration order is not in Python's contract and string hashing is randomised **per process** · `.get()` returns `None` where `[]` raises `KeyError` · `"+".join([])` is `""`, not nothing · provenance has to be recorded **while you still hold the root**.
 
 ---
 
-## The one method failure — which he diagnosed himself
-
-> *"the part that confused me the most was the lack of teaching. You needed to teach me the update function or the union function. the code itself now i see it is easy i had it i was on the right track. i would have struggled with the final set but the others i essentialy had it."*
-
-**He's right.** The increment 1 brief taught `set()`, `.add()` and `a | b` — and never the merge form. Increment 4's *central operation* was merging a set into an accumulator, so he built one out of `.add()` and a generator expression and put two generator **objects** into his set. **All three hint tiers tonight trace to that single gap.** His third signal — *"you havent explained the final step? we have a copy set and the additional set? i feel like this final function was a step up and im not getting it at all"* — was also correct.
-
-**Seventh consecutive session of correct pushback on method.** Logged against the **existing** one-new-concept / pre-built-machinery rule. No new rule written, by design.
-
----
-
-## 🎓 Head-of-Year Review #2 (2026-10-17, Fable) — **AMBER**
-
-Ran first, before the greeting, three days late. Full text in `progress.json.head_of_year_review.log`.
-
-**Its own three priorities, graded by itself:** re-warm by cold redo — **done**, honestly · make something public — **half** (Increment 10 landed and much more, but the repo still didn't exist after 3.5 months) · teacher accountability — **FAILED**.
-
-**Amber again, and it named the repetition as the finding:** best attendance and the most code the programme has produced, and the colour didn't move, because nothing is public and project sessions kept ending badly.
-
-**It confirmed one half of the dashboard's claim and rejected the other.** Method is the main risk to him **staying** — but *"retention is still the risk to you improving, and the cold redos show it live. Two risks. Don't let the teacher's self-criticism bury the one the programme exists for."*
-
-**Its sharpest observation:** seven standing teaching rules across four project sessions, each written after a failure, none preventing the next. *"The rulebook is complete. Another rule is not the fix."* **Call: REFINE, then hold still** — test compliance, don't legislate. Followed tonight.
-
-**Priorities for the fortnight to 2026-10-31:**
-1. **Two project sessions he closes because he's done, not fed up.** ✅ **one delivered tonight**, one to go.
-2. **Decide `sectools`-public in one sentence.** ✅ **answered** — see below.
-3. **Retention lane on schedule, outside project time.** ⬜ deferred one session at his request.
-
----
-
-## His portfolio decision (2026-10-17) — a debt becomes a decision
-
-> *"i want it on github but the repo should be private, sectools is good for beginner, the stuff i display on my github i need to make sure its done properly, documented properly and without heavy AI reliance."*
-
-**Open debt #1 is closed as a decision, not as outstanding work.** It is not avoidance — he's distinguishing a learning repo from a portfolio piece, which is the correct distinction, and it **raises the bar** on what this programme should be building toward.
-
-**His recorded standard for anything public:** done properly, documented properly, **no heavy AI reliance** — i.e. something he can defend as substantially his own. That now governs what gets proposed as portfolio work.
-
-Replacement task, lower stakes: a **private** repo + push, so 21 commits exist off-machine. OPSEC scrub and `SPEC.md` spellcheck still apply first.
-
----
-
-## Active Build — `passcheck` (3 increments)
+## Active Build — `passcheck`
 
 | # | Increment | Status |
 |---|-----------|--------|
-| 1 | `case_variants` + `year_variants` | ✅ 2026-10-17 |
-| 2 | `leet_variants` — substitution combinatorics | ✅ 2026-10-17 |
+| 1 | `case_variants` + `year_variants` | ✅ 2026-10-17 · `68d6d17` |
+| 2 | `leet_variants` — substitution combinatorics | ✅ 2026-10-17 · `f66c73e` |
 | 3 | `joins` — concatenate pairs of facts | ⬜ deferred past 4 |
-| **4** | **`build_candidate_set` — compose the generators** | ✅ **2026-10-17** |
-| **5** | **`screen(password, candidates)` + which rule matched** | ⬜ **next — recommended** |
-| 6 | argparse CLI | ⬜ |
+| 4 | `build_candidate_set` — compose the generators | ✅ 2026-10-17 · `ffa1709` |
+| **5a** | **`build_candidate_map` — set + provenance** | ✅ **49 green 2026-10-19 · UNCOMMITTED** |
+| **5b** | **`screen(password, candidates)` — the verdict** | ⬜ **next — one line** |
+| 6 | argparse CLI | ⬜ **then this** |
 | 7 | Scoring and the report | ⬜ direction only |
 
-**Design principle, settled by his argument:** for a screener, **over-generation is the safe direction of error.**
+**Frozen corpora must include adversarial inputs.** The original twelve had no mixed-case input word, and that single gap let a candidate-inventing bug pass the entire suite. Two cases and a superset guard were added as a dated amendment.
+
+**Design principles, both settled by argument rather than decree:** for a screener, **over-generation is the safe direction of error** (his, 2026-10-17) · **a reproducible explanation is part of correctness**, hence `sorted()` (tutor, 2026-10-18, measured).
+
+**Why provenance exists at all:** "rejected" with no reason reads as an arbitrary rule and gets worked around — the user tries `L1v3rp00l1999` and gets in. ⚠️ **Verify** [NIST SP 800-63B §5.1.1.2](https://pages.nist.gov/800-63-3/sp800-63b.html).
 
 ---
 
 ## Previous Project — `loginwatch` (12/15 + 11a)
 
-**Python work is complete.** Increments 11 and 12 are Bash, 14 is packaging, 15 is docs. **Do not offer any of it as "Python work."** Increment 11 (`run-daily.sh`) is still the **Bash L2 gate on Scenario missions**. 23 tests green, mypy strict clean, exit-code contract honest. Five minor flagged code items outstanding, none blocking.
+**Python work is complete.** Increments 11 and 12 are Bash, 14 is packaging, 15 is docs. **Do not offer any of it as "Python work."** Increment 11 (`run-daily.sh`) is still the **Bash L2 gate on Scenario missions**. 23 tests green, mypy strict clean, exit-code contract honest.
 
 ---
 
@@ -120,8 +121,8 @@ Replacement task, lower stakes: a **private** repo + push, so 21 commits exist o
 
 | Track | Level | Status |
 |-------|-------|--------|
-| Python | **L2 (in progress)** | L1 complete 2026-05-11. Last active **2026-10-17**. *(progress.json said L1 until tonight — drift corrected.)* |
-| Bash | **L2 (pending)** | L1 complete. Track challenges last active 2026-05-10; Linux work carried by Bandit + CTF to 2026-10-09. L2 arrives at `loginwatch` Increment 11. |
+| Python | **L2 (in progress)** | L1 complete 2026-05-11. Last active **2026-10-18**. |
+| Bash | **L2 (pending)** | L1 complete. Track challenges last active 2026-05-10 — **flagged, 161 days**; Linux fluency carried by Bandit + CTF. L2 arrives at `loginwatch` Increment 11. |
 | Concepts | **ARCHIVED** | 3/3 done, archived 2026-07-16, reinstatable. |
 | Scenarios | Locked | Unlocks on Python L2 + Bash L2. **Increment 11 is the gate.** |
 
@@ -129,36 +130,35 @@ Replacement task, lower stakes: a **private** repo + push, so 21 commits exist o
 
 ## Active Weak Points
 
-**None.** WP001 retired; WP002 & WP004 mastered; WP003 & WP005 paused with the Concepts track. Nothing logged this session.
+**None logged.** WP001 retired; WP002 & WP004 mastered; WP003 & WP005 paused with the Concepts track.
 
-**Watched quietly inside review — read the output you were given (WP002 family).** It surfaced once tonight and resolved immediately: he asked whether he needed to *sort* when pytest had said `Extra items in the right set: 'R3X'` — a membership statement, not an ordering one. Fixed off a single Tier 1. He had also printed the generator objects himself, which is what made the diagnosis quick.
+**Watched quietly inside review — read the output you were given (WP002 family).** Surfaced twice this session and resolved both times off a single Tier 1 pointing at the diff rather than the fix: `('4','leet')` vs `('a','leet')` named the source-word bug, and `'' != 'exact'` named all six remaining failures at once. He is now reliably *given* the diff rather than the answer, and reliably reads it.
 
-**Still tracked in the CTF lane: identify before you act.** Untouched this session.
+**Still tracked in the CTF lane: identify before you act.** Untouched.
+
+---
+
+## Linux Gym — OverTheWire Bandit
+
+- **Status: bandit16** (port scan 31000–32000, not started). Last touched **2026-10-18**. Diversion satisfied — next trigger ~2026-10-25.
+- **Cold redos outstanding:** bandit13→16 **~2026-11-01, graded on tool recall alone** (new) · bandit12 ~2026-11-06 · bandit0→6 cold, **overdue since ~2026-08-07**.
+- Notes: [external/bandit-notes.md](external/bandit-notes.md). Scratch lives in `overthewire/` — **gitignored, correctly.**
 
 ---
 
 ## picoCTF / CyLab — CTF Practice
 
 - **Flags captured: 17.** Untouched this session.
-- **Requeued:** 09-30 batch **~2026-10-21** · Piece by Piece **~2026-10-23** (graded on `file`-first alone) · 10-03 batch ~2026-10-24 · Printer Shares ~2026-11-05 · bandit12 ~2026-11-06 · Sudo Make Me a Sandwich needs one clean self-powered retest · **Endianness** he self-flagged.
-- **Log:** [external/cylab-notes.md](external/cylab-notes.md) · **Rules:** tool-lookups fine, **answer-lookups not**.
-
----
-
-## Linux Gym — OverTheWire Bandit
-
-- **Status: bandit13** (`sshkey.private`, not started). Last touched **2026-10-09** — 8 days.
-- **Diversion trigger passed 2026-10-16.** Deferred **one** session tonight because he asked for Python; **it re-triggers next session.**
-- **Cold-redo outstanding:** bandit0→6 cold (overdue since ~2026-08-07).
-- Notes: [external/bandit-notes.md](external/bandit-notes.md).
+- **Requeued:** 09-30 batch **~2026-10-21** · Piece by Piece **~2026-10-23** (graded on `file`-first alone) · 10-03 batch ~2026-10-24 · Printer Shares ~2026-11-05 · Sudo Make Me a Sandwich needs one clean self-powered retest · **Endianness** he self-flagged.
+- **Log:** [external/cylab-notes.md](external/cylab-notes.md) · **Rules:** tool-lookups fine, **answer-lookups not** — and this session showed the line is thinner than it looks.
 
 ---
 
 ## Open Debts
 
-1. ~~**Ship `sectools` public**~~ — **CLOSED 2026-10-17 as a decision.** Private repo instead; public work must meet his own bar.
+1. ~~**Ship `sectools` public**~~ — **CLOSED 2026-10-17 as a decision.** Private repo instead; public work must meet his own bar: *done properly, documented properly, no heavy AI reliance.*
 2. **`loginwatch` write-up** — none since July. The exit-code contract, the 23-test suite and the false-all-clear bug with measured before/after numbers is still the strongest portfolio material to date. Raise as a separate errand, never as the session.
-3. **Push `sectools` to a private GitHub repo** — 21 commits exist only on this laptop. OPSEC scrub + spellcheck first. ~10 minutes.
+3. **Push `sectools` to a private GitHub repo** — 21 commits exist only on this laptop, and **session 32 added none**. OPSEC scrub + spellcheck first. ~10 minutes.
 4. Vulnerable target VM (Metasploitable2/DVWA) — not needed until the end of the project arc.
 
 ---
@@ -174,9 +174,12 @@ Replacement task, lower stakes: a **private** repo + push, so 21 commits exist o
 - [x] First cold redos executed and graded honestly *(2026-10-09)*
 - [x] First custom exception type · First refactor under a green suite *(2026-10-11)*
 - [x] First locked, in-repo acceptance criterion written before work started *(2026-10-11)*
-- [x] **Second portfolio tool started — `passcheck`, his own idea, chosen from three** *(2026-10-17)*
-- [x] **First combinatorial Python — `itertools.product` and a choice-list per position** *(2026-10-17)*
-- [x] **First project session in four to end on a win — and first measured duration in six** *(2026-10-17)*
+- [x] Second portfolio tool started — `passcheck`, his own idea, chosen from three *(2026-10-17)*
+- [x] First combinatorial Python — `itertools.product` *(2026-10-17)*
+- [x] **First dict-building code — provenance carried through a three-deep walk** *(2026-10-18)*
+- [x] **First time he pre-empted a red finding on his own code** *(2026-10-18)*
+- [x] **First time he rejected a hint tier as the wrong rung — and was right** *(2026-10-18)*
+- [x] **First time he specified the method himself — increment sizing, and it was adopted** *(2026-10-19)*
 - [ ] Lab environment fully set up — vulnerable target VM installed
 - [ ] `sectools` backed up to a private GitHub repo
 - [ ] Scenarios unlocked — Python L2 + Bash L2 both complete
@@ -188,23 +191,28 @@ Replacement task, lower stakes: a **private** repo + push, so 21 commits exist o
 
 - Write-ups generated / archived: **11 / 11**
 - Track challenges completed: **11** · attempted-unfinished: 2
-- **CTF flags captured: 17** · cold redos run: 2 (1 partial, 1 fail)
+- **CTF flags captured: 17** · cold redos run: 2 (1 partial, 1 fail) · **queued: 4**
 - `loginwatch`: **12 / 15 + 11a**, Python complete · **23 tests**
-- **`passcheck`: increments 1, 2, 4 · 35 tests · 38 lines of his Python**
-- `sectools` repo: **21 commits**, clean, **no remote yet**
-- **Bandit levels cleared: 13**
-- Total sessions: **31** · Total hours: **~31.3** *(26.3 → 31.3: session 30's 3h had never been added; session 31 is measured)*
+- **`passcheck`: increments 1, 2, 4, 5a · 49 green of 57 frozen · 5 functions, all his**
+- `sectools` repo: **21 commits** — unchanged, **session 32 committed nothing**, still no remote
+- **Bandit levels cleared: 16**
+- Total sessions: **32** · Total hours: **~33.1** *(31.3 + 1.8 measured)*
 - Weak points mastered: **2** · retired: 1
-- **Cross-track connections: 20** — newest: picoCTF *Password Profiler* handed him `cupp` and **provided** the checker; `passcheck` is him writing that checker.
+- **Cross-track connections: 20**
 - Active tracks: **Python, Bash**
 
 ---
 
 ## Weekly Rhythm
 
-**Weekly summary:** ~3h over 1 session in the 7 days to 10-17, under the 5–10h band — but five touches in the eighteen days before it. Frequency is holding; volume dipped over the last week.
+**Weekly summary:** ~4.8h over 2 sessions in the 7 days to 10-18 — still under the 5–10h band, but two sessions on consecutive days is the best back-to-back frequency since July.
 
-**Durations are measurable again.** Session 31 was stated, locked and measured. The head of year's standing instruction: don't ask him mid-session — take the git record (commits and line counts per session) as the metric.
+**Durations are measurable again** — two consecutive measured sessions. Standing head-of-year instruction: don't ask mid-session, take the git record as the metric. **Session 32 breaks that metric**, because nothing was committed.
+
+**🎓 Head-of-year priorities to 2026-10-31** *(review #2, AMBER)*:
+1. **Two project sessions he closes because he's done, not fed up.** ✅ one (s31) · **s32 is a half** — he chose to extend and finished what he started, but it ended on an uncommitted red finding.
+2. **Decide `sectools`-public in one sentence.** ✅ answered 2026-10-17.
+3. **Retention lane on schedule, outside project time.** ✅ **delivered 2026-10-18** — Bandit 13→16, with an honest cold redo queued off the back of it.
 
 ---
 
@@ -213,6 +221,6 @@ Replacement task, lower stakes: a **private** repo + push, so 21 commits exist o
 - Host attacker box — native Pop!_OS laptop. `pytest 9.1.1`, `mypy` in `sectools/.venv`.
 - ⚠️ `pip3` reports a **pre-existing** apt conflict (`pipx 1.0.0` wants `argcomplete>=1.9.4`, Ubuntu shipped `1.8.1`). **Do not** `pip3 install --upgrade argcomplete` over the apt-owned package.
 - Vulnerable target VM (Metasploitable2 / DVWA) — **not installed**.
-- `sectools` (`/home/emrebektas/sectools`) — `loginwatch` + `passcheck`, **58 tests between them**, clean tree, **no GitHub remote yet**.
-- `ctf-work/` — CTF solution scratch, **gitignored**.
+- `sectools` (`/home/emrebektas/sectools`) — `loginwatch` + `passcheck`, **72 tests between them (23 + 49)**, **dirty tree**, no GitHub remote.
+- `ctf-work/` — CTF solution scratch, **gitignored**. `overthewire/` — Bandit scratch with live level passwords, **gitignored**.
 - Localhost (`127.0.0.1`) — legal Python socket test target.

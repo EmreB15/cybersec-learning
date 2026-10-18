@@ -51,3 +51,21 @@ Picked `tr` himself after reading the man pages of six candidate commands — th
 **Defender's note:** extension-based trust is a live attack surface — `invoice.pdf.exe`, or a web upload filter that accepts `.jpg` and never reads the bytes. **Content inspection (magic numbers) is the control; extensions are attacker-supplied input.** Same instinct as the `split` fragments in Piece by Piece the same session: identify the artefact from what it *is*, not from what it's labelled.
 
 **Cold-redo (~2026-11-06):** given a hexdump, is `xxd -r` the first move, and is `file` run between **every** decompression step rather than guessing the next tool?
+
+---
+
+2026/10/18  bandit13→16 — **three levels in ~50 minutes. Fast, but the commands were looked up.** *(logged by the tutor; Emre's own account: "I used AI chatbots to help me with what commands i need. For the most part once i got the command it was easy to --help and get the arguments and flags correct.")*
+
+**13→14 `ssh -i`** — a private key is an *identity file*, not a password; `-i sshkey.private` plus the usual non-standard `-p 2220`.
+**14→15** — submit the current password to a port on localhost. The level is not a puzzle about files at all; it is the first one where the answer is **talking to a service**.
+**15→16** — same shape, but the port speaks **SSL/TLS**, so a plain connection returns garbage or hangs. A TLS client is required.
+
+**THE HONEST ENTRY, and the reason a redo is queued.** On these three levels *the command IS the answer* — there is no parsing, filtering or decoding underneath, so "which tool do I need" was not a tool-lookup in the sense the CTF rules permit (tool-lookups fine, answer-lookups not). The passwords are banked; the recall is unproven.
+
+**What was genuinely self-served and should be kept:** once the tool was named, `--help` carried the flags every time. Reading a tool's own documentation to get its arguments right is the half of this that transfers.
+
+**COLD REDO (~2026-11-01), graded on two things only and nothing else:**
+1. Given "submit the password to a port on localhost" — does a plain TCP client arrive **unaided**?
+2. When the level says the port speaks SSL — is a TLS client reached for **deliberately**, rather than retrying the plain client and wondering why the output is garbage?
+
+Flag capture is not the criterion. Tool recall is.
