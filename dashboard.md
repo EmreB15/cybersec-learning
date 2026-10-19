@@ -1,119 +1,119 @@
 # Cybersecurity Training Dashboard
-*Last updated: 2026-10-19 — Session 32. **Bandit 13→16, increment 5a green at 49 — and he finished the session by specifying how briefs should be sized.***
+*Last updated: 2026-10-19 — Session 33. **`passcheck` is a finished, working tool. Increment 6 closed in 43 minutes on his own method, plus an unplanned 6d that took the password off the command line.***
 
 ---
 
 ## Pickup Here
 
-> ### ⭐ NOTHING WAS COMMITTED. Commit first, then increment 5b — one line.
-> `/home/emrebektas/sectools` holds uncommitted changes to `derive.py`, [PASSCHECK-SPEC.md](../sectools/PASSCHECK-SPEC.md) and `tests/test_derive.py`, plus an untracked `tests/test_screen.py`. **49 green** in `test_derive.py`; 8 frozen and red in `test_screen.py` awaiting `screen.py`.
+> ### ⭐ SESSION 34 IS PROBABLY **CTF OR BASH**, NOT `passcheck`.
+> His words at the close of session 33: *"taking a 2-3 hour break and then when i come back we can potentially do some ctf-work or some bash."* Likely still **2026-10-19** — don't re-run the weekly (last 10-17) or head-of-year (next 10-31) gates. Ask how long he has and set a fresh box.
 
-**Increment 5a is closed.** The red finding was fixed — **tutor-applied, at his explicit request**, so it isn't credited to him. His 47 were his: the tree walk, both stage comparisons, `sorted()` in both places, `parts + ["year"]` over `.append`. The fix deleted 8 lines and added none, and the tutor's *first* recommendation for it was wrong and would have broken two frozen tests.
-
-**→ 5b: `screen.py`**, importing nothing from `derive`. `screen(password, candidates) -> tuple[str, str] | None`. Exact match, no normalising. **It should come out one line** — he's been told that if it's longer, 5a built the wrong structure. 8 frozen tests exist. Pass condition: `pytest` → **57 passed**.
-
-> **5b is also a probe.** The conditional expression `A if cond else B` was tutor-applied, not written by him. If 5b needs it and he reaches for it unaided, it landed. **Don't prompt him toward it.**
-
-**→ Increment 6, already split** — see the correction below.
-
-| | What he builds | Runnable? |
+| If he picks | Run this | Why |
 |---|---|---|
-| **6a** | argparse skeleton — repeatable `--word` / `--year`, prints what it parsed | yes |
-| **6b** | wire in `build_candidate_map` + `screen` on `--password`, print REJECTED / ACCEPTED | yes |
-| **6c** | the explanation line — *"rejected: derived from 'liverpool' by case+leet+year"* | the finished tool |
+| **CTF** | the **09-30 batch cold redo** | due ~10-21, so two days early is fine — it's the *graded redo*, not new content. Grade on **self-powered recall**, not flag capture. Log in [external/cylab-notes.md](external/cylab-notes.md). |
+| **Bash** | `loginwatch` **increment 11**, `run-daily.sh` | **the Bash L2 gate on Scenario missions**, and the track is 162 days cold. Say it's the gate. Needs a spec + frozen tests locked first — Bash cases are harder to freeze, so budget tutor prep. It branches on loginwatch's exit codes (0/1/2) and both sample logs already exist. |
+| **Linux CLI instead** | Bandit 16 — port scan 31000–32000 | not due until ~10-25, but legitimate if he asks for it. |
+
+**Watch for:** session 33's only stall was **control-flow structure** — three mutually exclusive routes came out as a nested `if/else`. Bash is the ideal test of whether that generalises, since `if/elif/else` and `case` are the whole of Bash branching. **If it shows up again, then** consider one small drill. Not a weak point. No ceremony.
+
+> ### ✅ `passcheck` IS FINISHED AND RUNNING — 111 green, repo clean at 30 commits
+> ```
+> $ printf 'L1v3rp00l1998' | python3 passcheck.py --word liverpool --word rex --year 1998 --password-stdin
+> words: liverpool, rex
+> years: 1998
+> REJECTED: derived from 'liverpool' by case+leet+year
+> [exit 1]
+> ```
+> Remaining, **all needing a spec written first**: increment 3 (`joins`, deferred) · increment 7 (scoring + report, reuses `report.py`'s CSV work) · a 10-minute polish pass (`description=`, `help=` on four options, redundant `else` after `sys.exit`). **Never offer the polish pass as "Python work."**
+
+**Repeat verbatim:** offer two or three builds and let him pick · lock the spec section and frozen tests in the repo **before** he starts, pass condition as a number · **verify tutor tests against a reference in a throwaway copy of the repo** — worked three times today · include adversarial inputs · pytest is the green light, not the tutor · one commit per increment.
+
+**New standing lesson, from three tutor errors today:** **freeze what must be printed *and* that nothing extra is** — and set the halfway check against **the clock**, not the conversation.
 
 ---
 
-> ### 📌 TWO METHOD CHANGES — BOTH RAISED BY HIM, BOTH NOW STANDING
->
-> **1. Grow the shape one level at a time** *(his, 2026-10-19)*
->
-> > *"Honestly a better approach here would have been starting off with just case then adding the leet and then the year. So i would understand it better."*
->
-> He's right. Split his way, **each sub-step adds exactly one loop and one comparison** — and at two levels deep it's nearly impossible to miss that the source word lives in the enclosing loop and can't be recovered from a finished candidate. The insight would have arrived free, at a depth where it's obvious, then scaled twice. Instead the whole four-level shape arrived at once and the insight had nowhere to come from.
->
-> **The programme already had this pattern and the tutor broke it.** Increments 1, 2 and 4 were one generator at a time, each green before the next. It was abandoned exactly where the difficulty stopped being *a new function* and became *a new shape*. It's also better on the metric that counts: more typing, three green lights, three commits.
->
-> **2. Draw the shape of the data at brief time** *(his, 2026-10-18)*
->
-> > *"your explaination for tier 2 is useless because im struggling to see the bigger picture"*
->
-> Tier 2 named a technique to someone who couldn't see the data's shape. What moved him in one step was Tier 3 **drawing the derivation as a tree**. Prose describing a tree is not a tree. This is **"show the path"** applied to data flow rather than file layout.
->
-> **Neither becomes an eighth teaching rule.** Both are the existing one-new-concept rule being broken. The head of year's standing call stands: test compliance, don't legislate.
+## Session 33 (2026-10-19) — increment 5b, then the whole of increment 6, then 6d
 
-**Repeat verbatim:** offer two or three builds and let him pick · lock the spec section and frozen tests in the repo **before** he starts, pass condition as a number · verify tutor-written tests against a reference implementation that **imports his functions**, so expected values are computed, not guessed · pytest is the green light, not the tutor · one commit per increment.
-
-**New:** ⏱ **warn him at the halfway mark of any timed chunk.** The Bandit chunk ran 50 minutes against a 25-minute budget with no check-in, and that is what cost increment 5b.
-
-**Not to be volunteered as "Python work":** the `loginwatch` write-up (debt #2 — a separate errand) · `loginwatch` Increments 11/12 when he wants **Bash** · packaging or docs for either project.
-
----
-
-## Session 32 (2026-10-18) — Bandit 13→16, then `passcheck` increment 5a
-
-**108 minutes, measured** — 22:29 to 00:17. A stated 90 plus a 20-minute extension he asked for at 23:56, three minutes from lock, when he was stuck and wanted to finish. Second consecutive measured session.
+**120 minutes, measured — 17:12 to 19:12, locked ON TIME.** First session since s31 to finish inside its stated number; fourth consecutive measured one.
 
 | Chunk | Budget | Actual | Outcome |
 |---|---|---|---|
-| Bandit 13→16 | 25 min | **50 min** | 3 levels, commands looked up |
-| `passcheck` 5a | 60 min | ~35 min | **47 passed**, 1 red outstanding |
-| Increment 5b | — | — | **cut for time** |
+| Increment 5b — `screen` | 15 min | **21 min** | 80 green, **no hints** |
+| 6a — argparse skeleton | 25 min | **20 min** | 88 green, **no hints** |
+| 6b — the wiring | 30 min | **12 min** | 97 green, 3 findings |
+| 6c — the explanation | 20 min | **8 min** | 103 green, **tool works end to end** |
+| 6d — `--password-stdin` | 25 min | ~30 min | 111 green, Tier 3 + tutor-applied fix |
 
-### Bandit 13→16 — fast, and honestly graded
+### His own method change, applied to a new problem, and it worked
 
-Three levels in ~50 minutes. **He disclosed unprompted** that he used AI chatbots for the commands and then self-served the flags with `--help`.
+**6a → 6b → 6c in 43 minutes.** Three sub-steps, each green before the next, three commits. The split was **his proposal** at the close of session 32 — *"starting off with just case then adding the leet and then the year. So i would understand it better."* Today is the evidence for it, and it was named to him as his.
 
-The `--help` half is the part that transfers and was named as such. But on *these* levels the command **is** the answer — `ssh -i`, then talking to a port, then talking to a port wrapped in TLS, with no parsing or decoding underneath — so "which tool do I need" was an **answer-lookup**, not the permitted tool-lookup. Passwords banked; recall unproven.
+### Increment 5b — the probe landed
 
-**→ Cold redo queued 2026-11-01, graded on tool recall alone,** not flag capture: does a plain TCP client arrive unaided, and when the level says the port speaks SSL is a TLS client reached for *deliberately* rather than retrying the plain one? Full entry in [external/bandit-notes.md](external/bandit-notes.md).
+One line, `return candidates.get(password)`. The conditional expression `A if cond else B` was **tutor-applied in 5a**; he reached for it **unaided** here and again in 6a's years line, with no prompting. It's his now, and it's off the watch list.
 
-### A real design finding came out of the tutor's prep
+**His confusion was conceptual and he diagnosed it precisely:** *"is the source word the original password?"* → *"this is like working back... why would rex be returned as case+leet+year?"* He was reading the `(source_word, rule_chain)` tuple as a statement about the **source word** rather than about the **key**. Fixed by printing the real 18-entry map as a labelled table and tracing the forward derivation through his own three functions. **He was also right that screening works backwards** — affirmed as the architecture, not corrected: forwards is the computable direction, backwards is the needed one, and 5a bridges them by keeping receipts.
 
-Provenance built by iterating generator **sets** is non-deterministic *across processes*. A candidate reachable by two routes — `"4"` from `"a"` via leet and from `"A"` via case+leet — takes whichever route is visited last, and string hashing is randomised per process. **Measured across 15 `PYTHONHASHSEED` values: 2 of 6 candidates flipped.** Wrapping the two inner set iterations in `sorted()` removed it on all 15.
+**Finding he fixed:** the annotation said `tuple[str, str]` while the function returns `None` on every accepted password. Shown rather than asserted — a caller trusting it unpacks the result and **crashes on the ACCEPTED path**, which is the path that runs for almost every password in production, and whoever later wraps that in `try/except` turns the screener into a fail-open.
 
-That became a frozen spec requirement with the reason recorded: **a security tool that gives two different explanations for the same password on two runs is defective, not quirky.**
+### ⭐ Solo wins worth naming
 
-### Increment 5a — the ladder, and why it was climbed
+1. **He anticipated `args.year` being `None`** rather than an empty list. The obvious `", ".join(args.year)` is a `TypeError` on every run with no year supplied — which is most runs. He handled a value he'd never seen, which is exactly what he *didn't* do in 5a.
+2. **Absent vs empty, right first time** in 6b: `--password ""` is screened, not skipped.
+3. **The tuple unpack and the f-string, first attempt**, format exact to the character including the quoting.
+4. **`", ".join(args.word)` with no `sorted()` and no `set()`** — after two sessions of being told determinism matters, he knew *where* the rule applied and left the command line alone.
 
-Tiers **1, 2, 3 and 4** in ~35 minutes. His first architecture built one set per rule-combination and classified candidates by membership over the finished `build_candidate_set` output. Real thinking — it even resolved the double-route ambiguity deterministically through `elif` order, with no `sorted()` needed — but **structurally unable to report the source word**, because by the time it iterated the finished set the origin had been discarded. pytest said it in one line: `assert ('4','leet') == ('a','leet')`, index 0.
+### Findings on 6b, two of them measured by deletion
 
-He diagnosed the rewrite himself — *"i have the feeling i need to rewrite all the code"* — and was told plainly he was right, and that the scope was **one function body**, ~20 lines deleted and ~15 written, not the project.
+- 🟡 **He imported `screen` and never called it**, inlining `.get()` instead. Deleting the import left **97 passing** — the import was dead, and a security decision existed in two places where only one would ever get hardened.
+- 🟡 **`if args.password is None and args.password != ""`** — the second conjunct is dead (`None != ""` is always true). Deleting it left **97 passing**. The behaviour was right by accident of the first condition.
+- Needed telling **twice** that the verdict must be *bound* to a name; he satisfied it by re-subscripting `candidate_map[args.password]` — a second lookup, and a guard and a fetch that are different operations and will drift apart.
 
-**⭐ Solo wins worth naming.**
-1. Once he had the shape, he wrote the tree walk **correctly on the first attempt**: source word carried from the root, each stage compared to its **immediate parent** rather than the root, `sorted()` in both places.
-2. `parts + ["year"]` rather than `.append` — the list-aliasing trap, dodged deliberately after one warning. Appending would have left `"year"` stuck in `parts` for every later candidate and the bug would have looked random.
-3. He diagnosed his own architecture as unfixable **before** being told.
-4. He flagged his finished solution as *"kind of silly"* **before review** — correct, and a first.
+### Three tutor criterion errors, all amended in the repo with dates and reasons
 
-**Concepts that stuck:** a dict is built by assignment, and re-assigning a key **overwrites** with no error · `sorted()` on a set gives an ordered **list**, and that is what makes dict-write order reproducible · set iteration order is not in Python's contract and string hashing is randomised **per process** · `.get()` returns `None` where `[]` raises `KeyError` · `"+".join([])` is `""`, not nothing · provenance has to be recorded **while you still hold the root**.
+1. **The 5b pass condition said "57"** — it counted only the two `passcheck` test files and forgot bare `pytest` collects the 23 `loginwatch` tests too. Corrected to **80 before he started**.
+2. **Two 6b cases froze stdout exactly equal to a line reading `REJECTED`** — on an interface 6c was always going to extend. *A frozen criterion must not forbid the next increment in the plan.*
+3. **The no-password case asserted the right output but not the absence of extra output** — so an implementation that **warned about a password nobody supplied** passed the whole suite.
+
+All three are the same sentence: **freeze what must be printed, and that nothing extra is.**
+
+### 6d — and the escalation traced to the brief for the third session running
+
+`--password-stdin` closed the leak the 6b spec had **deliberately deferred in the same session it recorded it**. `--password` was kept and warns on stderr rather than being removed — the `docker login` pattern — so 23 frozen cases and any existing caller keep working.
+
+The 6d brief gave four input routes as a **table** and never drew how they converge on one value. What moved him: **measured `readline()` output** for four stdin shapes with `repr`, a **drawn control-flow diagram**, and the **parsed namespace printed for all four invocations**. Same shape of failure as session 32's Tier 2. *Draw the shape at brief time* now has three sessions of evidence.
+
+**Concepts that stuck:** `.get()` is the lookup, not `in` plus a subscript · a type annotation that omits `| None` is a lie mypy will name · an option is repeatable with `action="append"`, and a dashed option is read as `args.password_stdin` · `store_true` is `False`/`True`, never `None` · `readline()` keeps its trailing newline and **only that newline comes off** — a trailing space is part of the password · stdout and stderr have different jobs · validate arguments **before** doing work.
 
 ---
 
-## Active Build — `passcheck`
+## Active Build — `passcheck` ✅ running
 
 | # | Increment | Status |
 |---|-----------|--------|
 | 1 | `case_variants` + `year_variants` | ✅ 2026-10-17 · `68d6d17` |
-| 2 | `leet_variants` — substitution combinatorics | ✅ 2026-10-17 · `f66c73e` |
-| 3 | `joins` — concatenate pairs of facts | ⬜ deferred past 4 |
-| 4 | `build_candidate_set` — compose the generators | ✅ 2026-10-17 · `ffa1709` |
-| **5a** | **`build_candidate_map` — set + provenance** | ✅ **49 green 2026-10-19 · UNCOMMITTED** |
-| **5b** | **`screen(password, candidates)` — the verdict** | ⬜ **next — one line** |
-| 6 | argparse CLI | ⬜ **then this** |
+| 2 | `leet_variants` | ✅ 2026-10-17 · `f66c73e` |
+| 3 | `joins` | ⬜ deferred — a candidate for next |
+| 4 | `build_candidate_set` | ✅ 2026-10-17 · `ffa1709` |
+| 5a | `build_candidate_map` — provenance | ✅ 2026-10-19 · `19a5504` |
+| 5b | `screen` — the verdict | ✅ **2026-10-19 · one line, no hints** |
+| 6a | argparse skeleton | ✅ **2026-10-19 · `149cc6c`** |
+| 6b | the wiring | ✅ **2026-10-19** |
+| 6c | the explanation line | ✅ **2026-10-19 — the tool works** |
+| 6d | `--password-stdin` | ✅ **2026-10-19 — the leak is closed** |
 | 7 | Scoring and the report | ⬜ direction only |
 
-**Frozen corpora must include adversarial inputs.** The original twelve had no mixed-case input word, and that single gap let a candidate-inventing bug pass the entire suite. Two cases and a superset guard were added as a dated amendment.
+**111 frozen tests:** 49 `test_derive.py` · 8 `test_screen.py` · 8 `test_cli.py` · 9 `test_cli_verdict.py` · 6 `test_cli_explain.py` · 8 `test_cli_stdin.py`. Plus 23 `loginwatch` tests in the same directory, which is what the "57" error forgot.
 
-**Design principles, both settled by argument rather than decree:** for a screener, **over-generation is the safe direction of error** (his, 2026-10-17) · **a reproducible explanation is part of correctness**, hence `sorted()` (tutor, 2026-10-18, measured).
+**Design principles, all settled by argument rather than decree:** over-generation is the safe direction of error (his, 10-17) · a reproducible explanation is part of correctness (tutor, measured, 10-18) · a rejection with no reason gets worked around (⚠️ **Verify** [NIST SP 800-63B §5.1.1.2](https://pages.nist.gov/800-63-3/sp800-63b.html)) · **you don't delete a published option to fix a leak a warning can flag** (10-19).
 
-**Why provenance exists at all:** "rejected" with no reason reads as an arbitrary rule and gets worked around — the user tries `L1v3rp00l1999` and gets in. ⚠️ **Verify** [NIST SP 800-63B §5.1.1.2](https://pages.nist.gov/800-63-3/sp800-63b.html).
+**Still deliberately unfixed, recorded as decisions:** no `getpass` prompt, and the candidate map sits in process memory in plain text.
 
 ---
 
 ## Previous Project — `loginwatch` (12/15 + 11a)
 
-**Python work is complete.** Increments 11 and 12 are Bash, 14 is packaging, 15 is docs. **Do not offer any of it as "Python work."** Increment 11 (`run-daily.sh`) is still the **Bash L2 gate on Scenario missions**. 23 tests green, mypy strict clean, exit-code contract honest.
+**Python work is complete.** Increments 11 and 12 are Bash, 14 is packaging, 15 is docs. **Do not offer any of it as "Python work."** Increment 11 (`run-daily.sh`) is the **Bash L2 gate on Scenario missions**. 23 tests green, mypy strict clean.
 
 ---
 
@@ -121,8 +121,8 @@ He diagnosed the rewrite himself — *"i have the feeling i need to rewrite all 
 
 | Track | Level | Status |
 |-------|-------|--------|
-| Python | **L2 (in progress)** | L1 complete 2026-05-11. Last active **2026-10-18**. |
-| Bash | **L2 (pending)** | L1 complete. Track challenges last active 2026-05-10 — **flagged, 161 days**; Linux fluency carried by Bandit + CTF. L2 arrives at `loginwatch` Increment 11. |
+| Python | **L2 (in progress)** | L1 complete 2026-05-11. Last active **2026-10-19**. |
+| Bash | **L2 (pending)** | L1 complete. Track challenges last active 2026-05-10 — **flagged, 162 days**; Linux fluency carried by Bandit + CTF. **Arrives at `loginwatch` Increment 11.** |
 | Concepts | **ARCHIVED** | 3/3 done, archived 2026-07-16, reinstatable. |
 | Scenarios | Locked | Unlocks on Python L2 + Bash L2. **Increment 11 is the gate.** |
 
@@ -132,7 +132,7 @@ He diagnosed the rewrite himself — *"i have the feeling i need to rewrite all 
 
 **None logged.** WP001 retired; WP002 & WP004 mastered; WP003 & WP005 paused with the Concepts track.
 
-**Watched quietly inside review — read the output you were given (WP002 family).** Surfaced twice this session and resolved both times off a single Tier 1 pointing at the diff rather than the fix: `('4','leet')` vs `('a','leet')` named the source-word bug, and `'' != 'exact'` named all six remaining failures at once. He is now reliably *given* the diff rather than the answer, and reliably reads it.
+**Watched quietly inside review:** read the output you were given (WP002 family) — **clean this session**, he read pytest and mypy output unprompted every time · **control-flow structure** (nested `if/else` where mutually exclusive `elif` routes are needed) — surfaced in 6d, see the pickup note · deciding a value before writing it rather than repairing it after — the module-level `password = None` was an instance.
 
 **Still tracked in the CTF lane: identify before you act.** Untouched.
 
@@ -140,9 +140,9 @@ He diagnosed the rewrite himself — *"i have the feeling i need to rewrite all 
 
 ## Linux Gym — OverTheWire Bandit
 
-- **Status: bandit16** (port scan 31000–32000, not started). Last touched **2026-10-18**. Diversion satisfied — next trigger ~2026-10-25.
-- **Cold redos outstanding:** bandit13→16 **~2026-11-01, graded on tool recall alone** (new) · bandit12 ~2026-11-06 · bandit0→6 cold, **overdue since ~2026-08-07**.
-- Notes: [external/bandit-notes.md](external/bandit-notes.md). Scratch lives in `overthewire/` — **gitignored, correctly.**
+- **Status: bandit16** (port scan 31000–32000, not started). Last touched **2026-10-18**. Next diversion trigger **~2026-10-25**.
+- **Cold redos outstanding:** bandit13→16 **~2026-11-01, graded on tool recall alone** · bandit12 ~2026-11-06 · bandit0→6 cold, **overdue since ~2026-08-07**.
+- Notes: [external/bandit-notes.md](external/bandit-notes.md). Scratch in `overthewire/` — gitignored.
 
 ---
 
@@ -150,16 +150,16 @@ He diagnosed the rewrite himself — *"i have the feeling i need to rewrite all 
 
 - **Flags captured: 17.** Untouched this session.
 - **Requeued:** 09-30 batch **~2026-10-21** · Piece by Piece **~2026-10-23** (graded on `file`-first alone) · 10-03 batch ~2026-10-24 · Printer Shares ~2026-11-05 · Sudo Make Me a Sandwich needs one clean self-powered retest · **Endianness** he self-flagged.
-- **Log:** [external/cylab-notes.md](external/cylab-notes.md) · **Rules:** tool-lookups fine, **answer-lookups not** — and this session showed the line is thinner than it looks.
+- **Log:** [external/cylab-notes.md](external/cylab-notes.md) · **Rules:** tool-lookups fine, answer-lookups not.
 
 ---
 
 ## Open Debts
 
-1. ~~**Ship `sectools` public**~~ — **CLOSED 2026-10-17 as a decision.** Private repo instead; public work must meet his own bar: *done properly, documented properly, no heavy AI reliance.*
+1. **Push `sectools` to a private GitHub repo** — **30 commits** now exist only on this laptop and today added seven. ~10 minutes, OPSEC scrub first. **Oldest live debt, and it grows every session.**
 2. **`loginwatch` write-up** — none since July. The exit-code contract, the 23-test suite and the false-all-clear bug with measured before/after numbers is still the strongest portfolio material to date. Raise as a separate errand, never as the session.
-3. **Push `sectools` to a private GitHub repo** — 21 commits exist only on this laptop, and **session 32 added none**. OPSEC scrub + spellcheck first. ~10 minutes.
-4. Vulnerable target VM (Metasploitable2/DVWA) — not needed until the end of the project arc.
+3. Vulnerable target VM (Metasploitable2/DVWA) — not needed until the end of the project arc.
+4. ~~Ship `sectools` public~~ — CLOSED 2026-10-17 as a decision. Private repo instead.
 
 ---
 
@@ -176,10 +176,13 @@ He diagnosed the rewrite himself — *"i have the feeling i need to rewrite all 
 - [x] First locked, in-repo acceptance criterion written before work started *(2026-10-11)*
 - [x] Second portfolio tool started — `passcheck`, his own idea, chosen from three *(2026-10-17)*
 - [x] First combinatorial Python — `itertools.product` *(2026-10-17)*
-- [x] **First dict-building code — provenance carried through a three-deep walk** *(2026-10-18)*
-- [x] **First time he pre-empted a red finding on his own code** *(2026-10-18)*
-- [x] **First time he rejected a hint tier as the wrong rung — and was right** *(2026-10-18)*
-- [x] **First time he specified the method himself — increment sizing, and it was adopted** *(2026-10-19)*
+- [x] First dict-building code — provenance through a three-deep walk *(2026-10-18)*
+- [x] First time he pre-empted a red finding on his own code *(2026-10-18)*
+- [x] First time he rejected a hint tier as the wrong rung — and was right *(2026-10-18)*
+- [x] First time he specified the method himself — increment sizing, adopted *(2026-10-19)*
+- [x] **`passcheck` runs end to end — a finished CLI that names the fact and the route** *(2026-10-19)*
+- [x] **First tool that takes a secret off the command line — `--password-stdin`** *(2026-10-19)*
+- [x] **First time his own method change was applied to a new problem and measured** *(2026-10-19)*
 - [ ] Lab environment fully set up — vulnerable target VM installed
 - [ ] `sectools` backed up to a private GitHub repo
 - [ ] Scenarios unlocked — Python L2 + Bash L2 both complete
@@ -191,28 +194,28 @@ He diagnosed the rewrite himself — *"i have the feeling i need to rewrite all 
 
 - Write-ups generated / archived: **11 / 11**
 - Track challenges completed: **11** · attempted-unfinished: 2
-- **CTF flags captured: 17** · cold redos run: 2 (1 partial, 1 fail) · **queued: 4**
+- **CTF flags captured: 17** · cold redos run: 2 (1 partial, 1 fail) · queued: 4
 - `loginwatch`: **12 / 15 + 11a**, Python complete · **23 tests**
-- **`passcheck`: increments 1, 2, 4, 5a · 49 green of 57 frozen · 5 functions, all his**
-- `sectools` repo: **21 commits** — unchanged, **session 32 committed nothing**, still no remote
+- **`passcheck`: increments 1, 2, 4, 5a, 5b, 6a, 6b, 6c, 6d · 111 green of 111 frozen · FINISHED AND RUNNING**
+- `sectools` repo: **30 commits** — **7 added this session**, still no remote
 - **Bandit levels cleared: 16**
-- Total sessions: **32** · Total hours: **~33.1** *(31.3 + 1.8 measured)*
+- Total sessions: **33** · Total hours: **~35.7** *(33.7 + 2.0 measured, locked on time)*
 - Weak points mastered: **2** · retired: 1
-- **Cross-track connections: 20**
+- **Cross-track connections: 21** *(new: a shell pipe into his own tool's stdin)*
 - Active tracks: **Python, Bash**
 
 ---
 
 ## Weekly Rhythm
 
-**Weekly summary:** ~4.8h over 2 sessions in the 7 days to 10-18 — still under the 5–10h band, but two sessions on consecutive days is the best back-to-back frequency since July.
+**Weekly summary:** not due — last run 2026-10-17, next on or after 2026-10-24.
 
-**Durations are measurable again** — two consecutive measured sessions. Standing head-of-year instruction: don't ask mid-session, take the git record as the metric. **Session 32 breaks that metric**, because nothing was committed.
+**Durations are measurable again — four consecutive measured sessions**, and this one **locked on time** against a stated 120 minutes. The single timekeeping miss was tutor-side: the promised 18:36 halfway check on the 6d chunk never fired because the conversation ran through it. Twice in two sessions. **Set the halfway check against the clock, not the conversation.**
 
 **🎓 Head-of-year priorities to 2026-10-31** *(review #2, AMBER)*:
-1. **Two project sessions he closes because he's done, not fed up.** ✅ one (s31) · **s32 is a half** — he chose to extend and finished what he started, but it ended on an uncommitted red finding.
+1. **Two project sessions he closes because he's done, not fed up.** ✅ s31 · s32 a half · ✅ **s33 — a finished tool, on time, four commits.** Target met.
 2. **Decide `sectools`-public in one sentence.** ✅ answered 2026-10-17.
-3. **Retention lane on schedule, outside project time.** ✅ **delivered 2026-10-18** — Bandit 13→16, with an honest cold redo queued off the back of it.
+3. **Retention lane on schedule, outside project time.** ✅ delivered 2026-10-18.
 
 ---
 
@@ -221,6 +224,6 @@ He diagnosed the rewrite himself — *"i have the feeling i need to rewrite all 
 - Host attacker box — native Pop!_OS laptop. `pytest 9.1.1`, `mypy` in `sectools/.venv`.
 - ⚠️ `pip3` reports a **pre-existing** apt conflict (`pipx 1.0.0` wants `argcomplete>=1.9.4`, Ubuntu shipped `1.8.1`). **Do not** `pip3 install --upgrade argcomplete` over the apt-owned package.
 - Vulnerable target VM (Metasploitable2 / DVWA) — **not installed**.
-- `sectools` (`/home/emrebektas/sectools`) — `loginwatch` + `passcheck`, **72 tests between them (23 + 49)**, **dirty tree**, no GitHub remote.
-- `ctf-work/` — CTF solution scratch, **gitignored**. `overthewire/` — Bandit scratch with live level passwords, **gitignored**.
+- `sectools` (`/home/emrebektas/sectools`) — `loginwatch` + `passcheck`, **134 tests between them (23 + 111)**, no GitHub remote.
+- `ctf-work/` and `overthewire/` — scratch, both gitignored.
 - Localhost (`127.0.0.1`) — legal Python socket test target.
